@@ -7,13 +7,24 @@ venv/
 
 # ML artifacts (regenerate via training scripts)
 ml_research/checkpoints/*.pt
+# Keep runtime / next-step models for reproducibility
+!ml_research/checkpoints/swap_net_v3.pt
+!ml_research/checkpoints/escalate_net_v1.pt
+!ml_research/checkpoints/escalate_net_map_v1.pt
+!ml_research/checkpoints/scene_difficulty_v1.pt
+!ml_research/checkpoints/scene_difficulty_v1.decision.json
+!ml_research/checkpoints/wave_net_map_v2.pt
 ml_research/checkpoints/archive/
 ml_research/data/*.npz
-# Keep summary tables/figs only (drop trajectory CSV dumps)
-ml_research/results/**/*
+
+# Results: ignore bulk dumps; keep summaries/figs (must un-ignore dirs first)
+ml_research/results/**
+!ml_research/results/**/
 !ml_research/results/**/*.md
 !ml_research/results/**/*.json
 !ml_research/results/**/*.png
+!ml_research/results/**/*.pdf
+ml_research/results/**/trajectories/
 
 # Simulation outputs
 data/outputs/trajectories/*.csv
