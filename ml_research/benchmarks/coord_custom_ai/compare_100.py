@@ -211,6 +211,9 @@ def _hier_meta(meta: dict) -> dict:
     m["m0_min_handoff_wall_s"] = 60.0
     m["wall_first_ecbs"] = False
     m["ecbs_prefer_full_k"] = False
+    # StallEscalateNet: earlier M0→ECBS when thrash features fire.
+    m["use_stall_escalate"] = True
+    m["stall_escalate_threshold"] = 0.58
     return m
 
 
@@ -357,7 +360,7 @@ def run_method(
                 wave_hard_cap=4,
             )
             wall = float(rep.get("wall_seconds") or (time.perf_counter() - t0))
-            notes = "M0 + stall/structure handoff + ECBS"
+            notes = "M0 + StallEscalateNet handoff + ECBS"
         else:
             raise ValueError(f"unknown method {method}")
     except Exception as exc:  # noqa: BLE001

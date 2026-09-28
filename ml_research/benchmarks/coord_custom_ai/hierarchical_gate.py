@@ -132,10 +132,14 @@ class LifelongGateTracker:
     calm_waves_to_release: int = 2
     dropoff_escalate_score: float = 0.45
     escalate_net: object = None  # Optional EscalateNet (scalar) or EscalateNetMap
+    stall_escalate_net: object = None  # Optional StallEscalateNet (M0 handoff)
     scene_diff_net: object = None  # Optional SceneDifficultyNet (map+task hard/easy)
     # Off by default: want_on is ignored on easy band; real upgrades use
     # force_commit / map hardness. Opt-in only for EscalateNet experiments.
     use_escalate_ai: bool = False
+    # StallEscalateNet for earlier M0→ECBS handoff under thrash (compare_100 hier).
+    use_stall_escalate: bool = False
+    stall_escalate_threshold: float = 0.58
     use_map_obs: bool = True
     # Off by default: p_hard collapsed to easy; real upgrades use force_commit /
     # map hardness. Opt-in only for SceneNet experiments.

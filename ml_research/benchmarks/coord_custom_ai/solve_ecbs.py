@@ -975,11 +975,56 @@ def _solve_via_m0_engine(
             and t >= 80
             and plateau_now >= 20
         )
+        # StallEscalateNet: cut long M0 thrash earlier than hard_livelock,
+        # but only after at least one recover attempt (plateau≥12) unless
+        # wall_window already proves sim starvation.
+        stall_ai_reason = ""
+        if (
+            gate is not None
+            and bool(getattr(gate, "use_stall_escalate", False))
+            and getattr(gate, "stall_escalate_net", None) is not None
+            and not near_done
+            and not sim_efficient
+            and sig["has_work"]
+            and not cold
+        ):
+            try:
+                from ml_research.benchmarks.hier_coord.escalate_stall import (
+                    decide_stall_escalate,
+                    stall_context_from_runtime,
+                )
+
+                sctx = stall_context_from_runtime(
+                    map_hardness=float(getattr(gate, "map_hardness", 0.0) or 0.0),
+                    narrow_cut=float(getattr(gate, "narrow_cut", 0.0) or 0.0),
+                    n_tasks=int(n_tasks),
+                    done_completed=int(done_plateau_metric),
+                    stall_state=stall_state,
+                    sig=sig,
+                    wall_elapsed_s=float(wall_elapsed),
+                    sim_t=int(t),
+                )
+                want, src, p_stall = decide_stall_escalate(
+                    sctx,
+                    getattr(gate, "stall_escalate_net", None),
+                    threshold=float(
+                        getattr(gate, "stall_escalate_threshold", 0.58) or 0.58
+                    ),
+                    min_plateau=12,
+                )
+                if want:
+                    stall_ai_reason = f"stall_ai:{src}:p={p_stall:.2f}"
+            except Exception as exc:  # noqa: BLE001
+                print(f"[M0] WARN stall_escalate failed: {exc}", flush=True)
+
         if near_done:
             force_reason = ""
         elif sim_efficient:
             # Healthy M0 sim/task with recent progress — do not eject.
             force_reason = ""
+        elif stall_ai_reason:
+            # AI may interrupt recover window when thrash is clear.
+            force_reason = stall_ai_reason
         elif 8 <= plateau_now < 20:
             # Recover window — never handoff; give clear+assign time to work.
             force_reason = ""
@@ -6177,10 +6222,31 @@ def solve_ecbs(
             free=free,
         )
         narrow0 = float(narrow_cut_score(free))
-        # EscalateNet / EscalateNetMap disabled: want_on ignored on easy band;
-        # upgrades come from force_commit (M0 degrade) / map hardness / force.
+        # Classic EscalateNet / SceneDifficultyNet stay off on easy band.
+        # StallEscalateNet drives earlier M0→ECBS handoff under thrash.
         escalate_net = None
         hier_stats["escalate_ai_enabled"] = False
+        stall_net = None
+        use_stall = bool(meta.get("use_stall_escalate", False))
+        if use_stall:
+            try:
+                from ml_research.benchmarks.hier_coord.escalate_stall import (
+                    STALL_ESCALATE_CKPT,
+                    load_stall_escalate_net,
+                )
+
+                ck = Path(meta.get("stall_escalate_ckpt") or STALL_ESCALATE_CKPT)
+                if ck.exists():
+                    stall_net = load_stall_escalate_net(ck)
+                    hier_stats["stall_escalate_ckpt"] = str(ck)
+                else:
+                    print(f"[HIER] WARN stall ckpt missing: {ck}", flush=True)
+                    use_stall = False
+            except Exception as exc:  # noqa: BLE001
+                print(f"[HIER] WARN load stall_escalate failed: {exc}", flush=True)
+                use_stall = False
+                stall_net = None
+        hier_stats["stall_escalate_enabled"] = bool(use_stall and stall_net is not None)
         wave_net, wave_meta = load_wave_policy(enabled=bool(use_wavenet))
         hier_stats["wave_meta"] = wave_meta
         # SceneDifficultyNet disabled: band/planner come from map hardness /
@@ -6201,8 +6267,13 @@ def solve_ecbs(
             hard_cap=int(wave_hard_cap),
             max_active=int(max_active),
             escalate_net=escalate_net,
+            stall_escalate_net=stall_net,
             scene_diff_net=scene_diff_net,
             use_escalate_ai=False,
+            use_stall_escalate=bool(use_stall and stall_net is not None),
+            stall_escalate_threshold=float(
+                meta.get("stall_escalate_threshold") or 0.58
+            ),
             use_map_obs=True,
             use_scene_diff=False,
             allow_mode_switch=bool(allow_switch),

@@ -11,6 +11,7 @@ ml_research/checkpoints/*.pt
 !ml_research/checkpoints/swap_net_v3.pt
 !ml_research/checkpoints/escalate_net_v1.pt
 !ml_research/checkpoints/escalate_net_map_v1.pt
+!ml_research/checkpoints/escalate_net_stall_v1.pt
 !ml_research/checkpoints/scene_difficulty_v1.pt
 !ml_research/checkpoints/scene_difficulty_v1.decision.json
 !ml_research/checkpoints/wave_net_map_v2.pt
