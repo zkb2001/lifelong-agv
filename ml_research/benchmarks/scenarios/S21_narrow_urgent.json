@@ -1,0 +1,76 @@
+{
+  "id": "S21_narrow_urgent",
+  "intent": "瓶颈+紧急件",
+  "n_agvs": 12,
+  "obstacle_mode": "mild",
+  "obstacle_seed": 621,
+  "task_pattern": "urgent_burst",
+  "n_tasks": 24,
+  "seed": 604,
+  "position_csv": "S21_narrow_urgent_position.csv",
+  "task_csv": "S21_narrow_urgent_task.csv",
+  "extra_obstacles": [
+    [
+      10,
+      2
+    ],
+    [
+      10,
+      3
+    ],
+    [
+      10,
+      5
+    ],
+    [
+      10,
+      7
+    ],
+    [
+      10,
+      9
+    ],
+    [
+      10,
+      13
+    ],
+    [
+      10,
+      17
+    ],
+    [
+      10,
+      18
+    ],
+    [
+      10,
+      19
+    ],
+    [
+      4,
+      14
+    ],
+    [
+      19,
+      4
+    ],
+    [
+      10,
+      11
+    ],
+    [
+      3,
+      16
+    ],
+    [
+      15,
+      2
+    ],
+    [
+      17,
+      5
+    ]
+  ],
+  "max_sim_time": 800,
+  "wall_timeout": 75.0
+}

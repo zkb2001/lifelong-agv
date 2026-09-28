@@ -1,0 +1,15 @@
+{
+  "id": "S02_ctrl_n12_mixed",
+  "intent": "正常混合对照",
+  "n_agvs": 12,
+  "obstacle_mode": "none",
+  "obstacle_seed": 119,
+  "task_pattern": "mixed",
+  "n_tasks": 32,
+  "seed": 102,
+  "position_csv": "S02_ctrl_n12_mixed_position.csv",
+  "task_csv": "S02_ctrl_n12_mixed_task.csv",
+  "extra_obstacles": [],
+  "max_sim_time": 800,
+  "wall_timeout": 75.0
+}

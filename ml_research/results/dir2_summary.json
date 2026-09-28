@@ -1,0 +1,26 @@
+{
+  "heuristic": {
+    "man": {
+      "n": 150,
+      "mean_expansions": 115.77333333333333,
+      "mean_cost": 15.36,
+      "expansion_reduction_vs_man": 0.0,
+      "cost_ratio_vs_man": 1.0
+    },
+    "residual": {
+      "n": 150,
+      "mean_expansions": 27.986666666666668,
+      "mean_cost": 15.36,
+      "expansion_reduction_vs_man": 0.7582632730623056,
+      "cost_ratio_vs_man": 1.0
+    },
+    "focal": {
+      "n": 150,
+      "mean_expansions": 24.88,
+      "mean_cost": 15.36,
+      "expansion_reduction_vs_man": 0.7850973165956466,
+      "cost_ratio_vs_man": 1.0
+    }
+  },
+  "conflict_best_f1": 0.989193083573487
+}

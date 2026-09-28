@@ -1,0 +1,15 @@
+{
+  "id": "S07_cluster_dest_agv4",
+  "intent": "少车+聚集卸货（贪心易堵）",
+  "n_agvs": 4,
+  "obstacle_mode": "none",
+  "obstacle_seed": 319,
+  "task_pattern": "clustered_dest",
+  "n_tasks": 24,
+  "seed": 302,
+  "position_csv": "S07_cluster_dest_agv4_position.csv",
+  "task_csv": "S07_cluster_dest_agv4_task.csv",
+  "extra_obstacles": [],
+  "max_sim_time": 800,
+  "wall_timeout": 75.0
+}

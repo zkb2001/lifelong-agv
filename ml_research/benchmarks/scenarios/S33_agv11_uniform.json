@@ -1,0 +1,15 @@
+{
+  "id": "S33_agv11_uniform",
+  "intent": "奇数车队11无障碍",
+  "n_agvs": 11,
+  "obstacle_mode": "none",
+  "obstacle_seed": 826,
+  "task_pattern": "urgent_burst",
+  "n_tasks": 30,
+  "seed": 809,
+  "position_csv": "S33_agv11_uniform_position.csv",
+  "task_csv": "S33_agv11_uniform_task.csv",
+  "extra_obstacles": [],
+  "max_sim_time": 900,
+  "wall_timeout": 90.0
+}

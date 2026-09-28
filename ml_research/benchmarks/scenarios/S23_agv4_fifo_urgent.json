@@ -1,0 +1,15 @@
+{
+  "id": "S23_agv4_fifo_urgent",
+  "intent": "少车+FIFO紧急压力",
+  "n_agvs": 4,
+  "obstacle_mode": "none",
+  "obstacle_seed": 718,
+  "task_pattern": "fifo_pressure",
+  "n_tasks": 24,
+  "seed": 701,
+  "position_csv": "S23_agv4_fifo_urgent_position.csv",
+  "task_csv": "S23_agv4_fifo_urgent_task.csv",
+  "extra_obstacles": [],
+  "max_sim_time": 800,
+  "wall_timeout": 75.0
+}

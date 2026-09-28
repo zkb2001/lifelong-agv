@@ -1,0 +1,15 @@
+{
+  "id": "S11_urgent_burst",
+  "intent": "紧急件密集（权重弱）",
+  "n_agvs": 12,
+  "obstacle_mode": "none",
+  "obstacle_seed": 418,
+  "task_pattern": "urgent_burst",
+  "n_tasks": 30,
+  "seed": 401,
+  "position_csv": "S11_urgent_burst_position.csv",
+  "task_csv": "S11_urgent_burst_task.csv",
+  "extra_obstacles": [],
+  "max_sim_time": 800,
+  "wall_timeout": 75.0
+}

@@ -1,0 +1,165 @@
+{
+  "device": "cuda",
+  "n_agents": 2,
+  "grid": 9,
+  "total_updates": 20,
+  "bc_warmup_success": 0.65,
+  "bc_warmup_arrival_rate": 0.7625,
+  "best_eval_success": 1.0,
+  "final_eval_success": 0.8,
+  "final_arrival_rate": 0.85,
+  "random_success": 0.04,
+  "random_arrival_rate": 0.07,
+  "greedy_success": 0.72,
+  "greedy_arrival_rate": 0.83,
+  "history": [
+    {
+      "update": 0,
+      "eval_success": 0.65,
+      "eval_return": -0.2661874999999899,
+      "arrival_rate": 0.7625,
+      "phase": "bc_warmup"
+    },
+    {
+      "update": 1,
+      "eval_success": 0.55,
+      "eval_return": 2.988125000000012,
+      "arrival_rate": 0.7,
+      "phase": "ppo"
+    },
+    {
+      "update": 2,
+      "eval_success": 0.65,
+      "eval_return": 3.070000000000011,
+      "arrival_rate": 0.775,
+      "phase": "ppo"
+    },
+    {
+      "update": 3,
+      "eval_success": 0.6,
+      "eval_return": 1.6730000000000156,
+      "arrival_rate": 0.725,
+      "phase": "ppo"
+    },
+    {
+      "update": 4,
+      "eval_success": 0.7,
+      "eval_return": 2.3131250000000123,
+      "arrival_rate": 0.8,
+      "phase": "ppo"
+    },
+    {
+      "update": 5,
+      "eval_success": 0.7,
+      "eval_return": 6.536500000000004,
+      "arrival_rate": 0.825,
+      "phase": "ppo"
+    },
+    {
+      "update": 6,
+      "eval_success": 1.0,
+      "eval_return": 13.255124999999998,
+      "arrival_rate": 1.0,
+      "phase": "ppo"
+    },
+    {
+      "update": 7,
+      "eval_success": 0.55,
+      "eval_return": -12.901374999999973,
+      "arrival_rate": 0.65,
+      "phase": "ppo"
+    },
+    {
+      "update": 8,
+      "eval_success": 0.75,
+      "eval_return": 8.709625000000006,
+      "arrival_rate": 0.85,
+      "phase": "ppo"
+    },
+    {
+      "update": 9,
+      "eval_success": 0.7,
+      "eval_return": 9.138250000000005,
+      "arrival_rate": 0.825,
+      "phase": "ppo"
+    },
+    {
+      "update": 10,
+      "eval_success": 0.5,
+      "eval_return": -0.39774999999998356,
+      "arrival_rate": 0.675,
+      "phase": "ppo"
+    },
+    {
+      "update": 11,
+      "eval_success": 0.75,
+      "eval_return": 11.750250000000005,
+      "arrival_rate": 0.875,
+      "phase": "ppo"
+    },
+    {
+      "update": 12,
+      "eval_success": 0.6,
+      "eval_return": 1.958500000000015,
+      "arrival_rate": 0.7,
+      "phase": "ppo"
+    },
+    {
+      "update": 13,
+      "eval_success": 0.5,
+      "eval_return": -4.197249999999984,
+      "arrival_rate": 0.65,
+      "phase": "ppo"
+    },
+    {
+      "update": 14,
+      "eval_success": 0.65,
+      "eval_return": -1.1143749999999875,
+      "arrival_rate": 0.75,
+      "phase": "ppo"
+    },
+    {
+      "update": 15,
+      "eval_success": 0.75,
+      "eval_return": 2.6210000000000067,
+      "arrival_rate": 0.825,
+      "phase": "ppo"
+    },
+    {
+      "update": 16,
+      "eval_success": 0.65,
+      "eval_return": -3.024249999999989,
+      "arrival_rate": 0.75,
+      "phase": "ppo"
+    },
+    {
+      "update": 17,
+      "eval_success": 0.65,
+      "eval_return": 5.224875000000014,
+      "arrival_rate": 0.775,
+      "phase": "ppo"
+    },
+    {
+      "update": 18,
+      "eval_success": 0.65,
+      "eval_return": -0.9536249999999855,
+      "arrival_rate": 0.75,
+      "phase": "ppo"
+    },
+    {
+      "update": 19,
+      "eval_success": 0.65,
+      "eval_return": 5.6941250000000085,
+      "arrival_rate": 0.8,
+      "phase": "ppo"
+    },
+    {
+      "update": 20,
+      "eval_success": 0.65,
+      "eval_return": -2.6368749999999865,
+      "arrival_rate": 0.725,
+      "phase": "ppo"
+    }
+  ],
+  "note": "IL(BC from greedy)+light PPO; shows hybrid MARL pipeline on AGV kinematics"
+}

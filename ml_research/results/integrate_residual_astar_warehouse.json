@@ -1,0 +1,136 @@
+{
+  "adapted_ckpt": "D:\\compitition\\MioVerse\\final_version\\ml_research\\checkpoints\\heuristic_residual_warehouse.pt",
+  "runs": [
+    {
+      "heuristic": "manhattan",
+      "task_file": "agv_task.csv",
+      "n_tasks_initial": 100,
+      "tasks_completed": 100,
+      "tasks_remaining": 0,
+      "sim_time": 257,
+      "wall_seconds": 12.946,
+      "heuristic_calls": 471476,
+      "forced_stop": false,
+      "trajectory": "D:\\compitition\\MioVerse\\final_version\\ml_research\\results\\integrate_trajectories\\normal_manhattan_v2.csv"
+    },
+    {
+      "heuristic": "residual",
+      "task_file": "agv_task.csv",
+      "n_tasks_initial": 100,
+      "tasks_completed": 100,
+      "tasks_remaining": 0,
+      "sim_time": 261,
+      "wall_seconds": 31.383,
+      "heuristic_calls": 500380,
+      "forced_stop": false,
+      "trajectory": "D:\\compitition\\MioVerse\\final_version\\ml_research\\results\\integrate_trajectories\\normal_residual_v2.csv"
+    },
+    {
+      "heuristic": "focal",
+      "task_file": "agv_task.csv",
+      "n_tasks_initial": 100,
+      "tasks_completed": 100,
+      "tasks_remaining": 0,
+      "sim_time": 256,
+      "wall_seconds": 29.795,
+      "heuristic_calls": 469331,
+      "forced_stop": false,
+      "trajectory": "D:\\compitition\\MioVerse\\final_version\\ml_research\\results\\integrate_trajectories\\normal_focal_v2.csv"
+    },
+    {
+      "heuristic": "manhattan",
+      "task_file": "agv_task_1.csv",
+      "n_tasks_initial": 100,
+      "tasks_completed": 100,
+      "tasks_remaining": 0,
+      "sim_time": 380,
+      "wall_seconds": 12241.595,
+      "heuristic_calls": 106700340,
+      "forced_stop": false,
+      "trajectory": "D:\\compitition\\MioVerse\\final_version\\ml_research\\results\\integrate_trajectories\\extreme_manhattan_v2.csv"
+    },
+    {
+      "heuristic": "residual",
+      "task_file": "agv_task_1.csv",
+      "n_tasks_initial": 100,
+      "tasks_completed": 100,
+      "tasks_remaining": 0,
+      "sim_time": 375,
+      "wall_seconds": 5944.68,
+      "heuristic_calls": 128827128,
+      "forced_stop": false,
+      "trajectory": "D:\\compitition\\MioVerse\\final_version\\ml_research\\results\\integrate_trajectories\\extreme_residual_v2.csv"
+    },
+    {
+      "heuristic": "focal",
+      "task_file": "agv_task_1.csv",
+      "n_tasks_initial": 100,
+      "tasks_completed": 100,
+      "tasks_remaining": 0,
+      "sim_time": 393,
+      "wall_seconds": 7944.69,
+      "heuristic_calls": 137972289,
+      "forced_stop": false,
+      "trajectory": "D:\\compitition\\MioVerse\\final_version\\ml_research\\results\\integrate_trajectories\\extreme_focal_v2.csv"
+    }
+  ],
+  "comparisons": [
+    {
+      "scenario": "normal",
+      "mode": "residual",
+      "sim_time_man": 257,
+      "sim_time_mode": 261,
+      "h_calls_man": 471476,
+      "h_calls_mode": 500380,
+      "h_calls_reduction": -0.06130534746201288,
+      "wall_man": 12.946,
+      "wall_mode": 31.383,
+      "wall_reduction": -1.4241464545033216,
+      "completed_man": 100,
+      "completed_mode": 100
+    },
+    {
+      "scenario": "normal",
+      "mode": "focal",
+      "sim_time_man": 257,
+      "sim_time_mode": 256,
+      "h_calls_man": 471476,
+      "h_calls_mode": 469331,
+      "h_calls_reduction": 0.004549542288472819,
+      "wall_man": 12.946,
+      "wall_mode": 29.795,
+      "wall_reduction": -1.3014830835779394,
+      "completed_man": 100,
+      "completed_mode": 100
+    },
+    {
+      "scenario": "extreme",
+      "mode": "residual",
+      "sim_time_man": 380,
+      "sim_time_mode": 375,
+      "h_calls_man": 106700340,
+      "h_calls_mode": 128827128,
+      "h_calls_reduction": -0.20737317238164388,
+      "wall_man": 12241.595,
+      "wall_mode": 5944.68,
+      "wall_reduction": 0.5143868098887441,
+      "completed_man": 100,
+      "completed_mode": 100
+    },
+    {
+      "scenario": "extreme",
+      "mode": "focal",
+      "sim_time_man": 380,
+      "sim_time_mode": 393,
+      "h_calls_man": 106700340,
+      "h_calls_mode": 137972289,
+      "h_calls_reduction": -0.29308199955126657,
+      "wall_man": 12241.595,
+      "wall_mode": 7944.69,
+      "wall_reduction": 0.3510085899754076,
+      "completed_man": 100,
+      "completed_mode": 100
+    }
+  ],
+  "note": "main copy.py untouched; monkey-patch manhattan_distance; residual adapted on warehouse map"
+}

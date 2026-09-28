@@ -1,8 +1,11 @@
 # AGV Multi-Agent Path Planning and Task Scheduling System
 
+> **技术速查（精简栈）→ [`PROJECT_GUIDE.md`](PROJECT_GUIDE.md)**  
+> 保留：Baseline / ECBS / RL-RH-PP / 最大努力 conflict-horizon + 场景·校验·视频工具。
+
 ## Project Overview
 
-This project implements a comprehensive multi-agent path planning and task scheduling system for Automated Guided Vehicles (AGVs) in a warehouse environment. The system coordinates 12 AGVs to efficiently complete 102 tasks across a 21×21 grid warehouse, ensuring collision-free operations and optimal task allocation.
+This project implements a comprehensive multi-agent path planning and task scheduling system for Automated Guided Vehicles (AGVs) in a warehouse environment. The system coordinates 12 AGVs to efficiently complete 100 tasks across a 20×20 grid warehouse, ensuring collision-free operations and optimal task allocation.
 
 ## Competition Rules
 
@@ -88,14 +91,29 @@ Expert evaluation considers the following factors:
 
 ```
 final_version/
-├── agv_position.csv          # Warehouse layout and initial AGV positions
-├── agv_task.csv              # Task definitions (102 tasks)
-├── agv_trajectory.csv         # Generated AGV trajectories (output)
-├── naviagation.py             # Main simulation algorithm
-├── display.py                 # Visualization module
-├── project_report.ipynb       # Jupyter notebook with full analysis
-├── README.md                  # This file
-└── agv_simulation.mp4         # Generated simulation video (output)
+├── README.md
+├── requirements.txt
+├── competition/                 # 竞赛提交基线（冻结）
+│   └── navigation.py
+├── simulation/                  # 研究与 benchmark 仿真引擎
+│   ├── engine.py                # ML/benchmark 运行时入口（原 main copy.py）
+│   └── display.py               # Pygame 可视化
+├── data/
+│   ├── agv_position.csv         # 仓库布局与 AGV 初始位姿
+│   ├── agv_task.csv             # 标准任务集
+│   ├── agv_task_1.csv           # 极端压力任务集
+│   └── outputs/
+│       ├── trajectories/        # 生成的轨迹 CSV
+│       └── videos/              # 仿真录像 MP4
+├── ml_research/                 # M0–M8 benchmark、训练与 checkpoint
+│   ├── benchmarks/
+│   ├── checkpoints/
+│   ├── common/
+│   └── results/                 # 实验日志（大体积，gitignore）
+├── mcp/                         # LLM / MCP 服务接口
+├── docs/                        # 报告、PPT、论文材料
+├── assets/generateimage/        # 项目说明配图
+└── archive/                     # 已废弃脚本与旧日志
 ```
 
 ## Requirements
@@ -115,32 +133,40 @@ final_version/
 ### Installation
 
 ```bash
-pip install pandas numpy matplotlib seaborn pygame imageio
+pip install -r requirements.txt
 ```
 
 ## Usage
 
-### 1. Run the Simulation
+### 1. Run the Simulation (competition baseline)
 
-Execute the main simulation to generate AGV trajectories:
+Execute the competition submission baseline:
 
 ```bash
-python "navigation.py"
+python competition/navigation.py
 ```
 
 This will:
-- Load warehouse layout from `agv_position.csv`
-- Load tasks from `agv_task.csv`
+- Load warehouse layout from `data/agv_position.csv`
+- Load tasks from `data/agv_task.csv`
 - Run the simulation with path planning and task allocation
-- Generate `agv_trajectory.csv` with complete AGV movements
+- Generate `data/outputs/trajectories/agv_trajectory.csv`
 - Perform conflict checking to verify no collisions or path swaps
+
+### 1b. Run ML research engine
+
+For benchmarks and ML integration (congestion control, neural A*, etc.):
+
+```bash
+python simulation/engine.py
+```
 
 ### 2. Visualize the Simulation
 
 Run the visualization tool to see the AGV movements:
 
 ```bash
-python display.py
+python simulation/display.py
 ```
 
 Options:
@@ -158,7 +184,7 @@ The visualization shows:
 
 ### 3. Analyze Results
 
-Open `project_report.ipynb` in Jupyter Notebook to:
+Open `docs/project_report.ipynb` in Jupyter Notebook to:
 - Explore data characteristics
 - Analyze task distributions
 - Visualize AGV trajectories

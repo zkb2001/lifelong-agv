@@ -1,0 +1,15 @@
+{
+  "id": "S03_agv4_uniform",
+  "intent": "少车运力不足压力",
+  "n_agvs": 4,
+  "obstacle_mode": "none",
+  "obstacle_seed": 218,
+  "task_pattern": "uniform",
+  "n_tasks": 24,
+  "seed": 201,
+  "position_csv": "S03_agv4_uniform_position.csv",
+  "task_csv": "S03_agv4_uniform_task.csv",
+  "extra_obstacles": [],
+  "max_sim_time": 800,
+  "wall_timeout": 75.0
+}

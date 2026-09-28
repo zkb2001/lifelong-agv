@@ -1,0 +1,15 @@
+{
+  "id": "S16_sparse_longhaul",
+  "intent": "稀疏长途任务",
+  "n_agvs": 8,
+  "obstacle_mode": "none",
+  "obstacle_seed": 520,
+  "task_pattern": "sparse_longhaul",
+  "n_tasks": 24,
+  "seed": 503,
+  "position_csv": "S16_sparse_longhaul_position.csv",
+  "task_csv": "S16_sparse_longhaul_task.csv",
+  "extra_obstacles": [],
+  "max_sim_time": 800,
+  "wall_timeout": 75.0
+}

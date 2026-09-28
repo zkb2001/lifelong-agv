@@ -1,0 +1,51 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+
+# ML artifacts (regenerate via training scripts)
+ml_research/checkpoints/*.pt
+ml_research/checkpoints/archive/
+ml_research/data/*.npz
+# Keep summary tables/figs only (drop trajectory CSV dumps)
+ml_research/results/**/*
+!ml_research/results/**/*.md
+!ml_research/results/**/*.json
+!ml_research/results/**/*.png
+
+# Simulation outputs
+data/outputs/trajectories/*.csv
+data/outputs/videos/*.mp4
+
+# Local bulk / personal (not for lifelong-agv)
+backup_*/
+generateimage/
+mcp/
+resume_*.txt
+resume_extract.txt
+resume_optimized.txt
+docs/papers/
+docs/~$*
+**/~$*
+*.docx
+!docs/*.docx
+**/_recover_ecbs/pylingual/
+**/*.bak*
+**/*.bak_*
+**/solve_ecbs_BROKEN_*.py
+**/solve_ecbs_VALID_*.py
+**/_ctx_*.txt
+**/_probe.txt
+**/_opt_snips.txt
+
+# Logs & temp
+*.log
+archive/old_logs/
+
+# OS / IDE
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/

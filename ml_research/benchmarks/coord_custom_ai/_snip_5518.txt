@@ -1,0 +1,60 @@
+ 5484|                            now, _ = _serial_move_to(
+ 5485|                                pose,
+ 5486|                                steps_by,
+ 5487|                                now,
+ 5488|                                other,
+ 5489|                                park,
+ 5490|                                blocked_plan,
+ 5491|                                loaded=ld,
+ 5492|                                dest=ds,
+ 5493|                                tid=td,
+ 5494|                            )
+ 5495|                        for tgt in sorted(
+ 5496|                            pads, key=lambda c: (_manh(pose[agv][:2], c), c)
+ 5497|                        ):
+ 5498|                            now, ok = _serial_move_to(
+ 5499|                                pose,
+ 5500|                                steps_by,
+ 5501|                                now,
+ 5502|                                agv,
+ 5503|                                tgt,
+ 5504|                                blocked_plan,
+ 5505|                                loaded=ld,
+ 5506|                                dest=ds,
+ 5507|                                tid=td,
+ 5508|                            )
+ 5509|                            if ok and pose[agv][:2] in pads:
+ 5510|                                arrived = True
+ 5511|                                break
+ 5512|                if arrived:
+ 5513|                    _count_done(str(task.get("task_id") or ""))
+ 5514|                    pending_delivery.pop(agv, None)
+ 5515|                    _clear_affinity(agv)
+ 5516|                    # Clear loaded flags for trajectory consistency
+ 5517|                    if steps_by.get(agv):
+ 5518|                        steps_by[agv][-1]["loaded"] = "FALSE"
+ 5519|                        steps_by[agv][-1]["destination"] = ""
+ 5520|                        steps_by[agv][-1]["task-id"] = ""
+ 5521|                    unloaded_any = True
+ 5522|                    print(
+ 5523|                        f"[RECOVER] forced unload {agv} task={task.get('task_id')} "
+ 5524|                        f"@t={now}",
+ 5525|                        flush=True,
+ 5526|                    )
+ 5527|                    # One success per recover tick is enough to break the spin;
+ 5528|                    # remaining carriers retry next wave with lower contention.
+ 5529|                    break
+ 5530|            if unloaded_any:
+ 5531|                recent_joint_fail = max(0, int(recent_joint_fail) - 4)
+ 5532|                if recent_joint_fail < 3:
+ 5533|                    joint_core_override = None
+ 5534|                no_progress_waves = 0
+ 5535|            else:
+ 5536|                # Keep pressure; do not wipe streak on failed recover.
+ 5537|                no_progress_waves = max(2, int(no_progress_waves))
+ 5538|                print(
+ 5539|                    f"[RECOVER] force-unload failed carry={len(pending_delivery)} "
+ 5540|                    f"@t={now}",
+ 5541|                    flush=True,
+ 5542|                )
+ 5543|

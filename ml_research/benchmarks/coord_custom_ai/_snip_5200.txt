@@ -1,0 +1,60 @@
+ 5166|                    if jam_hard:
+ 5167|                        recent_joint_fail += 1
+ 5168|            if need:
+ 5169|                # Before serial: clear blockers around the single (or few) targets.
+ 5170|                if last_mile or int(recent_joint_fail) >= 3:
+ 5171|                    keep_s: Set[Cell] = set()
+ 5172|                    for a in need:
+ 5173|                        keep_s.add(pose[a][:2])
+ 5174|                        keep_s.update(
+ 5175|                            _valid_unload_pads(deliverable[a], free, static)[:6]
+ 5176|                        )
+ 5177|                    now = _disperse_idle_agents(
+ 5178|                        pose,
+ 5179|                        steps_by,
+ 5180|                        now,
+ 5181|                        movers=set(need),
+ 5182|                        free=free,
+ 5183|                        blocked_plan=blocked_plan,
+ 5184|                        keep_clear=keep_s,
+ 5185|                        loaded={n: bool(loaded.get(n)) for n in names},
+ 5186|                        dest=dict(dest),
+ 5187|                        tid=dict(tid),
+ 5188|                    )
+ 5189|                for agv in list(need):
+ 5190|                    if not loaded.get(agv, False):
+ 5191|                        continue
+ 5192|                    pads = _valid_unload_pads(
+ 5193|                        deliverable[agv], free, static, prefer=pose[agv][:2]
+ 5194|                    )
+ 5195|                    if not pads:
+ 5196|                        _mark_failed(str(deliverable[agv]["task_id"]))
+ 5197|                        pending_delivery.pop(agv, None)
+ 5198|                        _clear_affinity(agv)
+ 5199|                        loaded[agv] = False
+ 5200|                        steps_by[agv][-1]["loaded"] = "FALSE"
+ 5201|                        steps_by[agv][-1]["destination"] = ""
+ 5202|                        steps_by[agv][-1]["task-id"] = ""
+ 5203|                        continue
+ 5204|                    target = goals[agv] if goals.get(agv) in pads else pads[0]
+ 5205|                    if target not in pads:
+ 5206|                        target = min(pads, key=lambda c: (_manh(pose[agv][:2], c), c))
+ 5207|                    now, ok = _serial_move_to(
+ 5208|                    pose,
+ 5209|                            steps_by,
+ 5210|                            now,
+ 5211|                        agv,
+ 5212|                        target,
+ 5213|                        blocked_plan,
+ 5214|                            loaded=loaded,
+ 5215|                            dest=dest,
+ 5216|                            tid=tid,
+ 5217|                        )
+ 5218|                    arrived = bool(ok) and (
+ 5219|                        pose[agv][:2] in pads or pose[agv][:2] == target
+ 5220|                    )
+ 5221|                    if not arrived:
+ 5222|                        for tgt in sorted(
+ 5223|                            pads, key=lambda c: (_manh(pose[agv][:2], c), c)
+ 5224|                        ):
+ 5225|                            now, ok2 = _serial_move_to(

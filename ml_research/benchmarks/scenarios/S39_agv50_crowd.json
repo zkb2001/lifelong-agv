@@ -1,0 +1,15 @@
+{
+  "id": "S39_agv50_crowd",
+  "intent": "50车无障碍拥挤",
+  "n_agvs": 50,
+  "obstacle_mode": "none",
+  "obstacle_seed": 838,
+  "task_pattern": "cross_flow",
+  "n_tasks": 40,
+  "seed": 821,
+  "position_csv": "S39_agv50_crowd_position.csv",
+  "task_csv": "S39_agv50_crowd_task.csv",
+  "extra_obstacles": [],
+  "max_sim_time": 900,
+  "wall_timeout": 90.0
+}

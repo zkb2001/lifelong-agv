@@ -1,0 +1,15 @@
+{
+  "id": "S05_agv16_uniform",
+  "intent": "多车：soft_cap/互扰",
+  "n_agvs": 16,
+  "obstacle_mode": "none",
+  "obstacle_seed": 220,
+  "task_pattern": "uniform",
+  "n_tasks": 36,
+  "seed": 203,
+  "position_csv": "S05_agv16_uniform_position.csv",
+  "task_csv": "S05_agv16_uniform_task.csv",
+  "extra_obstacles": [],
+  "max_sim_time": 800,
+  "wall_timeout": 75.0
+}

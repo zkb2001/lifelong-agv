@@ -1,0 +1,15 @@
+{
+  "threshold": 0.73,
+  "easy_max": 0.73,
+  "min_hard_recall": 0.0,
+  "target_acc": 0.9,
+  "calibration": {
+    "threshold": 0.73,
+    "acc": 0.9462962962962963,
+    "bal_acc": 0.9513611388611389,
+    "f1_hard": 0.9592123769338959,
+    "hard_recall": 0.9368131868131868,
+    "fp": 6,
+    "fn": 23
+  }
+}

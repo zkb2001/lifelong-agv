@@ -1,0 +1,15 @@
+{
+  "id": "H01_tight_urgent",
+  "intent": "极紧紧急时限暴露弱权重",
+  "n_agvs": 12,
+  "obstacle_mode": "none",
+  "obstacle_seed": 918,
+  "task_pattern": "hard_extra",
+  "n_tasks": 28,
+  "seed": 901,
+  "position_csv": "H01_tight_urgent_position.csv",
+  "task_csv": "H01_tight_urgent_task.csv",
+  "extra_obstacles": [],
+  "max_sim_time": 800,
+  "wall_timeout": 90.0
+}

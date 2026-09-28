@@ -1,0 +1,72 @@
+{
+  "id": "S34_agv11_narrow",
+  "intent": "奇数车队11有障碍",
+  "n_agvs": 11,
+  "obstacle_mode": "mild",
+  "obstacle_seed": 827,
+  "task_pattern": "urgent_burst",
+  "n_tasks": 30,
+  "seed": 810,
+  "position_csv": "S34_agv11_narrow_position.csv",
+  "task_csv": "S34_agv11_narrow_task.csv",
+  "extra_obstacles": [
+    [
+      10,
+      2
+    ],
+    [
+      10,
+      3
+    ],
+    [
+      10,
+      6
+    ],
+    [
+      10,
+      7
+    ],
+    [
+      10,
+      13
+    ],
+    [
+      10,
+      17
+    ],
+    [
+      10,
+      18
+    ],
+    [
+      10,
+      19
+    ],
+    [
+      8,
+      11
+    ],
+    [
+      11,
+      6
+    ],
+    [
+      4,
+      8
+    ],
+    [
+      17,
+      7
+    ],
+    [
+      17,
+      17
+    ],
+    [
+      4,
+      13
+    ]
+  ],
+  "max_sim_time": 900,
+  "wall_timeout": 90.0
+}

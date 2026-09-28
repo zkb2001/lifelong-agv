@@ -1,0 +1,15 @@
+{
+  "id": "H06_far_urgent_vs_hub",
+  "intent": "远紧急vs近枢纽贪心陷阱",
+  "n_agvs": 12,
+  "obstacle_mode": "none",
+  "obstacle_seed": 923,
+  "task_pattern": "hard_extra",
+  "n_tasks": 30,
+  "seed": 906,
+  "position_csv": "H06_far_urgent_vs_hub_position.csv",
+  "task_csv": "H06_far_urgent_vs_hub_task.csv",
+  "extra_obstacles": [],
+  "max_sim_time": 800,
+  "wall_timeout": 90.0
+}

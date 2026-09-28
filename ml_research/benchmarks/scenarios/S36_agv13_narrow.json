@@ -1,0 +1,72 @@
+{
+  "id": "S36_agv13_narrow",
+  "intent": "奇数车队13有障碍",
+  "n_agvs": 13,
+  "obstacle_mode": "mild",
+  "obstacle_seed": 829,
+  "task_pattern": "clustered_dest",
+  "n_tasks": 32,
+  "seed": 812,
+  "position_csv": "S36_agv13_narrow_position.csv",
+  "task_csv": "S36_agv13_narrow_task.csv",
+  "extra_obstacles": [
+    [
+      10,
+      2
+    ],
+    [
+      10,
+      3
+    ],
+    [
+      10,
+      6
+    ],
+    [
+      10,
+      9
+    ],
+    [
+      10,
+      13
+    ],
+    [
+      10,
+      14
+    ],
+    [
+      10,
+      17
+    ],
+    [
+      10,
+      18
+    ],
+    [
+      12,
+      10
+    ],
+    [
+      15,
+      6
+    ],
+    [
+      8,
+      11
+    ],
+    [
+      8,
+      5
+    ],
+    [
+      7,
+      2
+    ],
+    [
+      13,
+      9
+    ]
+  ],
+  "max_sim_time": 900,
+  "wall_timeout": 90.0
+}

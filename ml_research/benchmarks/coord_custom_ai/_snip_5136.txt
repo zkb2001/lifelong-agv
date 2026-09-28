@@ -1,0 +1,60 @@
+ 5102|                    for a in batch:
+ 5103|                        pads = _valid_unload_pads(
+ 5104|                            deliverable[a], free, static, prefer=starts_p[a]
+ 5105|                        )
+ 5106|                        if not pads:
+ 5107|                            continue
+ 5108|                        tgt = goals[a] if goals.get(a) in pads else pads[0]
+ 5109|                        if tgt not in pads:
+ 5110|                            tgt = min(pads, key=lambda c: (_manh(starts_p[a], c), c))
+ 5111|                        goals_p[a] = tgt
+ 5112|                    movers_p = {a for a in batch if loaded.get(a, False)}
+ 5113|                    sp_p = _prioritized_st_paths(
+ 5114|                        starts_p, goals_p, movers_p, blocked_plan
+ 5115|                    )
+ 5116|                    if _st_paths_ok(sp_p, movers_p, goals_p):
+ 5117|                        timelines = _plan_paths_as_poses(pose, sp_p)
+ 5118|                        if _pose_movers_ok(pose, timelines, movers_p):
+ 5119|                            now = _apply_pose_timelines(
+ 5120|                                steps_by,
+ 5121|                                pose,
+ 5122|                                timelines,
+ 5123|                                now,
+ 5124|                                loaded=loaded,
+ 5125|                                dest=dest,
+ 5126|                                tid=tid,
+ 5127|                            )
+ 5128|                            for a in list(movers_p):
+ 5129|                                pads = set(
+ 5130|                                    _valid_unload_pads(deliverable[a], free, static)
+ 5131|                                )
+ 5132|                                if pose[a][:2] in pads:
+ 5133|                                    loaded[a] = False
+ 5134|                                    dest[a] = ""
+ 5135|                                    tid[a] = ""
+ 5136|                                    steps_by[a][-1]["loaded"] = "FALSE"
+ 5137|                                    steps_by[a][-1]["destination"] = ""
+ 5138|                                    steps_by[a][-1]["task-id"] = ""
+ 5139|                                    _count_done(str(deliverable[a]["task_id"]))
+ 5140|                                    pending_delivery.pop(a, None)
+ 5141|                                    _clear_affinity(a)
+ 5142|                                    _clear_after_unload(a)
+ 5143|                            _flush_step_off()
+ 5144|                            need = sorted(
+ 5145|                                a for a in deliverable if loaded.get(a, False)
+ 5146|                            )
+ 5147|                            print(
+ 5148|                                f"[ECBS] delivery batch-ST k={len(movers_p)} "
+ 5149|                                f"left={len(need)} jam={int(jam_hard)} @t={now}",
+ 5150|                                flush=True,
+ 5151|                            )
+ 5152|                        else:
+ 5153|                            need = batch
+ 5154|                            print(
+ 5155|                                f"[ECBS] delivery batch-ST pose-conflict "
+ 5156|                                f"k={len(batch)} -> serial @t={now}",
+ 5157|                                flush=True,
+ 5158|                            )
+ 5159|                    else:
+ 5160|                        need = batch
+ 5161|                        print(

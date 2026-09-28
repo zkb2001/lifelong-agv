@@ -1,0 +1,15 @@
+{
+  "id": "H03_heavy_hub",
+  "intent": "重枢纽拥堵(soft_cap)",
+  "n_agvs": 12,
+  "obstacle_mode": "none",
+  "obstacle_seed": 920,
+  "task_pattern": "hard_extra",
+  "n_tasks": 36,
+  "seed": 903,
+  "position_csv": "H03_heavy_hub_position.csv",
+  "task_csv": "H03_heavy_hub_task.csv",
+  "extra_obstacles": [],
+  "max_sim_time": 800,
+  "wall_timeout": 90.0
+}

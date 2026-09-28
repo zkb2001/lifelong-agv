@@ -1,0 +1,60 @@
+ 4956|                        _mark_failed(str(deliverable[agv]["task_id"]))
+ 4957|                        loaded[agv] = False
+ 4958|                        continue
+ 4959|                    target = goals[agv] if goals.get(agv) in pads else pads[0]
+ 4960|                    if target not in pads:
+ 4961|                        target = min(pads, key=lambda c: (_manh(starts_b[agv], c), c))
+ 4962|                    goals_b[agv] = target
+ 4963|                    ok_need.append(agv)
+ 4964|                if ok_need:
+ 4965|                    sp = _prioritized_st_paths(
+ 4966|                        starts_b, goals_b, set(ok_need), blocked_plan
+ 4967|                    )
+ 4968|                    if _st_paths_ok(sp, set(ok_need), goals_b):
+ 4969|                        timelines = _plan_paths_as_poses(pose, sp)
+ 4970|                        if _pose_movers_ok(pose, timelines, set(ok_need)):
+ 4971|                            now = _apply_pose_timelines(
+ 4972|                            steps_by,
+ 4973|                            pose,
+ 4974|                                timelines,
+ 4975|                                now,
+ 4976|                                loaded=loaded,
+ 4977|                                dest=dest,
+ 4978|                                tid=tid,
+ 4979|                                )
+ 4980|                            for agv in list(ok_need):
+ 4981|                                pads = set(
+ 4982|                                    _valid_unload_pads(
+ 4983|                                    deliverable[agv], free, static
+ 4984|                                    )
+ 4985|                                )
+ 4986|                                if pose[agv][:2] in pads:
+ 4987|                                    loaded[agv] = False
+ 4988|                                    dest[agv] = ""
+ 4989|                                    tid[agv] = ""
+ 4990|                                    steps_by[agv][-1]["loaded"] = "FALSE"
+ 4991|                                    steps_by[agv][-1]["destination"] = ""
+ 4992|                                    steps_by[agv][-1]["task-id"] = ""
+ 4993|                                    _count_done(str(deliverable[agv]["task_id"]))
+ 4994|                                    pending_delivery.pop(agv, None)
+ 4995|                                    _clear_after_unload(agv)
+ 4996|                            _flush_step_off()
+ 4997|                            need = sorted(
+ 4998|                                a for a in deliverable if loaded.get(a, False)
+ 4999|                            )
+ 5000|                            print(
+ 5001|                                f"[ECBS] delivery ST leftover-parallel "
+ 5002|                                f"k={len(ok_need)} left={len(need)}",
+ 5003|                                flush=True,
+ 5004|                            )
+ 5005|
+ 5006|            if len(need) > 1:
+ 5007|                # P1: try disperse + full Prioritized once before shrinking.
+ 5008|                if int(recent_joint_fail) >= 1 or len(need) <= 2:
+ 5009|                    keep_cells: Set[Cell] = set()
+ 5010|                    for a in need:
+ 5011|                        keep_cells.add(pose[a][:2])
+ 5012|                        keep_cells.add(goals.get(a, pose[a][:2]))
+ 5013|                        keep_cells.update(
+ 5014|                            _valid_unload_pads(deliverable[a], free, static)[:4]
+ 5015|                        )

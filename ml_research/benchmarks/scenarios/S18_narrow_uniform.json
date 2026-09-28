@@ -1,0 +1,76 @@
+{
+  "id": "S18_narrow_uniform",
+  "intent": "走廊瓶颈+均匀",
+  "n_agvs": 12,
+  "obstacle_mode": "mild",
+  "obstacle_seed": 618,
+  "task_pattern": "uniform",
+  "n_tasks": 28,
+  "seed": 601,
+  "position_csv": "S18_narrow_uniform_position.csv",
+  "task_csv": "S18_narrow_uniform_task.csv",
+  "extra_obstacles": [
+    [
+      10,
+      2
+    ],
+    [
+      10,
+      5
+    ],
+    [
+      10,
+      6
+    ],
+    [
+      10,
+      7
+    ],
+    [
+      10,
+      9
+    ],
+    [
+      10,
+      13
+    ],
+    [
+      10,
+      14
+    ],
+    [
+      10,
+      17
+    ],
+    [
+      10,
+      18
+    ],
+    [
+      12,
+      19
+    ],
+    [
+      16,
+      14
+    ],
+    [
+      16,
+      19
+    ],
+    [
+      16,
+      6
+    ],
+    [
+      7,
+      15
+    ],
+    [
+      4,
+      12
+    ]
+  ],
+  "max_sim_time": 800,
+  "wall_timeout": 75.0
+}

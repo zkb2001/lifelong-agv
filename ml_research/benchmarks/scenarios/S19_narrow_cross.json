@@ -1,0 +1,80 @@
+{
+  "id": "S19_narrow_cross",
+  "intent": "走廊瓶颈+交叉流",
+  "n_agvs": 12,
+  "obstacle_mode": "mild",
+  "obstacle_seed": 619,
+  "task_pattern": "cross_flow",
+  "n_tasks": 28,
+  "seed": 602,
+  "position_csv": "S19_narrow_cross_position.csv",
+  "task_csv": "S19_narrow_cross_task.csv",
+  "extra_obstacles": [
+    [
+      10,
+      2
+    ],
+    [
+      10,
+      3
+    ],
+    [
+      10,
+      5
+    ],
+    [
+      10,
+      6
+    ],
+    [
+      10,
+      13
+    ],
+    [
+      10,
+      14
+    ],
+    [
+      10,
+      15
+    ],
+    [
+      10,
+      17
+    ],
+    [
+      10,
+      18
+    ],
+    [
+      10,
+      19
+    ],
+    [
+      18,
+      8
+    ],
+    [
+      14,
+      6
+    ],
+    [
+      19,
+      5
+    ],
+    [
+      12,
+      2
+    ],
+    [
+      18,
+      11
+    ],
+    [
+      4,
+      13
+    ]
+  ],
+  "max_sim_time": 800,
+  "wall_timeout": 75.0
+}

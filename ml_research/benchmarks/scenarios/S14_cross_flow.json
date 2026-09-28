@@ -1,0 +1,15 @@
+{
+  "id": "S14_cross_flow",
+  "intent": "远距离左右交叉流",
+  "n_agvs": 12,
+  "obstacle_mode": "none",
+  "obstacle_seed": 518,
+  "task_pattern": "cross_flow",
+  "n_tasks": 32,
+  "seed": 501,
+  "position_csv": "S14_cross_flow_position.csv",
+  "task_csv": "S14_cross_flow_task.csv",
+  "extra_obstacles": [],
+  "max_sim_time": 800,
+  "wall_timeout": 75.0
+}

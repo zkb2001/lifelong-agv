@@ -1,0 +1,80 @@
+{
+  "id": "S24_mixed_narrow",
+  "intent": "混合任务+轻度瓶颈",
+  "n_agvs": 12,
+  "obstacle_mode": "mild",
+  "obstacle_seed": 719,
+  "task_pattern": "mixed",
+  "n_tasks": 30,
+  "seed": 702,
+  "position_csv": "S24_mixed_narrow_position.csv",
+  "task_csv": "S24_mixed_narrow_task.csv",
+  "extra_obstacles": [
+    [
+      10,
+      2
+    ],
+    [
+      10,
+      3
+    ],
+    [
+      10,
+      5
+    ],
+    [
+      10,
+      6
+    ],
+    [
+      10,
+      7
+    ],
+    [
+      10,
+      9
+    ],
+    [
+      10,
+      13
+    ],
+    [
+      10,
+      15
+    ],
+    [
+      10,
+      18
+    ],
+    [
+      10,
+      19
+    ],
+    [
+      18,
+      10
+    ],
+    [
+      8,
+      14
+    ],
+    [
+      19,
+      4
+    ],
+    [
+      17,
+      9
+    ],
+    [
+      17,
+      2
+    ],
+    [
+      7,
+      7
+    ]
+  ],
+  "max_sim_time": 800,
+  "wall_timeout": 75.0
+}

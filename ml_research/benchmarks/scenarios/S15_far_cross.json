@@ -1,0 +1,15 @@
+{
+  "id": "S15_far_cross",
+  "intent": "对角超长交叉",
+  "n_agvs": 12,
+  "obstacle_mode": "none",
+  "obstacle_seed": 519,
+  "task_pattern": "far_cross",
+  "n_tasks": 30,
+  "seed": 502,
+  "position_csv": "S15_far_cross_position.csv",
+  "task_csv": "S15_far_cross_task.csv",
+  "extra_obstacles": [],
+  "max_sim_time": 800,
+  "wall_timeout": 75.0
+}

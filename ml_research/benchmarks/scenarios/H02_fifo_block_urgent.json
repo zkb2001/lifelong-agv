@@ -1,0 +1,15 @@
+{
+  "id": "H02_fifo_block_urgent",
+  "intent": "FIFO挡紧急+紧时限",
+  "n_agvs": 8,
+  "obstacle_mode": "none",
+  "obstacle_seed": 919,
+  "task_pattern": "hard_extra",
+  "n_tasks": 30,
+  "seed": 902,
+  "position_csv": "H02_fifo_block_urgent_position.csv",
+  "task_csv": "H02_fifo_block_urgent_task.csv",
+  "extra_obstacles": [],
+  "max_sim_time": 800,
+  "wall_timeout": 90.0
+}

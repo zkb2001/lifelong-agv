@@ -1,0 +1,15 @@
+{
+  "id": "S37_agv15_uniform",
+  "intent": "奇数车队15无障碍",
+  "n_agvs": 15,
+  "obstacle_mode": "none",
+  "obstacle_seed": 830,
+  "task_pattern": "fifo_pressure",
+  "n_tasks": 30,
+  "seed": 813,
+  "position_csv": "S37_agv15_uniform_position.csv",
+  "task_csv": "S37_agv15_uniform_task.csv",
+  "extra_obstacles": [],
+  "max_sim_time": 900,
+  "wall_timeout": 90.0
+}

@@ -1,0 +1,94 @@
+{
+  "device": "cuda",
+  "collect_meta": {
+    "n_episodes": 500,
+    "n_labels": 8581,
+    "mean_expansions_manhattan": 118.66465863453816,
+    "mean_opt_cost": 16.230923694779115
+  },
+  "best_val_mse": 4.814789297790053,
+  "history": [
+    {
+      "epoch": 1,
+      "train_mse": 140.8636385617205,
+      "val_mse": 135.90407645248496
+    },
+    {
+      "epoch": 2,
+      "train_mse": 131.7212919021326,
+      "val_mse": 123.95904265954314
+    },
+    {
+      "epoch": 3,
+      "train_mse": 116.27967374658859,
+      "val_mse": 103.49057583041959
+    },
+    {
+      "epoch": 4,
+      "train_mse": 91.89358137887506,
+      "val_mse": 75.30687568385933
+    },
+    {
+      "epoch": 5,
+      "train_mse": 63.17843213929913,
+      "val_mse": 50.22190175504766
+    },
+    {
+      "epoch": 6,
+      "train_mse": 44.51393497928319,
+      "val_mse": 40.815096374250885
+    },
+    {
+      "epoch": 7,
+      "train_mse": 38.32209254108719,
+      "val_mse": 35.648686374169316
+    },
+    {
+      "epoch": 8,
+      "train_mse": 32.95266881576132,
+      "val_mse": 30.153889435988205
+    },
+    {
+      "epoch": 9,
+      "train_mse": 27.809499034562567,
+      "val_mse": 25.178726786129587
+    },
+    {
+      "epoch": 10,
+      "train_mse": 23.004311401287694,
+      "val_mse": 20.59582022020033
+    },
+    {
+      "epoch": 11,
+      "train_mse": 18.622560307591918,
+      "val_mse": 16.382473797416537
+    },
+    {
+      "epoch": 12,
+      "train_mse": 14.643566513113823,
+      "val_mse": 12.64614822740414
+    },
+    {
+      "epoch": 13,
+      "train_mse": 11.15708266096897,
+      "val_mse": 9.463331487073209
+    },
+    {
+      "epoch": 14,
+      "train_mse": 8.222135343386894,
+      "val_mse": 6.849581033385069
+    },
+    {
+      "epoch": 15,
+      "train_mse": 5.8718879613152,
+      "val_mse": 4.814789297790053
+    }
+  ],
+  "search_comparison": {
+    "n_queries": 120,
+    "mean_expansions_manhattan": 118.15833333333333,
+    "mean_expansions_neural": 306.2416666666667,
+    "expansion_reduction_ratio": -1.5917906763523524
+  },
+  "note": "Cost model mirrors main copy.py: move/wait/turn unit costs"
+}

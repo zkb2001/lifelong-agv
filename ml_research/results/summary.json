@@ -1,0 +1,52 @@
+{
+  "started_at": "2026-08-20 12:05:03",
+  "finished_at": "2026-08-20 12:21:01",
+  "env": "agv-ml (conda)",
+  "device": "cuda (NVIDIA GeForce RTX 4060 Laptop GPU)",
+  "expert_base": "improved A* + cost-matrix allocation in main copy.py (not modified)",
+  "runs": {
+    "imitation_learning": {
+      "ok": true,
+      "result_file": "imitation_learning.json",
+      "n_samples": 11904,
+      "best_val_acc": 0.7866,
+      "class_acc": {
+        "wait": 0.619,
+        "forward": 0.962,
+        "turn_left": 0.054,
+        "turn_right": 0.017,
+        "turn_180": 0.0
+      },
+      "takeaway": "Policy clones expert trajectories well on wait/forward; turns are rare and need rebalancing."
+    },
+    "neural_heuristic": {
+      "ok": true,
+      "result_file": "neural_heuristic.json",
+      "n_labels": 8581,
+      "best_val_mse": 4.81,
+      "mean_expansions_manhattan": 118.16,
+      "mean_expansions_neural": 306.24,
+      "takeaway": "Cost regression converges, but naive plug-in neural h does not reduce expansions; residual/focal search needed."
+    },
+    "conflict_prediction": {
+      "ok": true,
+      "result_file": "conflict_prediction.json",
+      "n_samples": 18000,
+      "best_f1": 0.9885,
+      "takeaway": "Local spatio-temporal CNN predicts injected vertex/swap conflicts with high F1."
+    },
+    "marl_ppo": {
+      "ok": true,
+      "result_file": "marl_ppo.json",
+      "n_agents": 2,
+      "grid": 9,
+      "bc_warmup_success": 0.65,
+      "best_eval_success": 1.0,
+      "final_eval_success": 0.8,
+      "final_arrival_rate": 0.85,
+      "random_success": 0.04,
+      "greedy_success": 0.72,
+      "takeaway": "IL(BC)+light PPO beats random and matches/exceeds greedy on small multi-AGV nav."
+    }
+  }
+}

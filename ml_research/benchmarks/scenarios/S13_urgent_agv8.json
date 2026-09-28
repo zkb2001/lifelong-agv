@@ -1,0 +1,15 @@
+{
+  "id": "S13_urgent_agv8",
+  "intent": "中车队+紧急突发",
+  "n_agvs": 8,
+  "obstacle_mode": "none",
+  "obstacle_seed": 420,
+  "task_pattern": "urgent_burst",
+  "n_tasks": 28,
+  "seed": 403,
+  "position_csv": "S13_urgent_agv8_position.csv",
+  "task_csv": "S13_urgent_agv8_task.csv",
+  "extra_obstacles": [],
+  "max_sim_time": 800,
+  "wall_timeout": 75.0
+}

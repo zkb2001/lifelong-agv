@@ -1,0 +1,15 @@
+{
+  "id": "S06_cluster_dest",
+  "intent": "同卸货点聚集→端点拥堵",
+  "n_agvs": 12,
+  "obstacle_mode": "none",
+  "obstacle_seed": 318,
+  "task_pattern": "clustered_dest",
+  "n_tasks": 28,
+  "seed": 301,
+  "position_csv": "S06_cluster_dest_position.csv",
+  "task_csv": "S06_cluster_dest_task.csv",
+  "extra_obstacles": [],
+  "max_sim_time": 800,
+  "wall_timeout": 75.0
+}

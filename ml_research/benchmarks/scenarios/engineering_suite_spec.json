@@ -1,0 +1,146 @@
+{
+  "title": "Engineering MAPF suite — map and fleet designs",
+  "notes": "Specs for future generators. Current Simulation defaults to 21x21; large maps need a dimension-aware adapter.",
+  "scaling_sweeps": [
+    {
+      "id": "sweep_agents_on_W48",
+      "map": "W48-Large",
+      "n_agvs_list": [25, 50, 75, 100, 150]
+    },
+    {
+      "id": "sweep_maps_at_100",
+      "n_agvs": 100,
+      "maps": ["W32-Mid", "W48-Large", "W64-Mega"]
+    }
+  ],
+  "maps": [
+    {
+      "id": "W21-Base",
+      "width": 21,
+      "height": 21,
+      "n_agvs": [12, 16],
+      "n_pick_stations": 6,
+      "n_drop_stations": 16,
+      "obstacle_modes": ["none", "mild_corridor"],
+      "role": "legacy_control",
+      "gaps": ["G5"]
+    },
+    {
+      "id": "W32-Mid",
+      "width": 32,
+      "height": 32,
+      "n_agvs": [50],
+      "n_pick_stations": 8,
+      "pick_layout": {
+        "left_x": 1,
+        "right_x": 32,
+        "ys": [6, 12, 18, 24]
+      },
+      "n_drop_stations": 24,
+      "drop_layout": {
+        "xs": [8, 14, 20, 26],
+        "ys": [5, 10, 15, 20, 25, 30]
+      },
+      "static_obstacles": {
+        "type": "cross_aisle_plus_shelf_stripes",
+        "occupancy_ratio_target": 0.18,
+        "corridor_gap_cells": 2
+      },
+      "agv_spawn": {
+        "bands_y": [1, 2, 31, 32],
+        "spread": "uniform_x"
+      },
+      "task_patterns": ["uniform", "cross_flow", "hub_cluster"],
+      "batch_tasks": [80, 100, 120],
+      "dynamic_arrival_lambda": [0.3, 0.6, 1.0],
+      "role": "mid_scale_main",
+      "gaps": ["G3", "G5", "G1"]
+    },
+    {
+      "id": "W48-Large",
+      "width": 48,
+      "height": 48,
+      "n_agvs": [100],
+      "n_pick_stations": 12,
+      "n_drop_stations": 36,
+      "hubs": 2,
+      "static_obstacles": {
+        "type": "triple_vertical_corridor_plus_shelf_islands",
+        "occupancy_ratio_target": 0.22,
+        "bottleneck_width": 2
+      },
+      "partitioning": {
+        "enabled_optional": true,
+        "n_zones": 4,
+        "agvs_per_zone": 25,
+        "cross_zone_needs_corridor_token": true
+      },
+      "task_patterns": ["uniform", "cross_flow", "two_hubs", "fifo_pressure"],
+      "role": "large_scale_main",
+      "gaps": ["G3", "G5"]
+    },
+    {
+      "id": "W64-Mega",
+      "width": 64,
+      "height": 64,
+      "n_agvs": [100, 200],
+      "n_pick_stations": 16,
+      "n_drop_stations": 48,
+      "static_obstacles": {
+        "type": "zoned_shelves_with_chokepoints",
+        "occupancy_ratio_target": 0.25,
+        "chokepoint_width": 2
+      },
+      "role": "stress_ceiling",
+      "gaps": ["G3"],
+      "note": "Primary tables should emphasize <=100; 200 is stress-only."
+    },
+    {
+      "id": "W48-DynObs",
+      "width": 48,
+      "height": 48,
+      "n_agvs": [80],
+      "inherits_static_from": "W48-Large",
+      "dynamic_obstacles": {
+        "lanes": "N-S service lanes",
+        "block_length": 4,
+        "refresh_period": 20,
+        "known_trajectory": true,
+        "comment": "Start with announced dynamic obstacles before unknown adversarials."
+      },
+      "role": "dynamic_mapf",
+      "gaps": ["G1", "G5"]
+    },
+    {
+      "id": "W32-Noise",
+      "width": 32,
+      "height": 32,
+      "n_agvs": [50],
+      "inherits_static_from": "W32-Mid",
+      "execution_noise": {
+        "pose_gaussian_sigma_cells": [0.0, 0.15, 0.3],
+        "action_delay_steps": [0, 1, 2, 3],
+        "partial_obs_radius": [null, 8, 12]
+      },
+      "role": "robustness",
+      "gaps": ["G4"]
+    }
+  ],
+  "methods_to_compare": [
+    "M0_greedy_baseline",
+    "M2_priority_planning",
+    "M6_llm_constraints_on_M2",
+    "RH_PP_rolling_horizon",
+    "Zoned_PP_partitioned",
+    "RH_PP_plus_exec_shield"
+  ],
+  "primary_metrics": [
+    "throughput",
+    "mean_service_time",
+    "deadlock_rate",
+    "collisions",
+    "near_misses",
+    "replan_wall_seconds",
+    "constraint_satisfaction"
+  ]
+}

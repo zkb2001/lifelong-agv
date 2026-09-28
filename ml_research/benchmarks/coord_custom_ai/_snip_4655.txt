@@ -1,0 +1,60 @@
+ 4621|            committed[agv] = task
+ 4622|            committed_stations.add(st_name)
+ 4623|        if committed:
+ 4624|            # One stay tick for all pad arrivals this wave (pickup dwell).
+ 4625|            now = _fleet_hold_tick(
+ 4626|                steps_by, pose, names, now, loaded=loaded, dest=dest, tid=tid
+ 4627|            )
+ 4628|        assigned = committed
+ 4629|
+ 4630|        if not assigned and not pending_delivery:
+ 4631|            if pending_pickup:
+ 4632|                continue
+ 4633|            continue
+ 4634|
+ 4635|        # ---- delivery ----
+ 4636|        starts = {n: pose[n][:2] for n in names}
+ 4637|        goals = {n: starts[n] for n in names}
+ 4638|        deliverable: Dict[str, dict] = {}
+ 4639|        reserved_goals: Set[Cell] = set()
+ 4640|        unique_movers: Set[str] = set()
+ 4641|        delivery_agents = dict(pending_delivery)
+ 4642|        delivery_agents.update(assigned)
+ 4643|        for agv, task in sorted(delivery_agents.items()):
+ 4644|            # Unique pad per joint wave; NEVER use maze-wall end_points as goals.
+ 4645|            walk = _valid_unload_pads(task, free, static, prefer=starts[agv])
+ 4646|            if not walk:
+ 4647|                _mark_failed(str(task["task_id"]))
+ 4648|                print(
+ 4649|                    f"[ECBS] no free unload pad for {task['task_id']} -> fail",
+ 4650|                    flush=True,
+ 4651|                    )
+ 4652|                pending_delivery.pop(agv, None)
+ 4653|                _clear_affinity(agv)
+ 4654|                loaded[agv] = False
+ 4655|                steps_by[agv][-1]["loaded"] = "FALSE"
+ 4656|                steps_by[agv][-1]["destination"] = ""
+ 4657|                steps_by[agv][-1]["task-id"] = ""
+ 4658|                continue
+ 4659|            cands = [c for c in walk if c not in reserved_goals]
+ 4660|            if cands:
+ 4661|                goals[agv] = min(cands, key=lambda c: (_manh(starts[agv], c), c))
+ 4662|                reserved_goals.add(goals[agv])
+ 4663|                unique_movers.add(agv)
+ 4664|            else:
+ 4665|                # Share a true pad (ST time-multiplex); never unload on staging
+ 4666|                # neighbors — that caused task_carry violations.
+ 4667|                goals[agv] = min(walk, key=lambda c: (_manh(starts[agv], c), c))
+ 4668|            deliverable[agv] = task
+ 4669|
+ 4670|        if not deliverable:
+ 4671|            print(f"[ECBS] no deliverable goals @t={now}", flush=True)
+ 4672|
+ 4673|        # Carriers must stay loaded through every delivery apply/hold.
+ 4674|        for agv in list(pending_delivery.keys()) + list(deliverable.keys()):
+ 4675|            loaded[agv] = True
+ 4676|            if tid.get(agv):
+ 4677|                steps_by[agv][-1]["loaded"] = "TRUE"
+ 4678|                steps_by[agv][-1]["destination"] = dest.get(agv, "")
+ 4679|                steps_by[agv][-1]["task-id"] = tid.get(agv, "")
+ 4680|

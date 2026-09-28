@@ -1,0 +1,1616 @@
+{
+  "n_scenarios": 46,
+  "max_sim_time": 800,
+  "wall_timeout": 75.0,
+  "scenarios": [
+    {
+      "id": "H01_tight_urgent",
+      "intent": "极紧紧急时限暴露弱权重",
+      "n_agvs": 12,
+      "obstacle_mode": "none",
+      "obstacle_seed": 918,
+      "task_pattern": "hard_extra",
+      "n_tasks": 28,
+      "seed": 901,
+      "position_csv": "H01_tight_urgent_position.csv",
+      "task_csv": "H01_tight_urgent_task.csv",
+      "extra_obstacles": [],
+      "max_sim_time": 800,
+      "wall_timeout": 90.0
+    },
+    {
+      "id": "H02_fifo_block_urgent",
+      "intent": "FIFO挡紧急+紧时限",
+      "n_agvs": 8,
+      "obstacle_mode": "none",
+      "obstacle_seed": 919,
+      "task_pattern": "hard_extra",
+      "n_tasks": 30,
+      "seed": 902,
+      "position_csv": "H02_fifo_block_urgent_position.csv",
+      "task_csv": "H02_fifo_block_urgent_task.csv",
+      "extra_obstacles": [],
+      "max_sim_time": 800,
+      "wall_timeout": 90.0
+    },
+    {
+      "id": "H03_heavy_hub",
+      "intent": "重枢纽拥堵(soft_cap)",
+      "n_agvs": 12,
+      "obstacle_mode": "none",
+      "obstacle_seed": 920,
+      "task_pattern": "hard_extra",
+      "n_tasks": 36,
+      "seed": 903,
+      "position_csv": "H03_heavy_hub_position.csv",
+      "task_csv": "H03_heavy_hub_task.csv",
+      "extra_obstacles": [],
+      "max_sim_time": 800,
+      "wall_timeout": 90.0
+    },
+    {
+      "id": "H04_narrow_cross_urgent",
+      "intent": "窄通道交叉+紧急",
+      "n_agvs": 12,
+      "obstacle_mode": "mild",
+      "obstacle_seed": 921,
+      "task_pattern": "hard_extra",
+      "n_tasks": 28,
+      "seed": 904,
+      "position_csv": "H04_narrow_cross_urgent_position.csv",
+      "task_csv": "H04_narrow_cross_urgent_task.csv",
+      "extra_obstacles": [
+        [
+          10,
+          3
+        ],
+        [
+          10,
+          5
+        ],
+        [
+          10,
+          6
+        ],
+        [
+          10,
+          7
+        ],
+        [
+          10,
+          9
+        ],
+        [
+          10,
+          13
+        ],
+        [
+          10,
+          14
+        ],
+        [
+          10,
+          15
+        ],
+        [
+          10,
+          17
+        ],
+        [
+          10,
+          18
+        ],
+        [
+          10,
+          19
+        ],
+        [
+          16,
+          5
+        ],
+        [
+          18,
+          16
+        ],
+        [
+          14,
+          7
+        ],
+        [
+          18,
+          5
+        ],
+        [
+          7,
+          10
+        ],
+        [
+          8,
+          17
+        ]
+      ],
+      "max_sim_time": 800,
+      "wall_timeout": 90.0
+    },
+    {
+      "id": "H05_agv4_heavy_cross",
+      "intent": "4车重交叉流",
+      "n_agvs": 4,
+      "obstacle_mode": "none",
+      "obstacle_seed": 922,
+      "task_pattern": "hard_extra",
+      "n_tasks": 32,
+      "seed": 905,
+      "position_csv": "H05_agv4_heavy_cross_position.csv",
+      "task_csv": "H05_agv4_heavy_cross_task.csv",
+      "extra_obstacles": [],
+      "max_sim_time": 800,
+      "wall_timeout": 90.0
+    },
+    {
+      "id": "H06_far_urgent_vs_hub",
+      "intent": "远紧急vs近枢纽贪心陷阱",
+      "n_agvs": 12,
+      "obstacle_mode": "none",
+      "obstacle_seed": 923,
+      "task_pattern": "hard_extra",
+      "n_tasks": 30,
+      "seed": 906,
+      "position_csv": "H06_far_urgent_vs_hub_position.csv",
+      "task_csv": "H06_far_urgent_vs_hub_task.csv",
+      "extra_obstacles": [],
+      "max_sim_time": 800,
+      "wall_timeout": 90.0
+    },
+    {
+      "id": "S01_ctrl_n12_uniform",
+      "intent": "正常对照：12车均匀任务",
+      "n_agvs": 12,
+      "obstacle_mode": "none",
+      "obstacle_seed": 118,
+      "task_pattern": "uniform",
+      "n_tasks": 30,
+      "seed": 101,
+      "position_csv": "S01_ctrl_n12_uniform_position.csv",
+      "task_csv": "S01_ctrl_n12_uniform_task.csv",
+      "extra_obstacles": [],
+      "max_sim_time": 800,
+      "wall_timeout": 75.0
+    },
+    {
+      "id": "S02_ctrl_n12_mixed",
+      "intent": "正常混合对照",
+      "n_agvs": 12,
+      "obstacle_mode": "none",
+      "obstacle_seed": 119,
+      "task_pattern": "mixed",
+      "n_tasks": 32,
+      "seed": 102,
+      "position_csv": "S02_ctrl_n12_mixed_position.csv",
+      "task_csv": "S02_ctrl_n12_mixed_task.csv",
+      "extra_obstacles": [],
+      "max_sim_time": 800,
+      "wall_timeout": 75.0
+    },
+    {
+      "id": "S03_agv4_uniform",
+      "intent": "少车运力不足压力",
+      "n_agvs": 4,
+      "obstacle_mode": "none",
+      "obstacle_seed": 218,
+      "task_pattern": "uniform",
+      "n_tasks": 24,
+      "seed": 201,
+      "position_csv": "S03_agv4_uniform_position.csv",
+      "task_csv": "S03_agv4_uniform_task.csv",
+      "extra_obstacles": [],
+      "max_sim_time": 800,
+      "wall_timeout": 75.0
+    },
+    {
+      "id": "S04_agv8_uniform",
+      "intent": "中等车队均匀",
+      "n_agvs": 8,
+      "obstacle_mode": "none",
+      "obstacle_seed": 219,
+      "task_pattern": "uniform",
+      "n_tasks": 28,
+      "seed": 202,
+      "position_csv": "S04_agv8_uniform_position.csv",
+      "task_csv": "S04_agv8_uniform_task.csv",
+      "extra_obstacles": [],
+      "max_sim_time": 800,
+      "wall_timeout": 75.0
+    },
+    {
+      "id": "S05_agv16_uniform",
+      "intent": "多车：soft_cap/互扰",
+      "n_agvs": 16,
+      "obstacle_mode": "none",
+      "obstacle_seed": 220,
+      "task_pattern": "uniform",
+      "n_tasks": 36,
+      "seed": 203,
+      "position_csv": "S05_agv16_uniform_position.csv",
+      "task_csv": "S05_agv16_uniform_task.csv",
+      "extra_obstacles": [],
+      "max_sim_time": 800,
+      "wall_timeout": 75.0
+    },
+    {
+      "id": "S06_cluster_dest",
+      "intent": "同卸货点聚集→端点拥堵",
+      "n_agvs": 12,
+      "obstacle_mode": "none",
+      "obstacle_seed": 318,
+      "task_pattern": "clustered_dest",
+      "n_tasks": 28,
+      "seed": 301,
+      "position_csv": "S06_cluster_dest_position.csv",
+      "task_csv": "S06_cluster_dest_task.csv",
+      "extra_obstacles": [],
+      "max_sim_time": 800,
+      "wall_timeout": 75.0
+    },
+    {
+      "id": "S07_cluster_dest_agv4",
+      "intent": "少车+聚集卸货（贪心易堵）",
+      "n_agvs": 4,
+      "obstacle_mode": "none",
+      "obstacle_seed": 319,
+      "task_pattern": "clustered_dest",
+      "n_tasks": 24,
+      "seed": 302,
+      "position_csv": "S07_cluster_dest_agv4_position.csv",
+      "task_csv": "S07_cluster_dest_agv4_task.csv",
+      "extra_obstacles": [],
+      "max_sim_time": 800,
+      "wall_timeout": 75.0
+    },
+    {
+      "id": "S08_cluster_dest_agv16",
+      "intent": "多车涌向同卸货点（控规模可解）",
+      "n_agvs": 16,
+      "obstacle_mode": "none",
+      "obstacle_seed": 320,
+      "task_pattern": "clustered_dest",
+      "n_tasks": 24,
+      "seed": 303,
+      "position_csv": "S08_cluster_dest_agv16_position.csv",
+      "task_csv": "S08_cluster_dest_agv16_task.csv",
+      "extra_obstacles": [],
+      "max_sim_time": 800,
+      "wall_timeout": 75.0
+    },
+    {
+      "id": "S09_cluster_src",
+      "intent": "同取货站突发FIFO",
+      "n_agvs": 12,
+      "obstacle_mode": "none",
+      "obstacle_seed": 321,
+      "task_pattern": "clustered_src",
+      "n_tasks": 30,
+      "seed": 304,
+      "position_csv": "S09_cluster_src_position.csv",
+      "task_csv": "S09_cluster_src_task.csv",
+      "extra_obstacles": [],
+      "max_sim_time": 800,
+      "wall_timeout": 75.0
+    },
+    {
+      "id": "S10_two_hubs",
+      "intent": "双枢纽卸货竞争",
+      "n_agvs": 12,
+      "obstacle_mode": "none",
+      "obstacle_seed": 322,
+      "task_pattern": "two_hubs",
+      "n_tasks": 32,
+      "seed": 305,
+      "position_csv": "S10_two_hubs_position.csv",
+      "task_csv": "S10_two_hubs_task.csv",
+      "extra_obstacles": [],
+      "max_sim_time": 800,
+      "wall_timeout": 75.0
+    },
+    {
+      "id": "S11_urgent_burst",
+      "intent": "紧急件密集（权重弱）",
+      "n_agvs": 12,
+      "obstacle_mode": "none",
+      "obstacle_seed": 418,
+      "task_pattern": "urgent_burst",
+      "n_tasks": 30,
+      "seed": 401,
+      "position_csv": "S11_urgent_burst_position.csv",
+      "task_csv": "S11_urgent_burst_task.csv",
+      "extra_obstacles": [],
+      "max_sim_time": 800,
+      "wall_timeout": 75.0
+    },
+    {
+      "id": "S12_fifo_pressure",
+      "intent": "FIFO深队列埋紧急件",
+      "n_agvs": 12,
+      "obstacle_mode": "none",
+      "obstacle_seed": 419,
+      "task_pattern": "fifo_pressure",
+      "n_tasks": 36,
+      "seed": 402,
+      "position_csv": "S12_fifo_pressure_position.csv",
+      "task_csv": "S12_fifo_pressure_task.csv",
+      "extra_obstacles": [],
+      "max_sim_time": 800,
+      "wall_timeout": 75.0
+    },
+    {
+      "id": "S13_urgent_agv8",
+      "intent": "中车队+紧急突发",
+      "n_agvs": 8,
+      "obstacle_mode": "none",
+      "obstacle_seed": 420,
+      "task_pattern": "urgent_burst",
+      "n_tasks": 28,
+      "seed": 403,
+      "position_csv": "S13_urgent_agv8_position.csv",
+      "task_csv": "S13_urgent_agv8_task.csv",
+      "extra_obstacles": [],
+      "max_sim_time": 800,
+      "wall_timeout": 75.0
+    },
+    {
+      "id": "S14_cross_flow",
+      "intent": "远距离左右交叉流",
+      "n_agvs": 12,
+      "obstacle_mode": "none",
+      "obstacle_seed": 518,
+      "task_pattern": "cross_flow",
+      "n_tasks": 32,
+      "seed": 501,
+      "position_csv": "S14_cross_flow_position.csv",
+      "task_csv": "S14_cross_flow_task.csv",
+      "extra_obstacles": [],
+      "max_sim_time": 800,
+      "wall_timeout": 75.0
+    },
+    {
+      "id": "S15_far_cross",
+      "intent": "对角超长交叉",
+      "n_agvs": 12,
+      "obstacle_mode": "none",
+      "obstacle_seed": 519,
+      "task_pattern": "far_cross",
+      "n_tasks": 30,
+      "seed": 502,
+      "position_csv": "S15_far_cross_position.csv",
+      "task_csv": "S15_far_cross_task.csv",
+      "extra_obstacles": [],
+      "max_sim_time": 800,
+      "wall_timeout": 75.0
+    },
+    {
+      "id": "S16_sparse_longhaul",
+      "intent": "稀疏长途任务",
+      "n_agvs": 8,
+      "obstacle_mode": "none",
+      "obstacle_seed": 520,
+      "task_pattern": "sparse_longhaul",
+      "n_tasks": 24,
+      "seed": 503,
+      "position_csv": "S16_sparse_longhaul_position.csv",
+      "task_csv": "S16_sparse_longhaul_task.csv",
+      "extra_obstacles": [],
+      "max_sim_time": 800,
+      "wall_timeout": 75.0
+    },
+    {
+      "id": "S17_cross_agv4",
+      "intent": "少车交叉流易超时",
+      "n_agvs": 4,
+      "obstacle_mode": "none",
+      "obstacle_seed": 521,
+      "task_pattern": "cross_flow",
+      "n_tasks": 24,
+      "seed": 504,
+      "position_csv": "S17_cross_agv4_position.csv",
+      "task_csv": "S17_cross_agv4_task.csv",
+      "extra_obstacles": [],
+      "max_sim_time": 800,
+      "wall_timeout": 75.0
+    },
+    {
+      "id": "S18_narrow_uniform",
+      "intent": "走廊瓶颈+均匀",
+      "n_agvs": 12,
+      "obstacle_mode": "mild",
+      "obstacle_seed": 618,
+      "task_pattern": "uniform",
+      "n_tasks": 28,
+      "seed": 601,
+      "position_csv": "S18_narrow_uniform_position.csv",
+      "task_csv": "S18_narrow_uniform_task.csv",
+      "extra_obstacles": [
+        [
+          10,
+          2
+        ],
+        [
+          10,
+          5
+        ],
+        [
+          10,
+          6
+        ],
+        [
+          10,
+          7
+        ],
+        [
+          10,
+          9
+        ],
+        [
+          10,
+          13
+        ],
+        [
+          10,
+          14
+        ],
+        [
+          10,
+          17
+        ],
+        [
+          10,
+          18
+        ],
+        [
+          12,
+          19
+        ],
+        [
+          16,
+          14
+        ],
+        [
+          16,
+          19
+        ],
+        [
+          16,
+          6
+        ],
+        [
+          7,
+          15
+        ],
+        [
+          4,
+          12
+        ]
+      ],
+      "max_sim_time": 800,
+      "wall_timeout": 75.0
+    },
+    {
+      "id": "S19_narrow_cross",
+      "intent": "走廊瓶颈+交叉流",
+      "n_agvs": 12,
+      "obstacle_mode": "mild",
+      "obstacle_seed": 619,
+      "task_pattern": "cross_flow",
+      "n_tasks": 28,
+      "seed": 602,
+      "position_csv": "S19_narrow_cross_position.csv",
+      "task_csv": "S19_narrow_cross_task.csv",
+      "extra_obstacles": [
+        [
+          10,
+          2
+        ],
+        [
+          10,
+          3
+        ],
+        [
+          10,
+          5
+        ],
+        [
+          10,
+          6
+        ],
+        [
+          10,
+          13
+        ],
+        [
+          10,
+          14
+        ],
+        [
+          10,
+          15
+        ],
+        [
+          10,
+          17
+        ],
+        [
+          10,
+          18
+        ],
+        [
+          10,
+          19
+        ],
+        [
+          18,
+          8
+        ],
+        [
+          14,
+          6
+        ],
+        [
+          19,
+          5
+        ],
+        [
+          12,
+          2
+        ],
+        [
+          18,
+          11
+        ],
+        [
+          4,
+          13
+        ]
+      ],
+      "max_sim_time": 800,
+      "wall_timeout": 75.0
+    },
+    {
+      "id": "S20_narrow_hard_cluster",
+      "intent": "窄通道+聚集卸货",
+      "n_agvs": 8,
+      "obstacle_mode": "mild",
+      "obstacle_seed": 620,
+      "task_pattern": "clustered_dest",
+      "n_tasks": 24,
+      "seed": 603,
+      "position_csv": "S20_narrow_hard_cluster_position.csv",
+      "task_csv": "S20_narrow_hard_cluster_task.csv",
+      "extra_obstacles": [
+        [
+          10,
+          2
+        ],
+        [
+          10,
+          3
+        ],
+        [
+          10,
+          5
+        ],
+        [
+          10,
+          6
+        ],
+        [
+          10,
+          7
+        ],
+        [
+          10,
+          9
+        ],
+        [
+          10,
+          13
+        ],
+        [
+          10,
+          14
+        ],
+        [
+          10,
+          15
+        ],
+        [
+          10,
+          17
+        ],
+        [
+          10,
+          18
+        ],
+        [
+          10,
+          19
+        ],
+        [
+          6,
+          6
+        ],
+        [
+          18,
+          6
+        ],
+        [
+          2,
+          4
+        ],
+        [
+          13,
+          2
+        ],
+        [
+          8,
+          9
+        ],
+        [
+          4,
+          19
+        ]
+      ],
+      "max_sim_time": 800,
+      "wall_timeout": 75.0
+    },
+    {
+      "id": "S21_narrow_urgent",
+      "intent": "瓶颈+紧急件",
+      "n_agvs": 12,
+      "obstacle_mode": "mild",
+      "obstacle_seed": 621,
+      "task_pattern": "urgent_burst",
+      "n_tasks": 24,
+      "seed": 604,
+      "position_csv": "S21_narrow_urgent_position.csv",
+      "task_csv": "S21_narrow_urgent_task.csv",
+      "extra_obstacles": [
+        [
+          10,
+          2
+        ],
+        [
+          10,
+          3
+        ],
+        [
+          10,
+          5
+        ],
+        [
+          10,
+          7
+        ],
+        [
+          10,
+          9
+        ],
+        [
+          10,
+          13
+        ],
+        [
+          10,
+          17
+        ],
+        [
+          10,
+          18
+        ],
+        [
+          10,
+          19
+        ],
+        [
+          4,
+          14
+        ],
+        [
+          19,
+          4
+        ],
+        [
+          10,
+          11
+        ],
+        [
+          3,
+          16
+        ],
+        [
+          15,
+          2
+        ],
+        [
+          17,
+          5
+        ]
+      ],
+      "max_sim_time": 800,
+      "wall_timeout": 75.0
+    },
+    {
+      "id": "S22_narrow_agv16",
+      "intent": "多车挤窄通道",
+      "n_agvs": 12,
+      "obstacle_mode": "mild",
+      "obstacle_seed": 622,
+      "task_pattern": "cross_flow",
+      "n_tasks": 28,
+      "seed": 605,
+      "position_csv": "S22_narrow_agv16_position.csv",
+      "task_csv": "S22_narrow_agv16_task.csv",
+      "extra_obstacles": [
+        [
+          10,
+          2
+        ],
+        [
+          10,
+          5
+        ],
+        [
+          10,
+          6
+        ],
+        [
+          10,
+          9
+        ],
+        [
+          10,
+          13
+        ],
+        [
+          10,
+          14
+        ],
+        [
+          10,
+          15
+        ],
+        [
+          10,
+          17
+        ],
+        [
+          10,
+          18
+        ],
+        [
+          10,
+          19
+        ],
+        [
+          9,
+          19
+        ],
+        [
+          18,
+          11
+        ],
+        [
+          14,
+          19
+        ],
+        [
+          19,
+          3
+        ],
+        [
+          15,
+          19
+        ],
+        [
+          2,
+          16
+        ]
+      ],
+      "max_sim_time": 800,
+      "wall_timeout": 75.0
+    },
+    {
+      "id": "S23_agv4_fifo_urgent",
+      "intent": "少车+FIFO紧急压力",
+      "n_agvs": 4,
+      "obstacle_mode": "none",
+      "obstacle_seed": 718,
+      "task_pattern": "fifo_pressure",
+      "n_tasks": 24,
+      "seed": 701,
+      "position_csv": "S23_agv4_fifo_urgent_position.csv",
+      "task_csv": "S23_agv4_fifo_urgent_task.csv",
+      "extra_obstacles": [],
+      "max_sim_time": 800,
+      "wall_timeout": 75.0
+    },
+    {
+      "id": "S24_mixed_narrow",
+      "intent": "混合任务+轻度瓶颈",
+      "n_agvs": 12,
+      "obstacle_mode": "mild",
+      "obstacle_seed": 719,
+      "task_pattern": "mixed",
+      "n_tasks": 30,
+      "seed": 702,
+      "position_csv": "S24_mixed_narrow_position.csv",
+      "task_csv": "S24_mixed_narrow_task.csv",
+      "extra_obstacles": [
+        [
+          10,
+          2
+        ],
+        [
+          10,
+          3
+        ],
+        [
+          10,
+          5
+        ],
+        [
+          10,
+          6
+        ],
+        [
+          10,
+          7
+        ],
+        [
+          10,
+          9
+        ],
+        [
+          10,
+          13
+        ],
+        [
+          10,
+          15
+        ],
+        [
+          10,
+          18
+        ],
+        [
+          10,
+          19
+        ],
+        [
+          18,
+          10
+        ],
+        [
+          8,
+          14
+        ],
+        [
+          19,
+          4
+        ],
+        [
+          17,
+          9
+        ],
+        [
+          17,
+          2
+        ],
+        [
+          7,
+          7
+        ]
+      ],
+      "max_sim_time": 800,
+      "wall_timeout": 75.0
+    },
+    {
+      "id": "S25_agv3_uniform",
+      "intent": "奇数车队3无障碍",
+      "n_agvs": 3,
+      "obstacle_mode": "none",
+      "obstacle_seed": 818,
+      "task_pattern": "uniform",
+      "n_tasks": 24,
+      "seed": 801,
+      "position_csv": "S25_agv3_uniform_position.csv",
+      "task_csv": "S25_agv3_uniform_task.csv",
+      "extra_obstacles": [],
+      "max_sim_time": 900,
+      "wall_timeout": 90.0
+    },
+    {
+      "id": "S26_agv3_narrow",
+      "intent": "奇数车队3有障碍",
+      "n_agvs": 3,
+      "obstacle_mode": "mild",
+      "obstacle_seed": 819,
+      "task_pattern": "uniform",
+      "n_tasks": 24,
+      "seed": 802,
+      "position_csv": "S26_agv3_narrow_position.csv",
+      "task_csv": "S26_agv3_narrow_task.csv",
+      "extra_obstacles": [
+        [
+          10,
+          2
+        ],
+        [
+          10,
+          3
+        ],
+        [
+          10,
+          6
+        ],
+        [
+          10,
+          7
+        ],
+        [
+          10,
+          13
+        ],
+        [
+          10,
+          14
+        ],
+        [
+          10,
+          17
+        ],
+        [
+          10,
+          18
+        ],
+        [
+          10,
+          19
+        ],
+        [
+          18,
+          7
+        ],
+        [
+          8,
+          7
+        ],
+        [
+          17,
+          13
+        ],
+        [
+          17,
+          19
+        ],
+        [
+          4,
+          7
+        ],
+        [
+          18,
+          10
+        ]
+      ],
+      "max_sim_time": 900,
+      "wall_timeout": 90.0
+    },
+    {
+      "id": "S27_agv5_uniform",
+      "intent": "奇数车队5无障碍",
+      "n_agvs": 5,
+      "obstacle_mode": "none",
+      "obstacle_seed": 820,
+      "task_pattern": "uniform",
+      "n_tasks": 28,
+      "seed": 803,
+      "position_csv": "S27_agv5_uniform_position.csv",
+      "task_csv": "S27_agv5_uniform_task.csv",
+      "extra_obstacles": [],
+      "max_sim_time": 900,
+      "wall_timeout": 90.0
+    },
+    {
+      "id": "S28_agv5_narrow",
+      "intent": "奇数车队5有障碍",
+      "n_agvs": 5,
+      "obstacle_mode": "mild",
+      "obstacle_seed": 821,
+      "task_pattern": "cross_flow",
+      "n_tasks": 28,
+      "seed": 804,
+      "position_csv": "S28_agv5_narrow_position.csv",
+      "task_csv": "S28_agv5_narrow_task.csv",
+      "extra_obstacles": [
+        [
+          10,
+          2
+        ],
+        [
+          10,
+          6
+        ],
+        [
+          10,
+          7
+        ],
+        [
+          10,
+          9
+        ],
+        [
+          10,
+          13
+        ],
+        [
+          10,
+          14
+        ],
+        [
+          10,
+          17
+        ],
+        [
+          10,
+          19
+        ],
+        [
+          19,
+          19
+        ],
+        [
+          3,
+          10
+        ],
+        [
+          8,
+          17
+        ],
+        [
+          2,
+          17
+        ],
+        [
+          13,
+          9
+        ],
+        [
+          14,
+          15
+        ]
+      ],
+      "max_sim_time": 900,
+      "wall_timeout": 90.0
+    },
+    {
+      "id": "S29_agv7_uniform",
+      "intent": "奇数车队7无障碍",
+      "n_agvs": 7,
+      "obstacle_mode": "none",
+      "obstacle_seed": 822,
+      "task_pattern": "mixed",
+      "n_tasks": 28,
+      "seed": 805,
+      "position_csv": "S29_agv7_uniform_position.csv",
+      "task_csv": "S29_agv7_uniform_task.csv",
+      "extra_obstacles": [],
+      "max_sim_time": 900,
+      "wall_timeout": 90.0
+    },
+    {
+      "id": "S30_agv7_narrow",
+      "intent": "奇数车队7有障碍",
+      "n_agvs": 7,
+      "obstacle_mode": "mild",
+      "obstacle_seed": 823,
+      "task_pattern": "mixed",
+      "n_tasks": 28,
+      "seed": 806,
+      "position_csv": "S30_agv7_narrow_position.csv",
+      "task_csv": "S30_agv7_narrow_task.csv",
+      "extra_obstacles": [
+        [
+          10,
+          2
+        ],
+        [
+          10,
+          6
+        ],
+        [
+          10,
+          7
+        ],
+        [
+          10,
+          9
+        ],
+        [
+          10,
+          13
+        ],
+        [
+          10,
+          14
+        ],
+        [
+          10,
+          17
+        ],
+        [
+          10,
+          18
+        ],
+        [
+          10,
+          19
+        ],
+        [
+          18,
+          13
+        ],
+        [
+          5,
+          9
+        ],
+        [
+          3,
+          7
+        ],
+        [
+          2,
+          2
+        ],
+        [
+          7,
+          13
+        ],
+        [
+          8,
+          17
+        ]
+      ],
+      "max_sim_time": 900,
+      "wall_timeout": 90.0
+    },
+    {
+      "id": "S31_agv9_uniform",
+      "intent": "奇数车队9无障碍",
+      "n_agvs": 9,
+      "obstacle_mode": "none",
+      "obstacle_seed": 824,
+      "task_pattern": "cross_flow",
+      "n_tasks": 30,
+      "seed": 807,
+      "position_csv": "S31_agv9_uniform_position.csv",
+      "task_csv": "S31_agv9_uniform_task.csv",
+      "extra_obstacles": [],
+      "max_sim_time": 900,
+      "wall_timeout": 90.0
+    },
+    {
+      "id": "S32_agv9_narrow",
+      "intent": "奇数车队9有障碍",
+      "n_agvs": 9,
+      "obstacle_mode": "mild",
+      "obstacle_seed": 825,
+      "task_pattern": "cross_flow",
+      "n_tasks": 30,
+      "seed": 808,
+      "position_csv": "S32_agv9_narrow_position.csv",
+      "task_csv": "S32_agv9_narrow_task.csv",
+      "extra_obstacles": [
+        [
+          10,
+          2
+        ],
+        [
+          10,
+          6
+        ],
+        [
+          10,
+          7
+        ],
+        [
+          10,
+          9
+        ],
+        [
+          10,
+          14
+        ],
+        [
+          10,
+          17
+        ],
+        [
+          10,
+          18
+        ],
+        [
+          10,
+          19
+        ],
+        [
+          11,
+          11
+        ],
+        [
+          7,
+          7
+        ],
+        [
+          17,
+          17
+        ],
+        [
+          19,
+          18
+        ],
+        [
+          7,
+          10
+        ],
+        [
+          17,
+          13
+        ]
+      ],
+      "max_sim_time": 900,
+      "wall_timeout": 90.0
+    },
+    {
+      "id": "S33_agv11_uniform",
+      "intent": "奇数车队11无障碍",
+      "n_agvs": 11,
+      "obstacle_mode": "none",
+      "obstacle_seed": 826,
+      "task_pattern": "urgent_burst",
+      "n_tasks": 30,
+      "seed": 809,
+      "position_csv": "S33_agv11_uniform_position.csv",
+      "task_csv": "S33_agv11_uniform_task.csv",
+      "extra_obstacles": [],
+      "max_sim_time": 900,
+      "wall_timeout": 90.0
+    },
+    {
+      "id": "S34_agv11_narrow",
+      "intent": "奇数车队11有障碍",
+      "n_agvs": 11,
+      "obstacle_mode": "mild",
+      "obstacle_seed": 827,
+      "task_pattern": "urgent_burst",
+      "n_tasks": 30,
+      "seed": 810,
+      "position_csv": "S34_agv11_narrow_position.csv",
+      "task_csv": "S34_agv11_narrow_task.csv",
+      "extra_obstacles": [
+        [
+          10,
+          2
+        ],
+        [
+          10,
+          3
+        ],
+        [
+          10,
+          6
+        ],
+        [
+          10,
+          7
+        ],
+        [
+          10,
+          13
+        ],
+        [
+          10,
+          17
+        ],
+        [
+          10,
+          18
+        ],
+        [
+          10,
+          19
+        ],
+        [
+          8,
+          11
+        ],
+        [
+          11,
+          6
+        ],
+        [
+          4,
+          8
+        ],
+        [
+          17,
+          7
+        ],
+        [
+          17,
+          17
+        ],
+        [
+          4,
+          13
+        ]
+      ],
+      "max_sim_time": 900,
+      "wall_timeout": 90.0
+    },
+    {
+      "id": "S35_agv13_uniform",
+      "intent": "奇数车队13无障碍",
+      "n_agvs": 13,
+      "obstacle_mode": "none",
+      "obstacle_seed": 828,
+      "task_pattern": "clustered_dest",
+      "n_tasks": 32,
+      "seed": 811,
+      "position_csv": "S35_agv13_uniform_position.csv",
+      "task_csv": "S35_agv13_uniform_task.csv",
+      "extra_obstacles": [],
+      "max_sim_time": 900,
+      "wall_timeout": 90.0
+    },
+    {
+      "id": "S36_agv13_narrow",
+      "intent": "奇数车队13有障碍",
+      "n_agvs": 13,
+      "obstacle_mode": "mild",
+      "obstacle_seed": 829,
+      "task_pattern": "clustered_dest",
+      "n_tasks": 32,
+      "seed": 812,
+      "position_csv": "S36_agv13_narrow_position.csv",
+      "task_csv": "S36_agv13_narrow_task.csv",
+      "extra_obstacles": [
+        [
+          10,
+          2
+        ],
+        [
+          10,
+          3
+        ],
+        [
+          10,
+          6
+        ],
+        [
+          10,
+          9
+        ],
+        [
+          10,
+          13
+        ],
+        [
+          10,
+          14
+        ],
+        [
+          10,
+          17
+        ],
+        [
+          10,
+          18
+        ],
+        [
+          12,
+          10
+        ],
+        [
+          15,
+          6
+        ],
+        [
+          8,
+          11
+        ],
+        [
+          8,
+          5
+        ],
+        [
+          7,
+          2
+        ],
+        [
+          13,
+          9
+        ]
+      ],
+      "max_sim_time": 900,
+      "wall_timeout": 90.0
+    },
+    {
+      "id": "S37_agv15_uniform",
+      "intent": "奇数车队15无障碍",
+      "n_agvs": 15,
+      "obstacle_mode": "none",
+      "obstacle_seed": 830,
+      "task_pattern": "fifo_pressure",
+      "n_tasks": 30,
+      "seed": 813,
+      "position_csv": "S37_agv15_uniform_position.csv",
+      "task_csv": "S37_agv15_uniform_task.csv",
+      "extra_obstacles": [],
+      "max_sim_time": 900,
+      "wall_timeout": 90.0
+    },
+    {
+      "id": "S38_agv15_narrow",
+      "intent": "奇数车队15有障碍",
+      "n_agvs": 15,
+      "obstacle_mode": "mild",
+      "obstacle_seed": 831,
+      "task_pattern": "fifo_pressure",
+      "n_tasks": 30,
+      "seed": 814,
+      "position_csv": "S38_agv15_narrow_position.csv",
+      "task_csv": "S38_agv15_narrow_task.csv",
+      "extra_obstacles": [
+        [
+          10,
+          2
+        ],
+        [
+          10,
+          6
+        ],
+        [
+          10,
+          7
+        ],
+        [
+          10,
+          13
+        ],
+        [
+          10,
+          14
+        ],
+        [
+          10,
+          17
+        ],
+        [
+          10,
+          18
+        ],
+        [
+          8,
+          7
+        ],
+        [
+          19,
+          15
+        ],
+        [
+          8,
+          2
+        ],
+        [
+          7,
+          3
+        ],
+        [
+          3,
+          12
+        ],
+        [
+          11,
+          17
+        ]
+      ],
+      "max_sim_time": 900,
+      "wall_timeout": 90.0
+    },
+    {
+      "id": "S39_agv50_crowd",
+      "intent": "50车无障碍拥挤",
+      "n_agvs": 50,
+      "obstacle_mode": "none",
+      "obstacle_seed": 838,
+      "task_pattern": "cross_flow",
+      "n_tasks": 40,
+      "seed": 821,
+      "position_csv": "S39_agv50_crowd_position.csv",
+      "task_csv": "S39_agv50_crowd_task.csv",
+      "extra_obstacles": [],
+      "max_sim_time": 900,
+      "wall_timeout": 90.0
+    },
+    {
+      "id": "S40_agv50_narrow_crowd",
+      "intent": "50车有障碍拥挤",
+      "n_agvs": 50,
+      "obstacle_mode": "mild",
+      "obstacle_seed": 839,
+      "task_pattern": "cross_flow",
+      "n_tasks": 40,
+      "seed": 822,
+      "position_csv": "S40_agv50_narrow_crowd_position.csv",
+      "task_csv": "S40_agv50_narrow_crowd_task.csv",
+      "extra_obstacles": [
+        [
+          10,
+          2
+        ],
+        [
+          10,
+          3
+        ],
+        [
+          10,
+          6
+        ],
+        [
+          10,
+          7
+        ],
+        [
+          10,
+          9
+        ],
+        [
+          10,
+          13
+        ],
+        [
+          10,
+          14
+        ],
+        [
+          10,
+          19
+        ],
+        [
+          13,
+          18
+        ],
+        [
+          13,
+          9
+        ],
+        [
+          4,
+          17
+        ],
+        [
+          17,
+          7
+        ],
+        [
+          7,
+          17
+        ],
+        [
+          19,
+          13
+        ]
+      ],
+      "max_sim_time": 900,
+      "wall_timeout": 90.0
+    }
+  ]
+}

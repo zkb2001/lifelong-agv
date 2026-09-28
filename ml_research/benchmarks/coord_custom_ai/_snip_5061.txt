@@ -1,0 +1,60 @@
+ 5027|                    )
+ 5028|                    starts_r = {n: pose[n][:2] for n in names}
+ 5029|                    goals_r = {n: starts_r[n] for n in names}
+ 5030|                    for a in need:
+ 5031|                        pads = _valid_unload_pads(
+ 5032|                            deliverable[a], free, static, prefer=starts_r[a]
+ 5033|                        )
+ 5034|                        if pads:
+ 5035|                            goals_r[a] = min(
+ 5036|                                pads, key=lambda c: (_manh(starts_r[a], c), c)
+ 5037|                            )
+ 5038|                    sp_r = _prioritized_st_paths(
+ 5039|                        starts_r, goals_r, set(need), blocked_plan
+ 5040|                    )
+ 5041|                    if _st_paths_ok(sp_r, set(need), goals_r):
+ 5042|                        timelines = _plan_paths_as_poses(pose, sp_r)
+ 5043|                        if _pose_movers_ok(pose, timelines, set(need)):
+ 5044|                            now = _apply_pose_timelines(
+ 5045|                            steps_by,
+ 5046|                            pose,
+ 5047|                                timelines,
+ 5048|                                now,
+ 5049|                                loaded=loaded,
+ 5050|                                dest=dest,
+ 5051|                                tid=tid,
+ 5052|                                )
+ 5053|                            for a in list(need):
+ 5054|                                pads = set(
+ 5055|                                    _valid_unload_pads(deliverable[a], free, static)
+ 5056|                                )
+ 5057|                                if pose[a][:2] in pads:
+ 5058|                                    loaded[a] = False
+ 5059|                                    dest[a] = ""
+ 5060|                                    tid[a] = ""
+ 5061|                                    steps_by[a][-1]["loaded"] = "FALSE"
+ 5062|                                    steps_by[a][-1]["destination"] = ""
+ 5063|                                    steps_by[a][-1]["task-id"] = ""
+ 5064|                                    _count_done(str(deliverable[a]["task_id"]))
+ 5065|                                    pending_delivery.pop(a, None)
+ 5066|                                    _clear_affinity(a)
+ 5067|                                    _clear_after_unload(a)
+ 5068|                            _flush_step_off()
+ 5069|                            need = sorted(
+ 5070|                                a for a in deliverable if loaded.get(a, False)
+ 5071|                            )
+ 5072|                            print(
+ 5073|                                f"[RECOVER] delivery disperse+prio k_left={len(need)} "
+ 5074|                                f"@t={now}",
+ 5075|                                flush=True,
+ 5076|                                )
+ 5077|                if len(need) > 1:
+ 5078|                    # Prefer one spacetime wave for ALL leftovers (parallel clock).
+ 5079|                    # Sequential _serial_move_to sums path lengths into makespan.
+ 5080|                    ranked = sorted(
+ 5081|                        need,
+ 5082|                        key=lambda a: (
+ 5083|                            _manh(
+ 5084|                                pose[a][:2],
+ 5085|                                goals.get(a, pose[a][:2]),
+ 5086|                            ),

@@ -1,0 +1,76 @@
+{
+  "id": "S30_agv7_narrow",
+  "intent": "奇数车队7有障碍",
+  "n_agvs": 7,
+  "obstacle_mode": "mild",
+  "obstacle_seed": 823,
+  "task_pattern": "mixed",
+  "n_tasks": 28,
+  "seed": 806,
+  "position_csv": "S30_agv7_narrow_position.csv",
+  "task_csv": "S30_agv7_narrow_task.csv",
+  "extra_obstacles": [
+    [
+      10,
+      2
+    ],
+    [
+      10,
+      6
+    ],
+    [
+      10,
+      7
+    ],
+    [
+      10,
+      9
+    ],
+    [
+      10,
+      13
+    ],
+    [
+      10,
+      14
+    ],
+    [
+      10,
+      17
+    ],
+    [
+      10,
+      18
+    ],
+    [
+      10,
+      19
+    ],
+    [
+      18,
+      13
+    ],
+    [
+      5,
+      9
+    ],
+    [
+      3,
+      7
+    ],
+    [
+      2,
+      2
+    ],
+    [
+      7,
+      13
+    ],
+    [
+      8,
+      17
+    ]
+  ],
+  "max_sim_time": 900,
+  "wall_timeout": 90.0
+}

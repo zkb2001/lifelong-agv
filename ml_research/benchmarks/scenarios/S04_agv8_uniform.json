@@ -1,0 +1,15 @@
+{
+  "id": "S04_agv8_uniform",
+  "intent": "中等车队均匀",
+  "n_agvs": 8,
+  "obstacle_mode": "none",
+  "obstacle_seed": 219,
+  "task_pattern": "uniform",
+  "n_tasks": 28,
+  "seed": 202,
+  "position_csv": "S04_agv8_uniform_position.csv",
+  "task_csv": "S04_agv8_uniform_task.csv",
+  "extra_obstacles": [],
+  "max_sim_time": 800,
+  "wall_timeout": 75.0
+}

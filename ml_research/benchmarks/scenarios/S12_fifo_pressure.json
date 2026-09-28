@@ -1,0 +1,15 @@
+{
+  "id": "S12_fifo_pressure",
+  "intent": "FIFO深队列埋紧急件",
+  "n_agvs": 12,
+  "obstacle_mode": "none",
+  "obstacle_seed": 419,
+  "task_pattern": "fifo_pressure",
+  "n_tasks": 36,
+  "seed": 402,
+  "position_csv": "S12_fifo_pressure_position.csv",
+  "task_csv": "S12_fifo_pressure_task.csv",
+  "extra_obstacles": [],
+  "max_sim_time": 800,
+  "wall_timeout": 75.0
+}

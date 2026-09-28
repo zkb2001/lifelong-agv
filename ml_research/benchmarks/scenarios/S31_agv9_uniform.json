@@ -1,0 +1,15 @@
+{
+  "id": "S31_agv9_uniform",
+  "intent": "奇数车队9无障碍",
+  "n_agvs": 9,
+  "obstacle_mode": "none",
+  "obstacle_seed": 824,
+  "task_pattern": "cross_flow",
+  "n_tasks": 30,
+  "seed": 807,
+  "position_csv": "S31_agv9_uniform_position.csv",
+  "task_csv": "S31_agv9_uniform_task.csv",
+  "extra_obstacles": [],
+  "max_sim_time": 900,
+  "wall_timeout": 90.0
+}

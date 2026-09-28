@@ -1,0 +1,205 @@
+{
+  "direction": "neural_heuristic",
+  "device": "cuda",
+  "literature": [
+    {
+      "title": "Path Planning using Neural A* Search",
+      "venue": "ICML 2021",
+      "url": "https://arxiv.org/abs/2009.07476",
+      "takeaway": "Differentiable A* + CNN guidance map improves efficiency-optimality tradeoff."
+    },
+    {
+      "title": "Neural Weighted A*: Learning Graph Costs and Heuristics",
+      "venue": "LOD 2021",
+      "url": "https://doi.org/10.1007/978-3-030-95467-3_43",
+      "takeaway": "Learn residual scaling of admissible heuristic with bounded suboptimality."
+    },
+    {
+      "title": "Learning Heuristics for A*",
+      "venue": "various / related",
+      "url": "https://arxiv.org/abs/2009.07476",
+      "takeaway": "Naive replacement of h often fails; residual / weighted forms are safer."
+    }
+  ],
+  "collect_meta": {
+    "mean_expansions_manhattan": 119.80602006688963,
+    "n": 10336
+  },
+  "best_val_mse_residual": 0.1519833840429783,
+  "history": [
+    {
+      "epoch": 1,
+      "train_mse": 0.58176388855597,
+      "val_mse": 0.4420054618773922
+    },
+    {
+      "epoch": 2,
+      "train_mse": 0.41077126950982107,
+      "val_mse": 0.3987838760499031
+    },
+    {
+      "epoch": 3,
+      "train_mse": 0.36658785253892096,
+      "val_mse": 0.35899725191054804
+    },
+    {
+      "epoch": 4,
+      "train_mse": 0.32481749200438303,
+      "val_mse": 0.3146947467327118
+    },
+    {
+      "epoch": 5,
+      "train_mse": 0.28519954450128293,
+      "val_mse": 0.27799594625349966
+    },
+    {
+      "epoch": 6,
+      "train_mse": 0.2568668017158361,
+      "val_mse": 0.2558209595757146
+    },
+    {
+      "epoch": 7,
+      "train_mse": 0.2394079321776168,
+      "val_mse": 0.24111495948606923
+    },
+    {
+      "epoch": 8,
+      "train_mse": 0.22694115391250844,
+      "val_mse": 0.22995376842637216
+    },
+    {
+      "epoch": 9,
+      "train_mse": 0.2163424224828279,
+      "val_mse": 0.2206280687162953
+    },
+    {
+      "epoch": 10,
+      "train_mse": 0.20728577250110622,
+      "val_mse": 0.21310434010721022
+    },
+    {
+      "epoch": 11,
+      "train_mse": 0.20003563739255922,
+      "val_mse": 0.2076139812315664
+    },
+    {
+      "epoch": 12,
+      "train_mse": 0.19458442677432303,
+      "val_mse": 0.20338232211528287
+    },
+    {
+      "epoch": 13,
+      "train_mse": 0.1901803231581235,
+      "val_mse": 0.19965244939250332
+    },
+    {
+      "epoch": 14,
+      "train_mse": 0.1865928201456426,
+      "val_mse": 0.19732764677655312
+    },
+    {
+      "epoch": 15,
+      "train_mse": 0.18346964032807928,
+      "val_mse": 0.19398370629356754
+    },
+    {
+      "epoch": 16,
+      "train_mse": 0.18137017634268804,
+      "val_mse": 0.19108124138847474
+    },
+    {
+      "epoch": 17,
+      "train_mse": 0.17904142516771374,
+      "val_mse": 0.1888285702563101
+    },
+    {
+      "epoch": 18,
+      "train_mse": 0.17622095985168915,
+      "val_mse": 0.18700260966054855
+    },
+    {
+      "epoch": 19,
+      "train_mse": 0.1732792609659355,
+      "val_mse": 0.18490947729156865
+    },
+    {
+      "epoch": 20,
+      "train_mse": 0.17057657610873495,
+      "val_mse": 0.1808322824201276
+    },
+    {
+      "epoch": 21,
+      "train_mse": 0.1679167264778631,
+      "val_mse": 0.18017411829002442
+    },
+    {
+      "epoch": 22,
+      "train_mse": 0.16534508349220872,
+      "val_mse": 0.17589307168799062
+    },
+    {
+      "epoch": 23,
+      "train_mse": 0.1631707944740827,
+      "val_mse": 0.17231176340291576
+    },
+    {
+      "epoch": 24,
+      "train_mse": 0.1598906239154207,
+      "val_mse": 0.16900765337290302
+    },
+    {
+      "epoch": 25,
+      "train_mse": 0.15759658162207965,
+      "val_mse": 0.16679342265090635
+    },
+    {
+      "epoch": 26,
+      "train_mse": 0.1543379993284587,
+      "val_mse": 0.16444583718334474
+    },
+    {
+      "epoch": 27,
+      "train_mse": 0.15133355397475817,
+      "val_mse": 0.16161878580047237
+    },
+    {
+      "epoch": 28,
+      "train_mse": 0.1496359992517091,
+      "val_mse": 0.15839831985292896
+    },
+    {
+      "epoch": 29,
+      "train_mse": 0.14702234344780377,
+      "val_mse": 0.1553811258894782
+    },
+    {
+      "epoch": 30,
+      "train_mse": 0.14321376006450737,
+      "val_mse": 0.1519833840429783
+    }
+  ],
+  "search_comparison": {
+    "man": {
+      "n": 150,
+      "mean_expansions": 115.77333333333333,
+      "mean_cost": 15.36,
+      "expansion_reduction_vs_man": 0.0,
+      "cost_ratio_vs_man": 1.0
+    },
+    "residual": {
+      "n": 150,
+      "mean_expansions": 27.986666666666668,
+      "mean_cost": 15.36,
+      "expansion_reduction_vs_man": 0.7582632730623056,
+      "cost_ratio_vs_man": 1.0
+    },
+    "focal": {
+      "n": 150,
+      "mean_expansions": 24.88,
+      "mean_cost": 15.36,
+      "expansion_reduction_vs_man": 0.7850973165956466,
+      "cost_ratio_vs_man": 1.0
+    }
+  },
+  "method": "Learn residual Delta=opt_remaining-manhattan; h=manhattan+relu(Delta)"
+}

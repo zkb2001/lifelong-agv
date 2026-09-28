@@ -1,0 +1,84 @@
+{
+  "id": "H04_narrow_cross_urgent",
+  "intent": "窄通道交叉+紧急",
+  "n_agvs": 12,
+  "obstacle_mode": "mild",
+  "obstacle_seed": 921,
+  "task_pattern": "hard_extra",
+  "n_tasks": 28,
+  "seed": 904,
+  "position_csv": "H04_narrow_cross_urgent_position.csv",
+  "task_csv": "H04_narrow_cross_urgent_task.csv",
+  "extra_obstacles": [
+    [
+      10,
+      3
+    ],
+    [
+      10,
+      5
+    ],
+    [
+      10,
+      6
+    ],
+    [
+      10,
+      7
+    ],
+    [
+      10,
+      9
+    ],
+    [
+      10,
+      13
+    ],
+    [
+      10,
+      14
+    ],
+    [
+      10,
+      15
+    ],
+    [
+      10,
+      17
+    ],
+    [
+      10,
+      18
+    ],
+    [
+      10,
+      19
+    ],
+    [
+      16,
+      5
+    ],
+    [
+      18,
+      16
+    ],
+    [
+      14,
+      7
+    ],
+    [
+      18,
+      5
+    ],
+    [
+      7,
+      10
+    ],
+    [
+      8,
+      17
+    ]
+  ],
+  "max_sim_time": 800,
+  "wall_timeout": 90.0
+}

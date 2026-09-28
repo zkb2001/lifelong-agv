@@ -1,0 +1,15 @@
+{
+  "id": "S01_ctrl_n12_uniform",
+  "intent": "正常对照：12车均匀任务",
+  "n_agvs": 12,
+  "obstacle_mode": "none",
+  "obstacle_seed": 118,
+  "task_pattern": "uniform",
+  "n_tasks": 30,
+  "seed": 101,
+  "position_csv": "S01_ctrl_n12_uniform_position.csv",
+  "task_csv": "S01_ctrl_n12_uniform_task.csv",
+  "extra_obstacles": [],
+  "max_sim_time": 800,
+  "wall_timeout": 75.0
+}

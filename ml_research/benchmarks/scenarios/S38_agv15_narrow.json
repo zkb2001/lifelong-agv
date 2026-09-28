@@ -1,0 +1,68 @@
+{
+  "id": "S38_agv15_narrow",
+  "intent": "奇数车队15有障碍",
+  "n_agvs": 15,
+  "obstacle_mode": "mild",
+  "obstacle_seed": 831,
+  "task_pattern": "fifo_pressure",
+  "n_tasks": 30,
+  "seed": 814,
+  "position_csv": "S38_agv15_narrow_position.csv",
+  "task_csv": "S38_agv15_narrow_task.csv",
+  "extra_obstacles": [
+    [
+      10,
+      2
+    ],
+    [
+      10,
+      6
+    ],
+    [
+      10,
+      7
+    ],
+    [
+      10,
+      13
+    ],
+    [
+      10,
+      14
+    ],
+    [
+      10,
+      17
+    ],
+    [
+      10,
+      18
+    ],
+    [
+      8,
+      7
+    ],
+    [
+      19,
+      15
+    ],
+    [
+      8,
+      2
+    ],
+    [
+      7,
+      3
+    ],
+    [
+      3,
+      12
+    ],
+    [
+      11,
+      17
+    ]
+  ],
+  "max_sim_time": 900,
+  "wall_timeout": 90.0
+}

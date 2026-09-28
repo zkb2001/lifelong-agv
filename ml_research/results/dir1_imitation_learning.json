@@ -1,0 +1,368 @@
+{
+  "direction": "imitation_learning",
+  "device": "cuda",
+  "literature": [
+    {
+      "title": "MAPF-GPT: Imitation Learning for Multi-Agent Pathfinding at Scale",
+      "venue": "AAAI 2025",
+      "url": "https://doi.org/10.1609/aaai.v39i22.34477",
+      "takeaway": "Large-scale BC on expert MAPF can beat RL hybrids without online env training."
+    },
+    {
+      "title": "Work Smarter Not Harder: Simple IL with CS-PIBT",
+      "venue": "arXiv 2409.14491",
+      "url": "https://arxiv.org/abs/2409.14491",
+      "takeaway": "1-step collision shield (CS-PIBT) is critical; pure IL struggles without it."
+    },
+    {
+      "title": "SILLM: Scalable Imitation Learning for Lifelong MAPF",
+      "venue": "arXiv 2410.21415",
+      "url": "https://arxiv.org/abs/2410.21415",
+      "takeaway": "IL + communication + collision resolution scales to thousands of agents."
+    },
+    {
+      "title": "SCRIMP",
+      "venue": "arXiv 2303.00605",
+      "url": "https://arxiv.org/abs/2303.00605",
+      "takeaway": "Mix BC with RL; supervise invalid-action avoidance explicitly."
+    }
+  ],
+  "n_samples": 11904,
+  "action_dist": [
+    1496,
+    8702,
+    582,
+    812,
+    312
+  ],
+  "best_val_acc": 0.2661064425770308,
+  "final_class_acc": {
+    "wait": 0.5360824742268041,
+    "forward": 0.12057272042200452,
+    "turn_left": 0.8279569892473119,
+    "turn_right": 0.6173913043478261,
+    "turn_180": 0.9642857142857143
+  },
+  "history": [
+    {
+      "epoch": 1,
+      "train_acc": 0.20387390058306157,
+      "val_acc": 0.03753501400560224,
+      "class_acc": {
+        "wait": 0.0,
+        "forward": 0.0,
+        "turn_left": 0.13978494623655913,
+        "turn_right": 0.0,
+        "turn_180": 0.9642857142857143
+      }
+    },
+    {
+      "epoch": 2,
+      "train_acc": 0.24982705800968474,
+      "val_acc": 0.047619047619047616,
+      "class_acc": {
+        "wait": 0.0,
+        "forward": 0.0,
+        "turn_left": 0.3870967741935484,
+        "turn_right": 0.0,
+        "turn_180": 0.875
+      }
+    },
+    {
+      "epoch": 3,
+      "train_acc": 0.25901768949500936,
+      "val_acc": 0.04985994397759104,
+      "class_acc": {
+        "wait": 0.0,
+        "forward": 0.0,
+        "turn_left": 0.3870967741935484,
+        "turn_right": 0.0,
+        "turn_180": 0.9464285714285714
+      }
+    },
+    {
+      "epoch": 4,
+      "train_acc": 0.3062555588496887,
+      "val_acc": 0.07563025210084033,
+      "class_acc": {
+        "wait": 0.0,
+        "forward": 0.0,
+        "turn_left": 0.6989247311827957,
+        "turn_right": 0.19130434782608696,
+        "turn_180": 0.8571428571428571
+      }
+    },
+    {
+      "epoch": 5,
+      "train_acc": 0.34499456468030437,
+      "val_acc": 0.07955182072829131,
+      "class_acc": {
+        "wait": 0.0,
+        "forward": 0.0,
+        "turn_left": 0.6451612903225806,
+        "turn_right": 0.2608695652173913,
+        "turn_180": 0.9285714285714286
+      }
+    },
+    {
+      "epoch": 6,
+      "train_acc": 0.3808676746714102,
+      "val_acc": 0.0896358543417367,
+      "class_acc": {
+        "wait": 0.010309278350515464,
+        "forward": 0.0,
+        "turn_left": 0.7526881720430108,
+        "turn_right": 0.30434782608695654,
+        "turn_180": 0.9464285714285714
+      }
+    },
+    {
+      "epoch": 7,
+      "train_acc": 0.40033600158118393,
+      "val_acc": 0.09355742296918768,
+      "class_acc": {
+        "wait": 0.05670103092783505,
+        "forward": 0.0,
+        "turn_left": 0.8172043010752689,
+        "turn_right": 0.28695652173913044,
+        "turn_180": 0.8392857142857143
+      }
+    },
+    {
+      "epoch": 8,
+      "train_acc": 0.4130842968672794,
+      "val_acc": 0.10028011204481793,
+      "class_acc": {
+        "wait": 0.09278350515463918,
+        "forward": 0.0,
+        "turn_left": 0.8064516129032258,
+        "turn_right": 0.28695652173913044,
+        "turn_180": 0.9464285714285714
+      }
+    },
+    {
+      "epoch": 9,
+      "train_acc": 0.43937147939519716,
+      "val_acc": 0.11484593837535013,
+      "class_acc": {
+        "wait": 0.1958762886597938,
+        "forward": 0.0,
+        "turn_left": 0.7956989247311828,
+        "turn_right": 0.34782608695652173,
+        "turn_180": 0.9464285714285714
+      }
+    },
+    {
+      "epoch": 10,
+      "train_acc": 0.4614092301610831,
+      "val_acc": 0.12997198879551822,
+      "class_acc": {
+        "wait": 0.31958762886597936,
+        "forward": 0.0,
+        "turn_left": 0.7849462365591398,
+        "turn_right": 0.3652173913043478,
+        "turn_180": 0.9821428571428571
+      }
+    },
+    {
+      "epoch": 11,
+      "train_acc": 0.48374345291036663,
+      "val_acc": 0.12492997198879552,
+      "class_acc": {
+        "wait": 0.20618556701030927,
+        "forward": 0.0,
+        "turn_left": 0.8602150537634409,
+        "turn_right": 0.4782608695652174,
+        "turn_180": 0.8571428571428571
+      }
+    },
+    {
+      "epoch": 12,
+      "train_acc": 0.5026188358533452,
+      "val_acc": 0.1434173669467787,
+      "class_acc": {
+        "wait": 0.36597938144329895,
+        "forward": 0.0,
+        "turn_left": 0.8709677419354839,
+        "turn_right": 0.4782608695652174,
+        "turn_180": 0.875
+      }
+    },
+    {
+      "epoch": 13,
+      "train_acc": 0.513094179266726,
+      "val_acc": 0.13893557422969188,
+      "class_acc": {
+        "wait": 0.37628865979381443,
+        "forward": 0.0,
+        "turn_left": 0.8602150537634409,
+        "turn_right": 0.3826086956521739,
+        "turn_180": 0.9107142857142857
+      }
+    },
+    {
+      "epoch": 14,
+      "train_acc": 0.5215930427907896,
+      "val_acc": 0.1484593837535014,
+      "class_acc": {
+        "wait": 0.422680412371134,
+        "forward": 0.0,
+        "turn_left": 0.8387096774193549,
+        "turn_right": 0.4608695652173913,
+        "turn_180": 0.9285714285714286
+      }
+    },
+    {
+      "epoch": 15,
+      "train_acc": 0.5338472181045558,
+      "val_acc": 0.1484593837535014,
+      "class_acc": {
+        "wait": 0.37628865979381443,
+        "forward": 0.0015071590052750565,
+        "turn_left": 0.8387096774193549,
+        "turn_right": 0.5304347826086957,
+        "turn_180": 0.9107142857142857
+      }
+    },
+    {
+      "epoch": 16,
+      "train_acc": 0.5572685047929637,
+      "val_acc": 0.1781512605042017,
+      "class_acc": {
+        "wait": 0.5051546391752577,
+        "forward": 0.024868123587038434,
+        "turn_left": 0.8602150537634409,
+        "turn_right": 0.4782608695652174,
+        "turn_180": 0.9285714285714286
+      }
+    },
+    {
+      "epoch": 17,
+      "train_acc": 0.5751556477912837,
+      "val_acc": 0.1792717086834734,
+      "class_acc": {
+        "wait": 0.5,
+        "forward": 0.02185380557648832,
+        "turn_left": 0.8602150537634409,
+        "turn_right": 0.5478260869565217,
+        "turn_180": 0.9107142857142857
+      }
+    },
+    {
+      "epoch": 18,
+      "train_acc": 0.5932404387785354,
+      "val_acc": 0.20168067226890757,
+      "class_acc": {
+        "wait": 0.5721649484536082,
+        "forward": 0.04144687264506405,
+        "turn_left": 0.7741935483870968,
+        "turn_right": 0.6,
+        "turn_180": 0.9464285714285714
+      }
+    },
+    {
+      "epoch": 19,
+      "train_acc": 0.6009487103468723,
+      "val_acc": 0.2207282913165266,
+      "class_acc": {
+        "wait": 0.5051546391752577,
+        "forward": 0.07535795026375283,
+        "turn_left": 0.7956989247311828,
+        "turn_right": 0.6434782608695652,
+        "turn_180": 0.8571428571428571
+      }
+    },
+    {
+      "epoch": 20,
+      "train_acc": 0.6104358138155944,
+      "val_acc": 0.22913165266106442,
+      "class_acc": {
+        "wait": 0.5670103092783505,
+        "forward": 0.07912584777694047,
+        "turn_left": 0.9032258064516129,
+        "turn_right": 0.5043478260869565,
+        "turn_180": 0.9285714285714286
+      }
+    },
+    {
+      "epoch": 21,
+      "train_acc": 0.6249629410020753,
+      "val_acc": 0.23641456582633052,
+      "class_acc": {
+        "wait": 0.6701030927835051,
+        "forward": 0.08063300678221552,
+        "turn_left": 0.8924731182795699,
+        "turn_right": 0.41739130434782606,
+        "turn_180": 0.9642857142857143
+      }
+    },
+    {
+      "epoch": 22,
+      "train_acc": 0.6264453009190631,
+      "val_acc": 0.226890756302521,
+      "class_acc": {
+        "wait": 0.5927835051546392,
+        "forward": 0.06782215523737754,
+        "turn_left": 0.8494623655913979,
+        "turn_right": 0.591304347826087,
+        "turn_180": 0.9464285714285714
+      }
+    },
+    {
+      "epoch": 23,
+      "train_acc": 0.6315841486312876,
+      "val_acc": 0.2661064425770308,
+      "class_acc": {
+        "wait": 0.654639175257732,
+        "forward": 0.1092690278824416,
+        "turn_left": 0.7956989247311828,
+        "turn_right": 0.6521739130434783,
+        "turn_180": 0.9642857142857143
+      }
+    },
+    {
+      "epoch": 24,
+      "train_acc": 0.642355964028066,
+      "val_acc": 0.24761904761904763,
+      "class_acc": {
+        "wait": 0.5360824742268041,
+        "forward": 0.10550113036925396,
+        "turn_left": 0.8709677419354839,
+        "turn_right": 0.5478260869565217,
+        "turn_180": 0.9642857142857143
+      }
+    },
+    {
+      "epoch": 25,
+      "train_acc": 0.6565866192311494,
+      "val_acc": 0.26106442577030814,
+      "class_acc": {
+        "wait": 0.5360824742268041,
+        "forward": 0.12057272042200452,
+        "turn_left": 0.8279569892473119,
+        "turn_right": 0.6173913043478261,
+        "turn_180": 0.9642857142857143
+      }
+    }
+  ],
+  "collision_shield_demo": {
+    "raw": [
+      1,
+      1,
+      1,
+      0
+    ],
+    "shielded": [
+      1,
+      1,
+      1,
+      0
+    ],
+    "note": "second conflicting forward -> wait"
+  },
+  "improvements_vs_v1": [
+    "Focal loss + class-weighted CE",
+    "WeightedRandomSampler for rare turns",
+    "CS-PIBT-inspired 1-step collision shield demo"
+  ]
+}

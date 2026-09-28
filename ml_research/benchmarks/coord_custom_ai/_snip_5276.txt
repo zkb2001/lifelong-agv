@@ -1,0 +1,60 @@
+ 5242|                        loaded[agv] = False
+ 5243|                        dest[agv] = ""
+ 5244|                        tid[agv] = ""
+ 5245|                        _count_done(str(deliverable[agv]["task_id"]))
+ 5246|                        pending_delivery.pop(agv, None)
+ 5247|                        _clear_affinity(agv)
+ 5248|                        _clear_after_unload(agv)
+ 5249|                        now = _fleet_hold_tick(
+ 5250|                            steps_by, pose, names, now, loaded=loaded, dest=dest, tid=tid
+ 5251|                        )
+ 5252|                        _flush_step_off()
+ 5253|                    else:
+ 5254|                        tid_miss = str(deliverable[agv]["task_id"])
+ 5255|                        delivery_miss_count[tid_miss] = int(
+ 5256|                            delivery_miss_count.get(tid_miss, 0)
+ 5257|                        ) + 1
+ 5258|                        # Near end-of-run: allow more retries before hard-fail.
+ 5259|                        miss_cap = 24 if (total - done) <= 2 else 8
+ 5260|                        if delivery_miss_count[tid_miss] <= miss_cap:
+ 5261|                            pending_delivery[agv] = deliverable[agv]
+ 5262|                            loaded[agv] = True
+ 5263|                            dest[agv] = str(
+ 5264|                                deliverable[agv].get("destination") or ""
+ 5265|                            )
+ 5266|                            tid[agv] = tid_miss
+ 5267|                            steps_by[agv][-1]["loaded"] = "TRUE"
+ 5268|                            steps_by[agv][-1]["destination"] = dest[agv]
+ 5269|                            steps_by[agv][-1]["task-id"] = tid_miss
+ 5270|                            recent_joint_fail += 1
+ 5271|                        else:
+ 5272|                            _mark_failed(tid_miss)
+ 5273|                            pending_delivery.pop(agv, None)
+ 5274|                            _clear_affinity(agv)
+ 5275|                            loaded[agv] = False
+ 5276|                            steps_by[agv][-1]["loaded"] = "FALSE"
+ 5277|                            steps_by[agv][-1]["destination"] = ""
+ 5278|                            steps_by[agv][-1]["task-id"] = ""
+ 5279|
+ 5280|        eff_core = _effective_joint_core()
+ 5281|        if eff_core != joint_core_mode and recent_joint_fail >= 6:
+ 5282|            print(
+ 5283|                f"[HIER] joint_core escalate {joint_core_mode}->{eff_core} "
+ 5284|                f"fail={recent_joint_fail}",
+ 5285|                flush=True,
+ 5286|            )
+ 5287|        print(
+ 5288|            f"[PROG] t={now} done={done}/{total} "
+ 5289|            f"wall={time.perf_counter() - t0:.1f}s "
+ 5290|            f"planner={wave_planner} joint_core={eff_core} "
+ 5291|            f"wave={len(assigned)}"
+ 5292|            f"{'' if hybrid_mode == 'off' else f'+hybrid({hybrid_mode})'} "
+ 5293|            f"core={len(movers_ecbs)} astar={len(movers_astar)} "
+ 5294|            f"carry={len(pending_delivery)} fail={recent_joint_fail}",
+ 5295|            flush=True,
+ 5296|        )
+ 5297|
+ 5298|        # P0 anti-spin recover
+ 5299|        if now == stall_t and done == stall_done:
+ 5300|            no_progress_waves += 1
+ 5301|        else:

@@ -1,0 +1,15 @@
+{
+  "id": "S10_two_hubs",
+  "intent": "双枢纽卸货竞争",
+  "n_agvs": 12,
+  "obstacle_mode": "none",
+  "obstacle_seed": 322,
+  "task_pattern": "two_hubs",
+  "n_tasks": 32,
+  "seed": 305,
+  "position_csv": "S10_two_hubs_position.csv",
+  "task_csv": "S10_two_hubs_task.csv",
+  "extra_obstacles": [],
+  "max_sim_time": 800,
+  "wall_timeout": 75.0
+}

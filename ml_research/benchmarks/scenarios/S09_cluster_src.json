@@ -1,0 +1,15 @@
+{
+  "id": "S09_cluster_src",
+  "intent": "同取货站突发FIFO",
+  "n_agvs": 12,
+  "obstacle_mode": "none",
+  "obstacle_seed": 321,
+  "task_pattern": "clustered_src",
+  "n_tasks": 30,
+  "seed": 304,
+  "position_csv": "S09_cluster_src_position.csv",
+  "task_csv": "S09_cluster_src_task.csv",
+  "extra_obstacles": [],
+  "max_sim_time": 800,
+  "wall_timeout": 75.0
+}

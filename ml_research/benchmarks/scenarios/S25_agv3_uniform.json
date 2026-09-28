@@ -1,0 +1,15 @@
+{
+  "id": "S25_agv3_uniform",
+  "intent": "奇数车队3无障碍",
+  "n_agvs": 3,
+  "obstacle_mode": "none",
+  "obstacle_seed": 818,
+  "task_pattern": "uniform",
+  "n_tasks": 24,
+  "seed": 801,
+  "position_csv": "S25_agv3_uniform_position.csv",
+  "task_csv": "S25_agv3_uniform_task.csv",
+  "extra_obstacles": [],
+  "max_sim_time": 900,
+  "wall_timeout": 90.0
+}

@@ -1,0 +1,371 @@
+{
+  "direction": "multi_agent_rl",
+  "device": "cuda",
+  "literature": [
+    {
+      "title": "PRIMAL: Pathfinding via Reinforcement and Imitation Multi-Agent Learning",
+      "venue": "RA-L / IROS 2019",
+      "takeaway": "Alternate BC and RL; shared decentralized policy for MAPF."
+    },
+    {
+      "title": "PRIMAL2: Lifelong MAPF with conventions",
+      "venue": "2021",
+      "takeaway": "Lifelong warehousing; environment randomization; convention learning."
+    },
+    {
+      "title": "LNS2+RL",
+      "venue": "arXiv 2405.17794",
+      "takeaway": "MARL for early collision repair + search for remaining conflicts."
+    },
+    {
+      "title": "SCRIMP",
+      "venue": "arXiv 2303.00605",
+      "takeaway": "Scalable communication; IL+RL mixture; blocking penalties."
+    }
+  ],
+  "n_agents": 3,
+  "grid": 9,
+  "bc_success_shield": 0.625,
+  "bc_success_raw": 0.775,
+  "best_success_shield": 0.8,
+  "final_success_shield": 0.58,
+  "final_success_raw": 0.6,
+  "final_arrival_rate": 0.7999999999999998,
+  "random_success": 0.0,
+  "random_arrival": 0.11333333333333333,
+  "greedy_success": 0.5,
+  "greedy_arrival": 0.7399999999999999,
+  "greedy_shield_success": 0.52,
+  "greedy_shield_arrival": 0.7733333333333333,
+  "history": [
+    {
+      "update": 0,
+      "phase": "bc",
+      "success_shield": 0.625,
+      "success_raw": 0.775,
+      "arrival": 0.8166666666666667,
+      "return": 3.0800416666666726
+    },
+    {
+      "update": 1,
+      "phase": "il_rl_mix",
+      "success_shield": 0.7,
+      "success_raw": 0.4666666666666667,
+      "arrival": 0.8666666666666667,
+      "return": 6.502722222222228
+    },
+    {
+      "update": 2,
+      "phase": "il_rl_mix",
+      "success_shield": 0.7,
+      "success_raw": 0.4666666666666667,
+      "arrival": 0.8555555555555555,
+      "return": 9.103888888888896
+    },
+    {
+      "update": 3,
+      "phase": "il_rl_mix",
+      "success_shield": 0.5666666666666667,
+      "success_raw": 0.5,
+      "arrival": 0.8,
+      "return": 6.061944444444453
+    },
+    {
+      "update": 4,
+      "phase": "il_rl_mix",
+      "success_shield": 0.43333333333333335,
+      "success_raw": 0.43333333333333335,
+      "arrival": 0.7555555555555554,
+      "return": 5.008722222222237
+    },
+    {
+      "update": 5,
+      "phase": "il_rl_mix",
+      "success_shield": 0.3333333333333333,
+      "success_raw": 0.5333333333333333,
+      "arrival": 0.7222222222222224,
+      "return": 1.5192222222222385
+    },
+    {
+      "update": 6,
+      "phase": "il_rl_mix",
+      "success_shield": 0.6333333333333333,
+      "success_raw": 0.5,
+      "arrival": 0.8333333333333335,
+      "return": 7.134111111111119
+    },
+    {
+      "update": 7,
+      "phase": "il_rl_mix",
+      "success_shield": 0.5666666666666667,
+      "success_raw": 0.6333333333333333,
+      "arrival": 0.8,
+      "return": 6.658611111111123
+    },
+    {
+      "update": 8,
+      "phase": "il_rl_mix",
+      "success_shield": 0.7,
+      "success_raw": 0.26666666666666666,
+      "arrival": 0.8666666666666668,
+      "return": 6.41344444444445
+    },
+    {
+      "update": 9,
+      "phase": "il_rl_mix",
+      "success_shield": 0.7333333333333333,
+      "success_raw": 0.4,
+      "arrival": 0.8666666666666666,
+      "return": 8.99333333333334
+    },
+    {
+      "update": 10,
+      "phase": "il_rl_mix",
+      "success_shield": 0.4666666666666667,
+      "success_raw": 0.5,
+      "arrival": 0.7777777777777779,
+      "return": 3.9308888888889015
+    },
+    {
+      "update": 11,
+      "phase": "il_rl_mix",
+      "success_shield": 0.7,
+      "success_raw": 0.5666666666666667,
+      "arrival": 0.8555555555555555,
+      "return": 4.422777777777782
+    },
+    {
+      "update": 12,
+      "phase": "il_rl_mix",
+      "success_shield": 0.5,
+      "success_raw": 0.5,
+      "arrival": 0.7555555555555554,
+      "return": 1.9873888888889006
+    },
+    {
+      "update": 13,
+      "phase": "il_rl_mix",
+      "success_shield": 0.6333333333333333,
+      "success_raw": 0.23333333333333334,
+      "arrival": 0.8666666666666667,
+      "return": 8.86072222222223
+    },
+    {
+      "update": 14,
+      "phase": "il_rl_mix",
+      "success_shield": 0.5666666666666667,
+      "success_raw": 0.5666666666666667,
+      "arrival": 0.7888888888888889,
+      "return": 5.595666666666676
+    },
+    {
+      "update": 15,
+      "phase": "il_rl_mix",
+      "success_shield": 0.6666666666666666,
+      "success_raw": 0.6,
+      "arrival": 0.8333333333333335,
+      "return": 7.535777777777782
+    },
+    {
+      "update": 16,
+      "phase": "il_rl_mix",
+      "success_shield": 0.6333333333333333,
+      "success_raw": 0.6,
+      "arrival": 0.8555555555555556,
+      "return": 9.126666666666674
+    },
+    {
+      "update": 17,
+      "phase": "il_rl_mix",
+      "success_shield": 0.6666666666666666,
+      "success_raw": 0.6333333333333333,
+      "arrival": 0.8555555555555555,
+      "return": 8.853000000000007
+    },
+    {
+      "update": 18,
+      "phase": "il_rl_mix",
+      "success_shield": 0.5,
+      "success_raw": 0.6666666666666666,
+      "arrival": 0.8111111111111112,
+      "return": 5.81211111111112
+    },
+    {
+      "update": 19,
+      "phase": "il_rl_mix",
+      "success_shield": 0.5333333333333333,
+      "success_raw": 0.43333333333333335,
+      "arrival": 0.8333333333333335,
+      "return": 7.918388888888895
+    },
+    {
+      "update": 20,
+      "phase": "il_rl_mix",
+      "success_shield": 0.43333333333333335,
+      "success_raw": 0.43333333333333335,
+      "arrival": 0.6888888888888888,
+      "return": -1.0609444444444358
+    },
+    {
+      "update": 21,
+      "phase": "il_rl_mix",
+      "success_shield": 0.5333333333333333,
+      "success_raw": 0.5333333333333333,
+      "arrival": 0.788888888888889,
+      "return": 4.138888888888898
+    },
+    {
+      "update": 22,
+      "phase": "il_rl_mix",
+      "success_shield": 0.5666666666666667,
+      "success_raw": 0.43333333333333335,
+      "arrival": 0.8333333333333334,
+      "return": 6.125166666666674
+    },
+    {
+      "update": 23,
+      "phase": "il_rl_mix",
+      "success_shield": 0.5666666666666667,
+      "success_raw": 0.4666666666666667,
+      "arrival": 0.7888888888888889,
+      "return": 3.82950000000001
+    },
+    {
+      "update": 24,
+      "phase": "il_rl_mix",
+      "success_shield": 0.6666666666666666,
+      "success_raw": 0.6333333333333333,
+      "arrival": 0.8444444444444444,
+      "return": 7.439111111111116
+    },
+    {
+      "update": 25,
+      "phase": "il_rl_mix",
+      "success_shield": 0.36666666666666664,
+      "success_raw": 0.4,
+      "arrival": 0.6777777777777778,
+      "return": -3.559055555555545
+    },
+    {
+      "update": 26,
+      "phase": "il_rl_mix",
+      "success_shield": 0.3,
+      "success_raw": 0.5,
+      "arrival": 0.6444444444444444,
+      "return": -5.240777777777767
+    },
+    {
+      "update": 27,
+      "phase": "il_rl_mix",
+      "success_shield": 0.6,
+      "success_raw": 0.3,
+      "arrival": 0.8,
+      "return": 0.7493333333333422
+    },
+    {
+      "update": 28,
+      "phase": "il_rl_mix",
+      "success_shield": 0.6666666666666666,
+      "success_raw": 0.5666666666666667,
+      "arrival": 0.8444444444444446,
+      "return": 5.655055555555561
+    },
+    {
+      "update": 29,
+      "phase": "il_rl_mix",
+      "success_shield": 0.43333333333333335,
+      "success_raw": 0.4666666666666667,
+      "arrival": 0.7333333333333335,
+      "return": 0.6332222222222332
+    },
+    {
+      "update": 30,
+      "phase": "il_rl_mix",
+      "success_shield": 0.6,
+      "success_raw": 0.5,
+      "arrival": 0.8111111111111111,
+      "return": 5.257000000000008
+    },
+    {
+      "update": 31,
+      "phase": "il_rl_mix",
+      "success_shield": 0.7333333333333333,
+      "success_raw": 0.5333333333333333,
+      "arrival": 0.888888888888889,
+      "return": 9.894500000000004
+    },
+    {
+      "update": 32,
+      "phase": "il_rl_mix",
+      "success_shield": 0.8,
+      "success_raw": 0.4,
+      "arrival": 0.9000000000000001,
+      "return": 9.145777777777782
+    },
+    {
+      "update": 33,
+      "phase": "il_rl_mix",
+      "success_shield": 0.6,
+      "success_raw": 0.4666666666666667,
+      "arrival": 0.7555555555555556,
+      "return": -0.5982777777777707
+    },
+    {
+      "update": 34,
+      "phase": "il_rl_mix",
+      "success_shield": 0.6333333333333333,
+      "success_raw": 0.36666666666666664,
+      "arrival": 0.8555555555555557,
+      "return": 7.947166666666672
+    },
+    {
+      "update": 35,
+      "phase": "il_rl_mix",
+      "success_shield": 0.6333333333333333,
+      "success_raw": 0.5333333333333333,
+      "arrival": 0.8333333333333333,
+      "return": 6.375222222222229
+    },
+    {
+      "update": 36,
+      "phase": "il_rl_mix",
+      "success_shield": 0.6333333333333333,
+      "success_raw": 0.43333333333333335,
+      "arrival": 0.7888888888888889,
+      "return": 2.492555555555563
+    },
+    {
+      "update": 37,
+      "phase": "il_rl_mix",
+      "success_shield": 0.7,
+      "success_raw": 0.43333333333333335,
+      "arrival": 0.8666666666666668,
+      "return": 9.024666666666672
+    },
+    {
+      "update": 38,
+      "phase": "il_rl_mix",
+      "success_shield": 0.7,
+      "success_raw": 0.6333333333333333,
+      "arrival": 0.888888888888889,
+      "return": 9.416111111111116
+    },
+    {
+      "update": 39,
+      "phase": "il_rl_mix",
+      "success_shield": 0.6,
+      "success_raw": 0.6333333333333333,
+      "arrival": 0.8333333333333333,
+      "return": 5.486166666666676
+    },
+    {
+      "update": 40,
+      "phase": "il_rl_mix",
+      "success_shield": 0.6,
+      "success_raw": 0.7,
+      "arrival": 0.8222222222222222,
+      "return": 7.358333333333342
+    }
+  ],
+  "method": "PRIMAL-style BC then IL+RL mix; CS-PIBT-like 1-step collision shield"
+}

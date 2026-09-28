@@ -1,0 +1,15 @@
+{
+  "id": "S17_cross_agv4",
+  "intent": "少车交叉流易超时",
+  "n_agvs": 4,
+  "obstacle_mode": "none",
+  "obstacle_seed": 521,
+  "task_pattern": "cross_flow",
+  "n_tasks": 24,
+  "seed": 504,
+  "position_csv": "S17_cross_agv4_position.csv",
+  "task_csv": "S17_cross_agv4_task.csv",
+  "extra_obstacles": [],
+  "max_sim_time": 800,
+  "wall_timeout": 75.0
+}

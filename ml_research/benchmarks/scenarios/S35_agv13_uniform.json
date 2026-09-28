@@ -1,0 +1,15 @@
+{
+  "id": "S35_agv13_uniform",
+  "intent": "奇数车队13无障碍",
+  "n_agvs": 13,
+  "obstacle_mode": "none",
+  "obstacle_seed": 828,
+  "task_pattern": "clustered_dest",
+  "n_tasks": 32,
+  "seed": 811,
+  "position_csv": "S35_agv13_uniform_position.csv",
+  "task_csv": "S35_agv13_uniform_task.csv",
+  "extra_obstacles": [],
+  "max_sim_time": 900,
+  "wall_timeout": 90.0
+}

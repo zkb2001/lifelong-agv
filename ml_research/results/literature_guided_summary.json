@@ -1,0 +1,89 @@
+{
+  "title": "Three-direction literature-guided GPU experiments",
+  "device": "cuda RTX 4060",
+  "expert_base": "improved A* + cost-matrix (main copy.py untouched)",
+  "directions": {
+    "1_imitation_learning": {
+      "papers": [
+        "MAPF-GPT (AAAI 2025)",
+        "CS-PIBT simple IL (arXiv 2409.14491)",
+        "SILLM (arXiv 2410.21415)",
+        "SCRIMP (arXiv 2303.00605)"
+      ],
+      "improvements": ["Focal+class weight", "Weighted sampler", "1-step collision shield demo"],
+      "results": {
+        "v1_overall_val_acc": 0.787,
+        "v1_turn_left_acc": 0.054,
+        "v2_overall_val_acc": 0.266,
+        "v2_turn_left_acc": 0.828,
+        "v2_turn_right_acc": 0.617,
+        "insight": "Rebalancing rare turns trades overall accuracy for cooperative-action recall (matches MAPF IL literature)."
+      },
+      "result_file": "dir1_imitation_learning.json"
+    },
+    "2_neural_heuristic_conflict": {
+      "papers": [
+        "Neural A* (ICML 2021)",
+        "Neural Weighted A* (LOD 2021)"
+      ],
+      "improvements": ["Learn residual Delta=opt-manhattan", "h=man+relu(Delta)", "focal-style 1.5*Delta"],
+      "results": {
+        "manhattan_expansions": 115.77,
+        "residual_expansions": 27.99,
+        "focal_expansions": 24.88,
+        "expansion_reduction_residual": 0.758,
+        "expansion_reduction_focal": 0.785,
+        "cost_ratio": 1.0,
+        "conflict_f1": 0.989,
+        "insight": "Residual/weighted heuristic cuts ~76-79% expansions with same path cost; naive h replacement previously failed."
+      },
+      "result_file": "dir2_summary.json"
+    },
+    "3_multi_agent_rl": {
+      "papers": [
+        "PRIMAL / PRIMAL2",
+        "LNS2+RL (arXiv 2405.17794)",
+        "SCRIMP",
+        "SJRL search-aided RL"
+      ],
+      "improvements": ["PRIMAL-style BC then IL+RL mix", "CS-like 1-step shield", "3 agents"],
+      "results": {
+        "n_agents": 3,
+        "grid": 9,
+        "bc_success_raw": 0.78,
+        "best_success_shield": 0.80,
+        "final_success_shield": 0.58,
+        "greedy_success": 0.50,
+        "random_success": 0.00,
+        "insight": "IL+RL hybrid beats greedy/random on small multi-AGV nav; shield helps some rollouts but can over-wait."
+      },
+      "result_file": "dir3_marl.json"
+    }
+  },
+  "recommended_thesis_ranking": [
+    {
+      "rank": 1,
+      "topic": "Residual neural heuristic accelerating warehouse A* under turn costs",
+      "why": "Strongest quantitative win (76%+ fewer expansions, cost preserved); clear theory link to Neural Weighted A*; plugs directly into existing planner.",
+      "next_work": ["Integrate into main A*", "dynamic obstacles", "admissibility/suboptimality bounds", "extreme congestion tasks"]
+    },
+    {
+      "rank": 2,
+      "topic": "Hybrid expert A*/cost-matrix + IL policy with collision shield",
+      "why": "Aligns with MAPF-GPT/SILLM/CS-PIBT SOTA narrative; uses your expert trajectories; practical for thesis engineering chapter.",
+      "next_work": ["Closed-loop eval on full 12-AGV warehouse", "DAgger/DDG fine-tune", "proper PIBT shield"]
+    },
+    {
+      "rank": 3,
+      "topic": "Conflict-aware cost inflation for task allocation and path planning",
+      "why": "Conflict F1~0.99; can augment cost-matrix allocation and A* temp obstacles.",
+      "next_work": ["Online coupling with Simulation", "false-positive cost analysis"]
+    },
+    {
+      "rank": 4,
+      "topic": "PRIMAL-style IL+RL for AGV with rotation kinematics",
+      "why": "Valid but harder to scale; better as extension chapter than sole contribution.",
+      "next_work": ["Curriculum to 12 agents", "lifelong tasks", "search-aided shield"]
+    }
+  ]
+}

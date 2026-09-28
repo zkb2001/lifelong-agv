@@ -1,0 +1,1165 @@
+{
+  "id": "SH_custom_20",
+  "map_id": "SH_custom_20",
+  "format_version": 2,
+  "grid_min": 1,
+  "grid_max": 20,
+  "n_agvs": 30,
+  "n_pickups": 6,
+  "n_dropoffs": 16,
+  "n_tasks": 100,
+  "pickups": [
+    {
+      "name": "Tiger",
+      "x": 1,
+      "y": 6
+    },
+    {
+      "name": "Dragon",
+      "x": 1,
+      "y": 10
+    },
+    {
+      "name": "Horse",
+      "x": 1,
+      "y": 14
+    },
+    {
+      "name": "Rabbit",
+      "x": 20,
+      "y": 6
+    },
+    {
+      "name": "Ox",
+      "x": 20,
+      "y": 10
+    },
+    {
+      "name": "Monkey",
+      "x": 20,
+      "y": 14
+    }
+  ],
+  "dropoffs": [
+    {
+      "name": "Beijing",
+      "x": 6,
+      "y": 4
+    },
+    {
+      "name": "Shanghai",
+      "x": 6,
+      "y": 8
+    },
+    {
+      "name": "Suzhou",
+      "x": 6,
+      "y": 12
+    },
+    {
+      "name": "Hangzhou",
+      "x": 6,
+      "y": 16
+    },
+    {
+      "name": "Nanjing",
+      "x": 9,
+      "y": 4
+    },
+    {
+      "name": "Wuhan",
+      "x": 9,
+      "y": 8
+    },
+    {
+      "name": "Changsha",
+      "x": 9,
+      "y": 12
+    },
+    {
+      "name": "Guangzhou",
+      "x": 9,
+      "y": 16
+    },
+    {
+      "name": "Chengdu",
+      "x": 12,
+      "y": 4
+    },
+    {
+      "name": "Xiamen",
+      "x": 12,
+      "y": 8
+    },
+    {
+      "name": "Kunming",
+      "x": 12,
+      "y": 12
+    },
+    {
+      "name": "Urumqi",
+      "x": 12,
+      "y": 16
+    },
+    {
+      "name": "Shenzhen",
+      "x": 15,
+      "y": 4
+    },
+    {
+      "name": "Dalian",
+      "x": 15,
+      "y": 8
+    },
+    {
+      "name": "Tianjin",
+      "x": 15,
+      "y": 12
+    },
+    {
+      "name": "Chongqing",
+      "x": 15,
+      "y": 16
+    }
+  ],
+  "agvs": [
+    {
+      "name": "Optimus",
+      "x": 3,
+      "y": 1,
+      "pitch": 90
+    },
+    {
+      "name": "Bumblebee",
+      "x": 6,
+      "y": 1,
+      "pitch": 90
+    },
+    {
+      "name": "Jazz",
+      "x": 9,
+      "y": 1,
+      "pitch": 90
+    },
+    {
+      "name": "Sideswipe",
+      "x": 12,
+      "y": 1,
+      "pitch": 90
+    },
+    {
+      "name": "Wheeljack",
+      "x": 15,
+      "y": 1,
+      "pitch": 90
+    },
+    {
+      "name": "Ratchet",
+      "x": 18,
+      "y": 1,
+      "pitch": 90
+    },
+    {
+      "name": "Ironhide",
+      "x": 3,
+      "y": 20,
+      "pitch": 270
+    },
+    {
+      "name": "Hound",
+      "x": 6,
+      "y": 20,
+      "pitch": 270
+    },
+    {
+      "name": "Smokescreen",
+      "x": 9,
+      "y": 20,
+      "pitch": 270
+    },
+    {
+      "name": "Megatron",
+      "x": 12,
+      "y": 20,
+      "pitch": 270
+    },
+    {
+      "name": "Bluestreak",
+      "x": 15,
+      "y": 20,
+      "pitch": 270
+    },
+    {
+      "name": "RedAlert",
+      "x": 18,
+      "y": 20,
+      "pitch": 270
+    },
+    {
+      "name": "Prime",
+      "x": 4,
+      "y": 10,
+      "pitch": 0
+    },
+    {
+      "name": "Prowl",
+      "x": 8,
+      "y": 10,
+      "pitch": 0
+    },
+    {
+      "name": "Mirage",
+      "x": 13,
+      "y": 10,
+      "pitch": 180
+    },
+    {
+      "name": "Sunstreaker",
+      "x": 17,
+      "y": 10,
+      "pitch": 180
+    },
+    {
+      "name": "HotRod",
+      "x": 2,
+      "y": 8,
+      "pitch": 0
+    },
+    {
+      "name": "Kup",
+      "x": 2,
+      "y": 12,
+      "pitch": 0
+    },
+    {
+      "name": "Arcee",
+      "x": 5,
+      "y": 3,
+      "pitch": 90
+    },
+    {
+      "name": "Chromia",
+      "x": 8,
+      "y": 3,
+      "pitch": 90
+    },
+    {
+      "name": "Elita",
+      "x": 11,
+      "y": 3,
+      "pitch": 90
+    },
+    {
+      "name": "Flamewar",
+      "x": 14,
+      "y": 3,
+      "pitch": 90
+    },
+    {
+      "name": "Moonracer",
+      "x": 17,
+      "y": 3,
+      "pitch": 90
+    },
+    {
+      "name": "Novastar",
+      "x": 19,
+      "y": 8,
+      "pitch": 180
+    },
+    {
+      "name": "Greenlight",
+      "x": 19,
+      "y": 12,
+      "pitch": 180
+    },
+    {
+      "name": "Strongarm",
+      "x": 5,
+      "y": 18,
+      "pitch": 270
+    },
+    {
+      "name": "Windblade",
+      "x": 8,
+      "y": 18,
+      "pitch": 270
+    },
+    {
+      "name": "Override",
+      "x": 11,
+      "y": 18,
+      "pitch": 270
+    },
+    {
+      "name": "Thunderblast",
+      "x": 14,
+      "y": 18,
+      "pitch": 270
+    },
+    {
+      "name": "Slipstream",
+      "x": 17,
+      "y": 18,
+      "pitch": 270
+    }
+  ],
+  "tasks": [
+    {
+      "task_id": "Ox-1",
+      "start_point": "Ox",
+      "end_point": "Nanjing",
+      "priority": "Urgent",
+      "remaining_time": 100
+    },
+    {
+      "task_id": "Dragon-1",
+      "start_point": "Dragon",
+      "end_point": "Changsha",
+      "priority": "Urgent",
+      "remaining_time": 130
+    },
+    {
+      "task_id": "Horse-1",
+      "start_point": "Horse",
+      "end_point": "Chengdu",
+      "priority": "Urgent",
+      "remaining_time": 160
+    },
+    {
+      "task_id": "Ox-2",
+      "start_point": "Ox",
+      "end_point": "Xiamen",
+      "priority": "Urgent",
+      "remaining_time": 190
+    },
+    {
+      "task_id": "Rabbit-1",
+      "start_point": "Rabbit",
+      "end_point": "Shenzhen",
+      "priority": "Urgent",
+      "remaining_time": 220
+    },
+    {
+      "task_id": "Ox-3",
+      "start_point": "Ox",
+      "end_point": "Beijing",
+      "priority": "Urgent",
+      "remaining_time": 250
+    },
+    {
+      "task_id": "Tiger-1",
+      "start_point": "Tiger",
+      "end_point": "Shanghai",
+      "priority": "Urgent",
+      "remaining_time": 280
+    },
+    {
+      "task_id": "Monkey-1",
+      "start_point": "Monkey",
+      "end_point": "Suzhou",
+      "priority": "Urgent",
+      "remaining_time": 310
+    },
+    {
+      "task_id": "Monkey-2",
+      "start_point": "Monkey",
+      "end_point": "Hangzhou",
+      "priority": "Urgent",
+      "remaining_time": 340
+    },
+    {
+      "task_id": "Horse-2",
+      "start_point": "Horse",
+      "end_point": "Suzhou",
+      "priority": "Urgent",
+      "remaining_time": 370
+    },
+    {
+      "task_id": "Tiger-2",
+      "start_point": "Tiger",
+      "end_point": "Shenzhen",
+      "priority": "Normal",
+      "remaining_time": null
+    },
+    {
+      "task_id": "Dragon-2",
+      "start_point": "Dragon",
+      "end_point": "Xiamen",
+      "priority": "Normal",
+      "remaining_time": null
+    },
+    {
+      "task_id": "Tiger-3",
+      "start_point": "Tiger",
+      "end_point": "Dalian",
+      "priority": "Normal",
+      "remaining_time": null
+    },
+    {
+      "task_id": "Dragon-3",
+      "start_point": "Dragon",
+      "end_point": "Shenzhen",
+      "priority": "Normal",
+      "remaining_time": null
+    },
+    {
+      "task_id": "Tiger-4",
+      "start_point": "Tiger",
+      "end_point": "Dalian",
+      "priority": "Normal",
+      "remaining_time": null
+    },
+    {
+      "task_id": "Horse-3",
+      "start_point": "Horse",
+      "end_point": "Tianjin",
+      "priority": "Normal",
+      "remaining_time": null
+    },
+    {
+      "task_id": "Dragon-4",
+      "start_point": "Dragon",
+      "end_point": "Kunming",
+      "priority": "Normal",
+      "remaining_time": null
+    },
+    {
+      "task_id": "Horse-4",
+      "start_point": "Horse",
+      "end_point": "Kunming",
+      "priority": "Normal",
+      "remaining_time": null
+    },
+    {
+      "task_id": "Horse-5",
+      "start_point": "Horse",
+      "end_point": "Tianjin",
+      "priority": "Normal",
+      "remaining_time": null
+    },
+    {
+      "task_id": "Horse-6",
+      "start_point": "Horse",
+      "end_point": "Shenzhen",
+      "priority": "Normal",
+      "remaining_time": null
+    },
+    {
+      "task_id": "Tiger-5",
+      "start_point": "Tiger",
+      "end_point": "Tianjin",
+      "priority": "Normal",
+      "remaining_time": null
+    },
+    {
+      "task_id": "Dragon-5",
+      "start_point": "Dragon",
+      "end_point": "Chengdu",
+      "priority": "Normal",
+      "remaining_time": null
+    },
+    {
+      "task_id": "Dragon-6",
+      "start_point": "Dragon",
+      "end_point": "Chongqing",
+      "priority": "Normal",
+      "remaining_time": null
+    },
+    {
+      "task_id": "Dragon-7",
+      "start_point": "Dragon",
+      "end_point": "Chongqing",
+      "priority": "Normal",
+      "remaining_time": null
+    },
+    {
+      "task_id": "Tiger-6",
+      "start_point": "Tiger",
+      "end_point": "Shenzhen",
+      "priority": "Normal",
+      "remaining_time": null
+    },
+    {
+      "task_id": "Horse-7",
+      "start_point": "Horse",
+      "end_point": "Chengdu",
+      "priority": "Normal",
+      "remaining_time": null
+    },
+    {
+      "task_id": "Horse-8",
+      "start_point": "Horse",
+      "end_point": "Shenzhen",
+      "priority": "Normal",
+      "remaining_time": null
+    },
+    {
+      "task_id": "Horse-9",
+      "start_point": "Horse",
+      "end_point": "Tianjin",
+      "priority": "Normal",
+      "remaining_time": null
+    },
+    {
+      "task_id": "Tiger-7",
+      "start_point": "Tiger",
+      "end_point": "Dalian",
+      "priority": "Normal",
+      "remaining_time": null
+    },
+    {
+      "task_id": "Tiger-8",
+      "start_point": "Tiger",
+      "end_point": "Kunming",
+      "priority": "Normal",
+      "remaining_time": null
+    },
+    {
+      "task_id": "Tiger-9",
+      "start_point": "Tiger",
+      "end_point": "Shenzhen",
+      "priority": "Normal",
+      "remaining_time": null
+    },
+    {
+      "task_id": "Horse-10",
+      "start_point": "Horse",
+      "end_point": "Kunming",
+      "priority": "Normal",
+      "remaining_time": null
+    },
+    {
+      "task_id": "Horse-11",
+      "start_point": "Horse",
+      "end_point": "Tianjin",
+      "priority": "Normal",
+      "remaining_time": null
+    },
+    {
+      "task_id": "Dragon-8",
+      "start_point": "Dragon",
+      "end_point": "Shenzhen",
+      "priority": "Normal",
+      "remaining_time": null
+    },
+    {
+      "task_id": "Horse-12",
+      "start_point": "Horse",
+      "end_point": "Urumqi",
+      "priority": "Normal",
+      "remaining_time": null
+    },
+    {
+      "task_id": "Dragon-9",
+      "start_point": "Dragon",
+      "end_point": "Urumqi",
+      "priority": "Normal",
+      "remaining_time": null
+    },
+    {
+      "task_id": "Horse-13",
+      "start_point": "Horse",
+      "end_point": "Chongqing",
+      "priority": "Normal",
+      "remaining_time": null
+    },
+    {
+      "task_id": "Dragon-10",
+      "start_point": "Dragon",
+      "end_point": "Xiamen",
+      "priority": "Normal",
+      "remaining_time": null
+    },
+    {
+      "task_id": "Dragon-11",
+      "start_point": "Dragon",
+      "end_point": "Xiamen",
+      "priority": "Normal",
+      "remaining_time": null
+    },
+    {
+      "task_id": "Tiger-10",
+      "start_point": "Tiger",
+      "end_point": "Kunming",
+      "priority": "Normal",
+      "remaining_time": null
+    },
+    {
+      "task_id": "Ox-4",
+      "start_point": "Ox",
+      "end_point": "Xiamen",
+      "priority": "Normal",
+      "remaining_time": null
+    },
+    {
+      "task_id": "Dragon-12",
+      "start_point": "Dragon",
+      "end_point": "Xiamen",
+      "priority": "Normal",
+      "remaining_time": null
+    },
+    {
+      "task_id": "Rabbit-2",
+      "start_point": "Rabbit",
+      "end_point": "Xiamen",
+      "priority": "Normal",
+      "remaining_time": null
+    },
+    {
+      "task_id": "Dragon-13",
+      "start_point": "Dragon",
+      "end_point": "Xiamen",
+      "priority": "Normal",
+      "remaining_time": null
+    },
+    {
+      "task_id": "Rabbit-3",
+      "start_point": "Rabbit",
+      "end_point": "Xiamen",
+      "priority": "Normal",
+      "remaining_time": null
+    },
+    {
+      "task_id": "Rabbit-4",
+      "start_point": "Rabbit",
+      "end_point": "Xiamen",
+      "priority": "Normal",
+      "remaining_time": null
+    },
+    {
+      "task_id": "Horse-14",
+      "start_point": "Horse",
+      "end_point": "Xiamen",
+      "priority": "Normal",
+      "remaining_time": null
+    },
+    {
+      "task_id": "Dragon-14",
+      "start_point": "Dragon",
+      "end_point": "Xiamen",
+      "priority": "Normal",
+      "remaining_time": null
+    },
+    {
+      "task_id": "Monkey-3",
+      "start_point": "Monkey",
+      "end_point": "Xiamen",
+      "priority": "Normal",
+      "remaining_time": null
+    },
+    {
+      "task_id": "Monkey-4",
+      "start_point": "Monkey",
+      "end_point": "Xiamen",
+      "priority": "Normal",
+      "remaining_time": null
+    },
+    {
+      "task_id": "Tiger-11",
+      "start_point": "Tiger",
+      "end_point": "Xiamen",
+      "priority": "Normal",
+      "remaining_time": null
+    },
+    {
+      "task_id": "Dragon-15",
+      "start_point": "Dragon",
+      "end_point": "Xiamen",
+      "priority": "Normal",
+      "remaining_time": null
+    },
+    {
+      "task_id": "Tiger-12",
+      "start_point": "Tiger",
+      "end_point": "Xiamen",
+      "priority": "Normal",
+      "remaining_time": null
+    },
+    {
+      "task_id": "Monkey-5",
+      "start_point": "Monkey",
+      "end_point": "Xiamen",
+      "priority": "Normal",
+      "remaining_time": null
+    },
+    {
+      "task_id": "Dragon-16",
+      "start_point": "Dragon",
+      "end_point": "Xiamen",
+      "priority": "Normal",
+      "remaining_time": null
+    },
+    {
+      "task_id": "Dragon-17",
+      "start_point": "Dragon",
+      "end_point": "Xiamen",
+      "priority": "Normal",
+      "remaining_time": null
+    },
+    {
+      "task_id": "Dragon-18",
+      "start_point": "Dragon",
+      "end_point": "Xiamen",
+      "priority": "Normal",
+      "remaining_time": null
+    },
+    {
+      "task_id": "Dragon-19",
+      "start_point": "Dragon",
+      "end_point": "Xiamen",
+      "priority": "Normal",
+      "remaining_time": null
+    },
+    {
+      "task_id": "Dragon-20",
+      "start_point": "Dragon",
+      "end_point": "Xiamen",
+      "priority": "Normal",
+      "remaining_time": null
+    },
+    {
+      "task_id": "Horse-15",
+      "start_point": "Horse",
+      "end_point": "Xiamen",
+      "priority": "Normal",
+      "remaining_time": null
+    },
+    {
+      "task_id": "Dragon-21",
+      "start_point": "Dragon",
+      "end_point": "Xiamen",
+      "priority": "Normal",
+      "remaining_time": null
+    },
+    {
+      "task_id": "Rabbit-5",
+      "start_point": "Rabbit",
+      "end_point": "Xiamen",
+      "priority": "Normal",
+      "remaining_time": null
+    },
+    {
+      "task_id": "Dragon-22",
+      "start_point": "Dragon",
+      "end_point": "Xiamen",
+      "priority": "Normal",
+      "remaining_time": null
+    },
+    {
+      "task_id": "Ox-5",
+      "start_point": "Ox",
+      "end_point": "Xiamen",
+      "priority": "Normal",
+      "remaining_time": null
+    },
+    {
+      "task_id": "Ox-6",
+      "start_point": "Ox",
+      "end_point": "Xiamen",
+      "priority": "Normal",
+      "remaining_time": null
+    },
+    {
+      "task_id": "Dragon-23",
+      "start_point": "Dragon",
+      "end_point": "Xiamen",
+      "priority": "Normal",
+      "remaining_time": null
+    },
+    {
+      "task_id": "Monkey-6",
+      "start_point": "Monkey",
+      "end_point": "Xiamen",
+      "priority": "Normal",
+      "remaining_time": null
+    },
+    {
+      "task_id": "Ox-7",
+      "start_point": "Ox",
+      "end_point": "Xiamen",
+      "priority": "Normal",
+      "remaining_time": null
+    },
+    {
+      "task_id": "Dragon-24",
+      "start_point": "Dragon",
+      "end_point": "Xiamen",
+      "priority": "Normal",
+      "remaining_time": null
+    },
+    {
+      "task_id": "Dragon-25",
+      "start_point": "Dragon",
+      "end_point": "Xiamen",
+      "priority": "Normal",
+      "remaining_time": null
+    },
+    {
+      "task_id": "Monkey-7",
+      "start_point": "Monkey",
+      "end_point": "Chengdu",
+      "priority": "Normal",
+      "remaining_time": null
+    },
+    {
+      "task_id": "Monkey-8",
+      "start_point": "Monkey",
+      "end_point": "Shanghai",
+      "priority": "Normal",
+      "remaining_time": null
+    },
+    {
+      "task_id": "Rabbit-6",
+      "start_point": "Rabbit",
+      "end_point": "Suzhou",
+      "priority": "Normal",
+      "remaining_time": null
+    },
+    {
+      "task_id": "Tiger-13",
+      "start_point": "Tiger",
+      "end_point": "Xiamen",
+      "priority": "Normal",
+      "remaining_time": null
+    },
+    {
+      "task_id": "Rabbit-7",
+      "start_point": "Rabbit",
+      "end_point": "Shenzhen",
+      "priority": "Normal",
+      "remaining_time": null
+    },
+    {
+      "task_id": "Monkey-9",
+      "start_point": "Monkey",
+      "end_point": "Wuhan",
+      "priority": "Normal",
+      "remaining_time": null
+    },
+    {
+      "task_id": "Tiger-14",
+      "start_point": "Tiger",
+      "end_point": "Tianjin",
+      "priority": "Normal",
+      "remaining_time": null
+    },
+    {
+      "task_id": "Horse-16",
+      "start_point": "Horse",
+      "end_point": "Changsha",
+      "priority": "Normal",
+      "remaining_time": null
+    },
+    {
+      "task_id": "Horse-17",
+      "start_point": "Horse",
+      "end_point": "Nanjing",
+      "priority": "Normal",
+      "remaining_time": null
+    },
+    {
+      "task_id": "Monkey-10",
+      "start_point": "Monkey",
+      "end_point": "Xiamen",
+      "priority": "Normal",
+      "remaining_time": null
+    },
+    {
+      "task_id": "Monkey-11",
+      "start_point": "Monkey",
+      "end_point": "Nanjing",
+      "priority": "Normal",
+      "remaining_time": null
+    },
+    {
+      "task_id": "Tiger-15",
+      "start_point": "Tiger",
+      "end_point": "Nanjing",
+      "priority": "Normal",
+      "remaining_time": null
+    },
+    {
+      "task_id": "Rabbit-8",
+      "start_point": "Rabbit",
+      "end_point": "Tianjin",
+      "priority": "Normal",
+      "remaining_time": null
+    },
+    {
+      "task_id": "Monkey-12",
+      "start_point": "Monkey",
+      "end_point": "Hangzhou",
+      "priority": "Normal",
+      "remaining_time": null
+    },
+    {
+      "task_id": "Dragon-26",
+      "start_point": "Dragon",
+      "end_point": "Nanjing",
+      "priority": "Normal",
+      "remaining_time": null
+    },
+    {
+      "task_id": "Rabbit-9",
+      "start_point": "Rabbit",
+      "end_point": "Shanghai",
+      "priority": "Normal",
+      "remaining_time": null
+    },
+    {
+      "task_id": "Monkey-13",
+      "start_point": "Monkey",
+      "end_point": "Guangzhou",
+      "priority": "Normal",
+      "remaining_time": null
+    },
+    {
+      "task_id": "Tiger-16",
+      "start_point": "Tiger",
+      "end_point": "Kunming",
+      "priority": "Normal",
+      "remaining_time": null
+    },
+    {
+      "task_id": "Monkey-14",
+      "start_point": "Monkey",
+      "end_point": "Shenzhen",
+      "priority": "Normal",
+      "remaining_time": null
+    },
+    {
+      "task_id": "Monkey-15",
+      "start_point": "Monkey",
+      "end_point": "Chengdu",
+      "priority": "Normal",
+      "remaining_time": null
+    },
+    {
+      "task_id": "Ox-8",
+      "start_point": "Ox",
+      "end_point": "Chongqing",
+      "priority": "Normal",
+      "remaining_time": null
+    },
+    {
+      "task_id": "Monkey-16",
+      "start_point": "Monkey",
+      "end_point": "Tianjin",
+      "priority": "Normal",
+      "remaining_time": null
+    },
+    {
+      "task_id": "Dragon-27",
+      "start_point": "Dragon",
+      "end_point": "Wuhan",
+      "priority": "Normal",
+      "remaining_time": null
+    },
+    {
+      "task_id": "Dragon-28",
+      "start_point": "Dragon",
+      "end_point": "Xiamen",
+      "priority": "Normal",
+      "remaining_time": null
+    },
+    {
+      "task_id": "Dragon-29",
+      "start_point": "Dragon",
+      "end_point": "Beijing",
+      "priority": "Normal",
+      "remaining_time": null
+    },
+    {
+      "task_id": "Monkey-17",
+      "start_point": "Monkey",
+      "end_point": "Changsha",
+      "priority": "Normal",
+      "remaining_time": null
+    },
+    {
+      "task_id": "Monkey-18",
+      "start_point": "Monkey",
+      "end_point": "Wuhan",
+      "priority": "Normal",
+      "remaining_time": null
+    },
+    {
+      "task_id": "Dragon-30",
+      "start_point": "Dragon",
+      "end_point": "Changsha",
+      "priority": "Normal",
+      "remaining_time": null
+    },
+    {
+      "task_id": "Horse-18",
+      "start_point": "Horse",
+      "end_point": "Xiamen",
+      "priority": "Normal",
+      "remaining_time": null
+    },
+    {
+      "task_id": "Tiger-17",
+      "start_point": "Tiger",
+      "end_point": "Changsha",
+      "priority": "Normal",
+      "remaining_time": null
+    }
+  ],
+  "extra_obstacles": [
+    [
+      0,
+      0
+    ],
+    [
+      0,
+      1
+    ],
+    [
+      0,
+      2
+    ],
+    [
+      0,
+      3
+    ],
+    [
+      0,
+      4
+    ],
+    [
+      0,
+      5
+    ],
+    [
+      0,
+      7
+    ],
+    [
+      0,
+      8
+    ],
+    [
+      0,
+      9
+    ],
+    [
+      0,
+      11
+    ],
+    [
+      0,
+      12
+    ],
+    [
+      0,
+      13
+    ],
+    [
+      0,
+      15
+    ],
+    [
+      0,
+      16
+    ],
+    [
+      0,
+      17
+    ],
+    [
+      0,
+      18
+    ],
+    [
+      0,
+      19
+    ],
+    [
+      0,
+      20
+    ],
+    [
+      1,
+      0
+    ],
+    [
+      2,
+      0
+    ],
+    [
+      3,
+      0
+    ],
+    [
+      4,
+      0
+    ],
+    [
+      5,
+      0
+    ],
+    [
+      6,
+      0
+    ],
+    [
+      7,
+      0
+    ],
+    [
+      8,
+      0
+    ],
+    [
+      9,
+      0
+    ],
+    [
+      10,
+      0
+    ],
+    [
+      11,
+      0
+    ],
+    [
+      12,
+      0
+    ],
+    [
+      13,
+      0
+    ],
+    [
+      14,
+      0
+    ],
+    [
+      15,
+      0
+    ],
+    [
+      16,
+      0
+    ],
+    [
+      17,
+      0
+    ],
+    [
+      18,
+      0
+    ],
+    [
+      19,
+      0
+    ],
+    [
+      20,
+      0
+    ]
+  ],
+  "notes": "from SH20_maze_agv30 @ L100 | maze_soft",
+  "compatible_with": "curriculum_shape ladder (position CSV + task CSV + extra_obstacles)"
+}

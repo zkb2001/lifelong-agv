@@ -1,0 +1,12 @@
+torch
+torchvision
+pandas
+numpy
+matplotlib
+scikit-learn
+tqdm
+openpyxl
+pygame
+imageio
+imageio-ffmpeg
+pymapf
