@@ -1,0 +1,17 @@
+{
+  "slot": 1,
+  "use_mats_local": true,
+  "tasks_completed": 100,
+  "tasks_total": 100,
+  "completion_ratio": 1.0,
+  "sim_time": 557,
+  "wall_seconds": 13.24,
+  "validate_ok": true,
+  "validate_summary": "VALID ok",
+  "m0_handoff": false,
+  "m0_handoff_t": null,
+  "m0_handoff_reason": null,
+  "n_mats_local_defer": 0,
+  "mats_local_last": null,
+  "trajectory": "D:\\compitition\\MioVerse\\final_version\\ml_research\\results\\coord_custom_ai\\ecbs\\trajectories\\SH01_mats_on_m0_engine_swap.csv"
+}

@@ -68,6 +68,7 @@ def pibt_one_step(
     blocked: Set[Cell],
     fixed: Optional[Set[str]] = None,
     dist_fields: Optional[Dict[Cell, Dict[Cell, int]]] = None,
+    forbid: Optional[Dict[str, Set[Cell]]] = None,
     lo: int = 1,
     hi: int = 20,
 ) -> Dict[str, Cell]:
@@ -76,8 +77,10 @@ def pibt_one_step(
     ``fixed`` agents stay put (must turn / dwell); their cells are reserved
     before the PIBT search so movers do not plan into a turn-in-place body.
     ``dist_fields`` maps goal -> BFS distance map (preferred over Manhattan).
+    ``forbid`` maps agent -> cells banned as the *next* vertex (LaCAM constraints).
     """
     fixed = set(fixed or ())
+    forbid = forbid or {}
     decided: Dict[str, Cell] = {}
     occupied: Set[Cell] = set()
     from_cell = {n: pos[n] for n in names}
@@ -112,7 +115,10 @@ def pibt_one_step(
     def prefer_order(agent: str) -> List[Cell]:
         cur = pos[agent]
         g = goals.get(agent, cur)
-        cands = _neighbors(cur, blocked, lo, hi)
+        ban = forbid.get(agent) or set()
+        cands = [c for c in _neighbors(cur, blocked, lo, hi) if c not in ban]
+        if not cands and cur not in ban:
+            cands = [cur]
         noise = abs(hash((agent, int(priority.get(agent, 0.0) * 1000)))) % 5
         cands.sort(
             key=lambda c: (

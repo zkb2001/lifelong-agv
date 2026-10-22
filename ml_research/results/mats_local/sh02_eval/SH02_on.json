@@ -1,0 +1,16 @@
+{
+  "use_mats_local": true,
+  "tasks_completed": 100,
+  "tasks_total": 100,
+  "completion_ratio": 1.0,
+  "sim_time": 4478,
+  "wall_seconds": 1167.48,
+  "validate_ok": true,
+  "validate_summary": "VALID ok",
+  "m0_handoff": true,
+  "m0_handoff_t": 725,
+  "m0_handoff_reason": "stall_ai:stall_net:p=0.85",
+  "n_mats_local_defer": 0,
+  "mats_local_last": null,
+  "trajectory": "D:\\compitition\\MioVerse\\final_version\\ml_research\\results\\coord_custom_ai\\ecbs\\trajectories\\SH02_mats_on_ecbs_joint_w1.5_k6_hier.csv"
+}

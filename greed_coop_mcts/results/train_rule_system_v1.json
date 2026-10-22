@@ -1,0 +1,7 @@
+{
+  "ckpt": "D:\\compitition\\MioVerse\\final_version\\greed_coop_mcts\\checkpoints\\global_rule_transformer_v1.pt",
+  "steps": 5000,
+  "final_loss": 0.015196117188315839,
+  "final_acc": 0.9980553829669953,
+  "n_params": 682628
+}

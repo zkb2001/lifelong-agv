@@ -1,0 +1,272 @@
+==== 177b10af-86c5-4ec3-95f8-946efedd1d6c.jsonl
+
+---
+
+<timestamp>Sunday, Oct 11, 2026, 3:56 AM (UTC+8)</timestamp>
+<user_query>
+You are analyzing greed_coop_mcts at d:\compitition\MioVerse\final_version\greed_coop_mcts for paper-tier MAPD gains.
+
+CURRENT BASELINE (ASA+FG-CEBI+TBC): 20/20 VALID avg 1712.4 vs FULL 1877, worse=0, 13/20 strict wins. FLAT maps (sim equals FULL): SH02=2021, SH04=1053, SH09=1337, SH12=1558, SH13=832, SH14=1216, SH17=2395.
+
+CONSTRAINTS: no map-id branches, no ENABLE_SAME_DROP_SERIAL, no Approach-Lease FIFO staging. Gates SH01/02/03/08 must stay ≤15% worse than FULL. Prefer default-on mechanisms.
+
+ALREADY TRIED AND REJECTED (do not re-propose): wide CEBI, SMPP/SCPO, APA/no-PGFA, DPSM teacher override, open-dense cap7, unconditional CGPN, expanding DLO to all fleets, contested×egress reorder (just verified neutral).
+
+TASK: Deep-read pgcp.py, meeting_rh.py, solve.py (relevant sections), global_altruism.py, local_agent.py, stage_net.py, region_admit.py, results/INCOMPLETE_RESEARCH_PLAN.md, results/ALTRUISM_PLAN.md, results/EGRESS_INGRESS_RESEARCH.md.
+
+Return:
+1. Which PGCP pieces A/B/C/D are actually implemented vs missing/weak
+2. For each flat map (02/04/09/12/13/14/17): most likely bottleneck class (capacity / same-dest / opposing corridor / stage policy / progress livelock) with evidence from code+docs
+3. TOP 3 concrete implementable levers (specific functions/thresholds to change) that are NEW vs rejected list, ranked by expected gain×safety for breaking ≥2 flats without gate regression
+4. Exact code locations (file:line) for each lever
+
+Be specific and actionable. Do not write code; analysis only.
+</user_query>
+
+---
+
+我先按论文级增益目标深读指定模块与研究文档，对照当前 baseline 与已否决方向做证据对齐。
+
+---
+
+{"current_step": "Reading PGCP and research docs"}
+
+---
+
+{"current_step": "Auditing PGCP implementation status"}
+
+---
+
+{"current_step": "Mapping flat-map bottlenecks"}
+
+---
+
+{"current_step": "Synthesizing lever recommendations", "final_summary": "PGCP A/C/D 已落地但 B 与 CEBI E3/E4 仍弱；七张打平图可分成 stage 瓶颈（02/04/09/13/14）与同 dest/对顶（12/17）。最值得试的新杠杆是：卸后 sticky E4、稀疏进度 soft-pulse、同站喉道软容量——均避开已否决的宽 CEBI/CGPN/DLO 扩。", "completed_subtitle": "Completed PGCP flat-map analysis"}
+
+---
+
+## 1. PGCP A/B/C/D：实现 vs 缺口
+
+| 件 | 状态 | 证据 |
+|---|---|---|
+| **A Contested-Dest Gate** | **已实现（偏弱）** | `rewrite_contested_destinations`（`pgcp.py:351–483`）按 station hub 分组、sticky holder、非 holder 改写到 `nearest_deg3`；接入 `meeting_rh.py:353`、`solve.py:1039`。**弱于方案**：触发只看 `Manh≤CONTEND_NEAR(=6)`（`:391–394`），**未**要求「≥2 人在 deg≤2 BFS 前缀」；`near_pad_deg2` 被 `del` 未用（`:382`）；不限制「同 unload 前缀载货总数」，只挡已靠近的人。 |
+| **B Outward Push** | **半实现（弱）** | 原语 `outward_step`（`:486–511`）存在；CEBI 内对廊内 carrier 会调用（`:853–861`）；PGFA 有 depth≤3 链推（`global_altruism.py:468–508`）。**关键缺口**：`outward=True` **仅非 carrier**（`:317–319` 注释写明 carrier↔carrier 外推曾锁死 SH17）；carrier 只用侧移增 Manh（`:413–431`）；**未**挂到 `local_gap_yield`；**无** blocker 继承 bene 优先级。 |
+| **C Progress Potential** | **半实现（稀疏图弱）** | `update_progress`（`:112–157`）有 done/ΣManh stale；`adaptive_meet_w(..., no_task_progress=)`（`meeting_rh.py:84–100`）；dense 加窗/忙脉冲（`solve.py:1157–1181`）。**缺口**：`no_prog` **必须** `contested≥1`（`pgcp.py:153`）；`trigger_progress_response` 对 `n_agents<12` **直接 return**（`:253–254`，显式避开 SH17）；方案 C.3「no_prog 期间禁换 PGFA lead」仅靠 `lock_holder`（`global_altruism.py:232–240`），无全局 freeze。 |
+| **D Idle 廊洁** | **已实现（偏晚/偏软）** | `apply_idle_hygiene`（`:514–584`），`IDLE_CORRIDOR_N=24`（`:30`），在 PGFA 之后跑（`solve.py:1321`）。不覆盖 carrying/assigned（符合方案）。实际更强路径是 CEBI/`apply_pad_egress`（`:630–977`），属 PGCP 外的 FG-CEBI。 |
+
+**默认栈相对原 PGCP 的额外件**：ASA（`:218–246`）、TBC（`:201–215`）、FG-CEBI E2 lane-lock（`:661–662,830–835`，仅 `n≥10 ∧ near≥100`）、DLO（`meeting_rh.py:536`，仅 10–14 车）。
+
+---
+
+## 2. 七张打平图：瓶颈类 + 证据
+
+几何来自 `results/summary.json`（`n_agents` / `near_pad_deg2` / `asa_stage_net` / `max_fleet_busy`）。
+
+| 图 | n / near / ASA / cap | 最可能瓶颈 | 证据 |
+|---|---|---|---|
+| **SH02** | 12 / 45 / StageNet / 6 | **stage policy**（次：PGFA 吞吐税） | 走廊不极端（near=45）；GATE+FLAT；消融去 PGFA sim+1296、去 PGCP+541（`ABLATION_PER_SLOT.md`）；Approach-Lease 曾伤 SH02（研究文档）。非同 dest 死锁主型。 |
+| **SH04** | 9 / 54 / StageNet / 6 | **stage policy** | ASA 特判 `n==9 ∧ 50≤near≤59`（`pgcp.py:231–233`）；消融去 StageNet/AI 均 +135；协议层几乎不动完成率。 |
+| **SH09** | 15 / 49 / StageNet / 6 | **stage policy** | ASA：`n==15 ∧ near<60 → StageNet`（`:241–242`）；开放中队；消融去 Stage +191、去 PGCP +261，无完成率崩。 |
+| **SH12** | 20 / 77 / StageNet / 6 | **same-dest + capacity** | 文档：同 dest=Hangzhou、busy 顶满、clr 打地鼠（`INCOMPLETE_RESEARCH_PLAN.md`）；`no_pgcp→45*`；TBC **未命中**（n=20 不在 mid/16–18 带，cap 仍 6）；FG-CEBI 因 near=77&lt;100 **不启**。 |
+| **SH13** | 24 / 34 / StageNet / 6 | **capacity / open-fleet 吞吐** | near 极低（开放）；`open-dense cap7` 已否决（SH13+3）；去 PGFA 反略快（−13）。不是廊对顶主型。 |
+| **SH14** | 9 / 97 / StageNet / 6 | **stage policy**（极端喉道小车队） | ASA：`n≤9 ∧ near≥90 → StageNet`（`:229–230`）；FG-CEBI/SMPP 类扩对 n=9 敏感（文档：CEBI 扩伤 SH14）；旧消融「去 AI 更快」说明网络噪声大，当前已打到 FULL=1216。 |
+| **SH17** | 8 / 116 / StageNet / 6 | **opposing corridor + progress livelock** | 文档：空载↔载货对顶、H 健康 adapt 漏检；FG-CEBI **n&lt;10 跳过**；busy pulse **n&lt;12 跳过**；`no_pgfa→20*`、`no_stagenet→32*`；DE-swap/E4 未落地（`EGRESS_INGRESS_RESEARCH.md`）。 |
+
+---
+
+## 3. TOP 3 新杠杆（相对已否决列表）
+
+排名按 **期望撬开 ≥2 张 flat × 门禁安全**（避开宽 CEBI / SMPP / APA / DPSM / cap7 / 无条件 CGPN / DLO 全扩 / contested×egress 重排）。
+
+### #1 — CEBI **E4 sticky 卸后撤退**（SHARP-lite）
+- **做什么**：卸货写入 `last_unload_pad` 后，强制 `T_egress` tick 以 `EGRESS_PRI` 撤到最近 deg≥3，**不依赖**「已有对顶」也不放宽 E2 的 `n≥10∧near≥100`。
+- **为何新**：宽 CEBI/E2 扩阈值否决；E4 是文档推荐的低风险第一步，且钩子已在。
+- **打谁**：SH17（主）+ SH12 死胡同卸后占喉；对 SH02/04 开放图几乎不触发。
+- **位点**：
+  - 写入：`solve.py:809`（`last_unload_pad[agv]=cell`）
+  - 过早清除：`solve.py:1072–1076`（不在 `egress_agents` 即 pop——E4 应改为 TTL）
+  - 软离开逻辑：`pgcp.py:714–721`（`soft_leave` / `just_here`）、`:762–765`（`boost=0` → 应升为 sticky max-pri）
+  - 常量旁：`pgcp.py:31–32`（`EGRESS_PRI` / `PAD_CORRIDOR_MAX`）旁加 `T_EGRESS`
+
+### #2 — **稀疏 Progress soft-pulse**（补全 C，非盲加窗）
+- **做什么**：当 `n∈[8,11] ∧ near_pad_deg2≥100 ∧ no_prog`：脉冲 `max_fleet_busy→4`（不是 3）、TTL 短于 `BUSY_PULSE_TTL=28`；并在 `no_prog` 期间冻结 PGFA lead（用 `lock_holder` 或 `AltruismState.no_progress` 上限）。
+- **为何新**：否决的是「无进度盲加窗」与「过宽 CEBI」；此处仍要求 `update_progress` 的 contested+stale，只去掉「n&lt;12 永不脉冲」。
+- **打谁**：SH17（直接命中代码豁免）；SH12 在 dense 路径已有脉冲，可叠加 lead-freeze 减打地鼠。
+- **位点**：
+  - 豁免：`pgcp.py:249–257`（`if n_agents < 12: return`）
+  - 脉冲帽：`pgcp.py:28–29`（`BUSY_PULSE_TTL` / `BUSY_PULSE_CAP`）、`:160–166`（`effective_fleet_cap`）
+  - `no_prog` 门：`pgcp.py:153–156`（可选：extreme near 时放宽 `contested`）
+  - 调用：`solve.py:1164–1180`（`dense = n≥12` 分支）
+  - lead 锁：`global_altruism.py:232–250` + `select_beneficiary` `:131–136`（`PGFA_SWITCH_*` 于 `:38–39`）
+
+### #3 — **同站喉道软容量**（几何 cap，非 `ENABLE_SAME_DROP_SERIAL`）
+- **做什么**：对同一 unload station 的 deg≤2 廊，最多 1 个 carrier 的 `stage_goal` 可落在 forbid 前缀内；多余 carrier **只改 stage_goal→deg≥3**（保持 TO_DROP / 优先级），在 meeting **admit 之后、PP 之前**执行。可与 A 共用 `pad_deg2_corridor` / `_station_key`。
+- **为何新**：硬串行开关保持 OFF；不是廊上 FIFO lease；不是 demote 任务身份。也不同于已否决的「无条件 CGPN」。
+- **打谁**：SH12（n=20、cap=6、同 dest）；SH17（多载货同 Xiamen）；避免灌满喉道。SH02 near 低、同 dest 压力小，风险可控。
+- **位点**：
+  - 核心改写：`pgcp.py:351–483`（加强 A：廊内容量，不只 Manh 门控）
+  - 廊集合：`pgcp.py:587–615`（`pad_deg2_corridor`）、`:345–348`（`_station_key`）
+  - 当前 **不限** TO_DROP 并行：`region_admit.py:49–114` + `meeting_rh.py:247–253`（`protect_roles={TO_DROP}`）——可选在此对同站 FINAL 做 soft-cap demote→CLEAR **仅对非 holder**
+  - 舰队注入仍 6：`pgcp.py:201–215`（SH12 未进 TBC）+ `solve.py:501–503`——**不要**对开放图 cap7；若动容量，只对「同站廊内占用≥2」时脉冲，而非全局 n=24 提 cap
+
+---
+
+## 4. 杠杆 → 精确行号速查
+
+| 杠杆 | 文件:行 |
+|---|---|
+| E4 sticky unload | `solve.py:809`, `1072–1076`; `pgcp.py:714–721`, `762–765`, `630–655` |
+| Sparse soft-pulse + lead freeze | `pgcp.py:28–29`, `153–157`, `249–257`, `160–166`; `solve.py:1164–1180`; `global_altruism.py:38–39`, `232–250`, `131–136` |
+| Station-throat soft cap | `pgcp.py:351–483`, `587–615`, `345–348`; `region_admit.py:65–113`; `meeting_rh.py:247–253` |
+
+**不建议再碰（已否决或刚验中性）**：放宽 `fleet_cebi` 阈值（`pgcp.py:661–662`）、无条件 CGPN、DLO 扩到全舰队、关 PGFA、SH13 类 cap7、contested×egress holder 重排（`pgcp.py:434–454`）。
+
+**务实预期**：#1+#2 最像同时撬 **SH12+SH17**；SH02/04/09/13/14 更偏 stage/吞吐，协议杠杆增益可能 &lt;1%，需另开「开放图 claim/MEET 节奏」线，且 SH02 是 GATE，动 Stage 权威风险最高。
+
+---
+
+==== 31265f0b-3699-4c6b-b289-d35f26884767.jsonl
+
+---
+
+<timestamp>Sunday, Oct 11, 2026, 3:56 AM (UTC+8)</timestamp>
+<user_query>
+Analyze AI/learning components in d:\compitition\MioVerse\final_version\greed_coop_mcts for unused generalization levers.
+
+Files of interest: stage_net.py, rule_net.py, rule_system.py, transformer_net.py, policy_xfmr.py, cgpn.py (if exists), train_*.py, obs.py, obs_xfmr.py, teacher.py, checkpoints/.
+
+Context: Production solve uses ASA (adaptive StageNet) + FG-CEBI + Multi-Band TBC. CGPN is opt-in and hurts SH12 (+957). Flat maps SH02/04/09/12/13/14/17 match FULL exactly under PYTHONHASHSEED=0.
+
+Find:
+1. What AI modules exist, which are loaded by default in solve(), which are dead/optional
+2. Safe ways to use StageNet/CGPN/CostTracer/rule_net SELECTIVELY by geometry features (n_agents, near_pad_deg2, corridor stats) — not map-id — that could help flats
+3. Whether teacher vs StageNet disagreement on flat maps could be exploited (DPSM was rejected — look for softer alternatives)
+4. Concrete recommendation: one AI-gated mechanism + one systems mechanism most likely to convert flats to wins
+
+Return specific thresholds/gates and file:line references. Analysis only, no code edits.
+</user_query>
+
+---
+
+我会先梳理 `greed_coop_mcts` 里的 AI/学习模块与 `solve()` 默认加载路径，再对照几何特征找可安全门控的杠杆。
+
+---
+
+{"current_step": "Exploring AI learning modules"}
+
+---
+
+{"current_step": "Reading solve defaults"}
+
+---
+
+{"current_step": "Gathering flat-map geometry"}
+
+---
+
+{"current_step": "Synthesizing unused-lever report", "final_summary": "生产 RRSC 默认只活 StageNet(ASA)+RuleNet 弱融合；CostTracer/Transformer/CGPN/TERN/SoftGuidance 基本死或可选。教师硬覆盖（DPSM）与全开 CGPN 已否决；更值得试的是开放廊 SoftGuidance 边权叠加，以及把 Mid-TBC 下探到 near∈[40,54] 去撬 SH02。", "completed_subtitle": "Mapped unused AI levers"}
+
+---
+
+## 1. AI 模块清单：默认 / 可选 / 死路径
+
+| 模块 | 文件 | 生产 RRSC (`policy=auto/rrsc`) | 状态 |
+|------|------|-------------------------------|------|
+| **StageNet** | `stage_net.py` → `stage_selector_v1.pt` | 经 **ASA** 决定 `use_net` | **默认活**（flat 上全为 True） |
+| **RuleNet** | `rule_net.py` + `rule_system.py` | `RealtimeRuleSystem(use_net=True)` | **默认活**，但只补 `flow<0` 格；`stall≥40` 关网 |
+| **CGPN / ASDCR** | `cgpn.py` | `use_cgpn=False` | **可选**；默认几何残差、`use_net=False` |
+| **CostTracer** | `network.py` / `obs.py` / `teacher.py` | `_get_net` 仍加载 | **RRSC 下死**：`n_mcts_calls=0` |
+| **MapdTransformer** | `transformer_net.py` / `policy_xfmr.py` / `obs_xfmr.py` | 仅 `policy=xfmr` 或无 RULE ckpt 的 auto | **RRSC 死** |
+| **TERN** | `tern.py` + `tern_v1.pt` | `lambda_tf` 默认 0 | **可选/死** |
+| **SoftGuidance** | `rrsc_unified.py` | `solve` 里 `SoftGuidance()` 后未 `observe`/未接边权 | **实例化即死** |
+| **PIBT RRSC-U** | `rrsc_unified.py` | 运动走 `rule_sys.desired_cells` | **未接线** |
+| **StageNet V2 / setattn** | `checkpoints/stage_selector_setattn_v2.pt`；`train_stage_net.py` 引用 `StageSelectorNetV2` | 运行时只加载 `stage_selector_v1.pt` | **训练/ckpt 孤儿**（`stage_net.py` 无 V2 符号） |
+
+默认入口：`solve()` `policy="auto"` → RRSC（`solve.py:424-457`），`StageSelector(use_net=asa_stage_net, use_cgpn=…)`（`530-536`）。CLI：`--cgpn` / `--force-stage-net` / `--no-stage-net`（`2025-2039`）。
+
+---
+
+## 2. Flat 几何（无 map-id）与现有门控覆盖空洞
+
+来自 `SH*_gcm_gcm.json` + ASA（`pgcp.py:218-246`）+ TBC（`201-216`）+ FG-CEBI（`662`）：
+
+| Slot | n | near | ASA StageNet | Mid/Dense TBC | FG-CEBI (n≥10∧near≥100) |
+|------|---|------|--------------|---------------|-------------------------|
+| SH02 | 12 | 45 | True | 否（near&lt;55） | 否 |
+| SH04 | 9 | 54 | True (`n==9∧50–59`) | 否 | 否 |
+| SH09 | 15 | 49 | True (`n==15∧r&lt;60`) | 否 | 否 |
+| SH12 | 20 | 77 | True | 否（Dense 仅 16–18∧80–90） | 否 |
+| SH13 | 24 | 34 | True | 否（Mega cap7 要 n≥28） | 否 |
+| SH14 | 9 | 97 | True (`n≤9∧r≥90`) | 否 | 否（n&lt;10） |
+| SH17 | 8 | 116 | True | 否 | 否（故意跳过） |
+
+探针证据（`_probe_flat_levers` / 结果 JSON）：
+- 强制 teacher：SH04 +135、SH09 +191、SH14 +152、SH13 +98 → **更差**
+- CGPN：SH12 **2515 vs 1558（+957）**，`n_cgpn_priority=182`；SH09/13 有应用但 sim 打平；n&lt;14 时 `MIN_N=14`（`cgpn.py:36`）直接 noop
+- DPSM：SH02 有 67 次 override 仍 2021；SH17 override=3 仍 2395（或死锁）
+
+**可安全选择性使用的几何门（非 map-id）**：
+
+| 杠杆 | 建议门 | 目标 flat | 风险 |
+|------|--------|-----------|------|
+| StageNet | **保持 ASA 现状**；勿对 flat 切 teacher | — | teacher 已证实伤 flat |
+| CGPN | 仅 `14≤n≤18 ∧ near≤55 ∧ clique∈[2,3]`；**排除** `n≥20 ∨ near≥70` | SH09/13 类；避开 SH12 | SH09 探针零增益 |
+| CostTracer | 仅非 RRSC 或 `stall≥S ∧ near&lt;55` 局部 MATS | 开放图 | 会改运动层，门禁风险高 |
+| RuleNet | `near&lt;50` 时放宽「仅 flow&lt;0」融合；`near≥90` 保持弱融合 | SH02/09/13 | 强融合曾卡 SH17 |
+| SoftGuidance | `near&lt;55 ∧ n∈[12,24]` 才 `observe`+进 `edge_step_cost` | SH02/09/13 | **从未接过**，需小 λ |
+
+---
+
+## 3. Teacher vs StageNet：DPSM 之后的软替代
+
+已否决路径：
+- 硬 near-tie 覆盖 → SH15 +17（`stage_net.py:416-418`）
+- DPSM 类 kind 覆盖 → 零增益 / SH17 风险（`CGPN_TERN_STATUS.md`）
+
+教师逻辑（`teacher_kind`，`stage_net.py:234-268`）：`d≤5` 或 `streak≥18` → FINAL；拥堵且非 loaded 才 CLEAR。
+
+**更软、仍可利用分歧的方向（不换 kind）**：
+
+1. **Priority-only residual**（对齐 IP-CGPN「永不替换 StageNet kind」，`stage_net.py:480`）  
+   条件：`loaded ∧ d≤3 ∧ net_kind==CLEAR ∧ (logit_max−logit_2nd)&lt;τ`（τ≈0.10–0.15）  
+   动作：只加 `teacher_priority` 热力项（~`500*heat`），不改候选。  
+   注：SH02 DPSM 67 次 override 仍打平 → kind 分歧可能不是主瓶颈。
+
+2. **Completion FINAL soft-mask**（比 DPSM 更窄）  
+   仅 `loaded ∧ d≤2 ∧ CLEAR` 把 CLEAR logit 乘 `0.5`，仍 argmax；禁止 APPROACH/FINAL 互换。
+
+3. **不要**在 flat 上 ASA→teacher（探针已否）。
+
+结论：分歧可作 **priority/logit 软偏置**，不宜再做硬 DPSM；开放 flat 更可能卡在 **容量/廊协议**，不在 staging 标签。
+
+---
+
+## 4. 具体推荐（1 AI + 1 系统）
+
+### A. AI 门控（最值得试的未用杠杆）
+
+**开放廊 SoftGuidance 边权叠加**（代码已有、生产未接线）
+
+- **门**：`near_pad_deg2 < 55` 且 `n_agents ∈ [12, 24]`（盖 SH02/09/13；避开 SH04/14/17 迷宫与 SH12 中高 near）
+- **动作**：每 tick `soft_guide.observe(...)`；在 `RealtimeRuleSystem.edge_step_cost`（`rule_system.py:100-138`）加  
+  `+ λ * soft.edge_cost`，**λ∈[0.05, 0.15]**，且 `stall≥40` 时 λ→0（与 RuleNet stall 关网一致）
+- **锚点**：`solve.py:536`（死实例）、`rrsc_unified.py:30-105`（实现）、`rule_system.py:67-74`（预留 `soft_guide`）
+- **为何优于 CGPN/Stage 翻转**：不碰 kind、不碰同 dest 优先级（躲过 SH12 +957）；专打开放 mid/mega flat。
+
+### B. 系统机制（最可能把 flat 变 win）
+
+**Open-band Mid-TBC**：把喉带下探到低 near
+
+在 `throat_band_fleet_cap`（`pgcp.py:201-216`）增加（与现有 55–85 带并列）：
+
+```text
+10 ≤ n ≤ 14  ∧  40 ≤ near_pad_deg2 ≤ 54  →  cap = 5
+```
+
+- **直接命中 SH02**（12, 45）；不碰 SH15（12, 63 已在 55–85）、不碰 SH12（n=20）、不碰迷宫小车队
+- 阈值：现注释写 open maps 保持 cap=6（`pgcp.py:169-171`）——这是 **未压测的空洞**，比再扩 Dense-TBC/CEBI（已否：SH12/14/17）更干净
+- 次选（若 Open-TBC 门禁不过）：启用 `rewrite_contested_destinations` 里被丢弃的 `near_pad_deg2`（`pgcp.py:382`），对 `near<55` 把 `CONTEND_NEAR` 从 6→4，更早 deg≥3 等待
+
+---
+
+**不建议再投的 AI**：全图/宽门 CGPN、flat 切 teacher、DPSM kind 覆盖、CostTracer/Transformer 进默认 RRSC、盲开 `setattn_v2`（运行时架构不匹配）。

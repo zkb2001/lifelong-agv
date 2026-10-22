@@ -1,0 +1,30 @@
+[
+  {
+    "slot": 6,
+    "mode": "prio_net_r1",
+    "sim": 3878,
+    "wall": 654.47,
+    "valid": true,
+    "done": 100,
+    "handoff_t": 800,
+    "handoff_reason": "stall_ai:stall_net:p=0.76",
+    "hier": 3197,
+    "d_hier": 681,
+    "beats_hier": false,
+    "non_worse": false
+  },
+  {
+    "slot": 6,
+    "mode": "prio_net_r3",
+    "sim": 3198,
+    "wall": 1430.25,
+    "valid": true,
+    "done": 100,
+    "handoff_t": 2625,
+    "handoff_reason": "stall_ai:stall_net:p=0.74",
+    "hier": 3197,
+    "d_hier": 1,
+    "beats_hier": false,
+    "non_worse": false
+  }
+]

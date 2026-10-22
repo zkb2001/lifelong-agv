@@ -1,0 +1,1660 @@
+{
+  "slots": [
+    21,
+    22,
+    23,
+    24,
+    25,
+    26,
+    27,
+    28,
+    29,
+    30,
+    31,
+    32,
+    33,
+    34,
+    35,
+    36,
+    37,
+    38,
+    39,
+    40
+  ],
+  "facn": {
+    "21": {
+      "slot": 21,
+      "sim": 1085,
+      "done": 100,
+      "total": 100,
+      "valid": true,
+      "k": 6,
+      "delta": 0,
+      "n_updates": 0,
+      "use_facn": true
+    },
+    "22": {
+      "slot": 22,
+      "sim": 864,
+      "done": 100,
+      "total": 100,
+      "valid": true,
+      "k": 8,
+      "delta": 2,
+      "n_updates": 0,
+      "use_facn": true
+    },
+    "23": {
+      "slot": 23,
+      "sim": 1142,
+      "done": 100,
+      "total": 100,
+      "valid": true,
+      "k": 7,
+      "delta": 1,
+      "n_updates": 0,
+      "use_facn": true
+    },
+    "24": {
+      "slot": 24,
+      "sim": 602,
+      "done": 100,
+      "total": 100,
+      "valid": true,
+      "k": 10,
+      "delta": 4,
+      "n_updates": 0,
+      "use_facn": true
+    },
+    "25": {
+      "slot": 25,
+      "sim": 1269,
+      "done": 100,
+      "total": 100,
+      "valid": true,
+      "k": 8,
+      "delta": 2,
+      "n_updates": 0,
+      "use_facn": true
+    },
+    "26": {
+      "slot": 26,
+      "sim": 1522,
+      "done": 100,
+      "total": 100,
+      "valid": true,
+      "k": 7,
+      "delta": 2,
+      "n_updates": 0,
+      "use_facn": true
+    },
+    "27": {
+      "slot": 27,
+      "sim": 1174,
+      "done": 100,
+      "total": 100,
+      "valid": true,
+      "k": 7,
+      "delta": 1,
+      "n_updates": 0,
+      "use_facn": true
+    },
+    "28": {
+      "slot": 28,
+      "sim": 1283,
+      "done": 100,
+      "total": 100,
+      "valid": true,
+      "k": 7,
+      "delta": 1,
+      "n_updates": 14,
+      "use_facn": true
+    },
+    "29": {
+      "slot": 29,
+      "sim": 2579,
+      "done": 100,
+      "total": 100,
+      "valid": true,
+      "k": 8,
+      "delta": 2,
+      "n_updates": 0,
+      "use_facn": true
+    },
+    "30": {
+      "slot": 30,
+      "sim": 981,
+      "done": 100,
+      "total": 100,
+      "valid": true,
+      "k": 8,
+      "delta": 2,
+      "n_updates": 0,
+      "use_facn": true
+    },
+    "31": {
+      "slot": 31,
+      "sim": 3437,
+      "done": 100,
+      "total": 100,
+      "valid": true,
+      "k": 5,
+      "delta": 0,
+      "n_updates": 0,
+      "use_facn": true
+    },
+    "32": {
+      "slot": 32,
+      "sim": 1041,
+      "done": 100,
+      "total": 100,
+      "valid": true,
+      "k": 8,
+      "delta": 2,
+      "n_updates": 0,
+      "use_facn": true
+    },
+    "33": {
+      "slot": 33,
+      "sim": 791,
+      "done": 100,
+      "total": 100,
+      "valid": true,
+      "k": 8,
+      "delta": 2,
+      "n_updates": 0,
+      "use_facn": true
+    },
+    "34": {
+      "slot": 34,
+      "sim": 1234,
+      "done": 100,
+      "total": 100,
+      "valid": true,
+      "k": 6,
+      "delta": 0,
+      "n_updates": 0,
+      "use_facn": false
+    },
+    "35": {
+      "slot": 35,
+      "sim": 846,
+      "done": 100,
+      "total": 100,
+      "valid": true,
+      "k": 8,
+      "delta": 2,
+      "n_updates": 0,
+      "use_facn": true
+    },
+    "36": {
+      "slot": 36,
+      "sim": 1170,
+      "done": 100,
+      "total": 100,
+      "valid": true,
+      "k": 6,
+      "delta": 1,
+      "n_updates": 0,
+      "use_facn": true
+    },
+    "37": {
+      "slot": 37,
+      "sim": 1086,
+      "done": 100,
+      "total": 100,
+      "valid": true,
+      "k": 8,
+      "delta": 2,
+      "n_updates": 0,
+      "use_facn": true
+    },
+    "38": {
+      "slot": 38,
+      "sim": 1168,
+      "done": 100,
+      "total": 100,
+      "valid": true,
+      "k": 5,
+      "delta": 0,
+      "n_updates": 4,
+      "use_facn": true
+    },
+    "39": {
+      "slot": 39,
+      "sim": 1236,
+      "done": 100,
+      "total": 100,
+      "valid": true,
+      "k": 7,
+      "delta": 1,
+      "n_updates": 0,
+      "use_facn": true
+    },
+    "40": {
+      "slot": 40,
+      "sim": 1298,
+      "done": 100,
+      "total": 100,
+      "valid": true,
+      "k": 6,
+      "delta": 0,
+      "n_updates": 0,
+      "use_facn": true
+    }
+  },
+  "sweep": {
+    "21": [
+      {
+        "slot": 21,
+        "sim": 959,
+        "done": 100,
+        "total": 100,
+        "valid": true,
+        "k": 8
+      },
+      {
+        "slot": 21,
+        "sim": 1030,
+        "done": 100,
+        "total": 100,
+        "valid": false,
+        "k": 7
+      },
+      {
+        "slot": 21,
+        "sim": 1085,
+        "done": 100,
+        "total": 100,
+        "valid": true,
+        "k": 6
+      }
+    ],
+    "22": [
+      {
+        "slot": 22,
+        "sim": 1133,
+        "done": 100,
+        "total": 100,
+        "valid": true,
+        "k": 6
+      },
+      {
+        "slot": 22,
+        "sim": 823,
+        "done": 100,
+        "total": 100,
+        "valid": true,
+        "k": 8
+      },
+      {
+        "slot": 22,
+        "sim": 971,
+        "done": 100,
+        "total": 100,
+        "valid": true,
+        "k": 7
+      },
+      {
+        "slot": 22,
+        "sim": 859,
+        "done": 100,
+        "total": 100,
+        "valid": true,
+        "k": 9
+      },
+      {
+        "slot": 22,
+        "sim": 859,
+        "done": 100,
+        "total": 100,
+        "valid": true,
+        "k": 10
+      },
+      {
+        "slot": 22,
+        "sim": 859,
+        "done": 100,
+        "total": 100,
+        "valid": true,
+        "k": 11
+      },
+      {
+        "slot": 22,
+        "sim": 859,
+        "done": 100,
+        "total": 100,
+        "valid": true,
+        "k": 12
+      }
+    ],
+    "23": [
+      {
+        "slot": 23,
+        "sim": 1178,
+        "done": 100,
+        "total": 100,
+        "valid": true,
+        "k": 6
+      },
+      {
+        "slot": 23,
+        "sim": 1142,
+        "done": 100,
+        "total": 100,
+        "valid": true,
+        "k": 7
+      },
+      {
+        "slot": 23,
+        "sim": 1171,
+        "done": 100,
+        "total": 100,
+        "valid": true,
+        "k": 8
+      },
+      {
+        "slot": 23,
+        "sim": 1207,
+        "done": 100,
+        "total": 100,
+        "valid": true,
+        "k": 9
+      }
+    ],
+    "24": [
+      {
+        "slot": 24,
+        "sim": 1036,
+        "done": 100,
+        "total": 100,
+        "valid": true,
+        "k": 6
+      },
+      {
+        "slot": 24,
+        "sim": 841,
+        "done": 100,
+        "total": 100,
+        "valid": true,
+        "k": 7
+      },
+      {
+        "slot": 24,
+        "sim": 857,
+        "done": 100,
+        "total": 100,
+        "valid": true,
+        "k": 8
+      },
+      {
+        "slot": 24,
+        "sim": 811,
+        "done": 100,
+        "total": 100,
+        "valid": true,
+        "k": 9
+      },
+      {
+        "slot": 24,
+        "sim": 811,
+        "done": 100,
+        "total": 100,
+        "valid": true,
+        "k": 10
+      },
+      {
+        "slot": 24,
+        "sim": 811,
+        "done": 100,
+        "total": 100,
+        "valid": true,
+        "k": 11
+      },
+      {
+        "slot": 24,
+        "sim": 811,
+        "done": 100,
+        "total": 100,
+        "valid": true,
+        "k": 12
+      },
+      {
+        "slot": 24,
+        "sim": 811,
+        "done": 100,
+        "total": 100,
+        "valid": true,
+        "k": 13
+      },
+      {
+        "slot": 24,
+        "sim": 811,
+        "done": 100,
+        "total": 100,
+        "valid": true,
+        "k": 14
+      },
+      {
+        "slot": 24,
+        "sim": 811,
+        "done": 100,
+        "total": 100,
+        "valid": true,
+        "k": 15
+      }
+    ],
+    "25": [
+      {
+        "slot": 25,
+        "sim": 1317,
+        "done": 100,
+        "total": 100,
+        "valid": true,
+        "k": 7
+      },
+      {
+        "slot": 25,
+        "sim": 1626,
+        "done": 100,
+        "total": 100,
+        "valid": true,
+        "k": 6
+      },
+      {
+        "slot": 25,
+        "sim": 1257,
+        "done": 100,
+        "total": 100,
+        "valid": true,
+        "k": 8
+      },
+      {
+        "slot": 25,
+        "sim": 1422,
+        "done": 100,
+        "total": 100,
+        "valid": true,
+        "k": 9
+      },
+      {
+        "slot": 25,
+        "sim": 988,
+        "done": 100,
+        "total": 100,
+        "valid": true,
+        "k": 10
+      },
+      {
+        "slot": 25,
+        "sim": 1077,
+        "done": 100,
+        "total": 100,
+        "valid": true,
+        "k": 11
+      },
+      {
+        "slot": 25,
+        "sim": 1268,
+        "done": 100,
+        "total": 100,
+        "valid": true,
+        "k": 12
+      }
+    ],
+    "26": [
+      {
+        "slot": 26,
+        "sim": 1398,
+        "done": 100,
+        "total": 100,
+        "valid": true,
+        "k": 5
+      },
+      {
+        "slot": 26,
+        "sim": 1288,
+        "done": 100,
+        "total": 100,
+        "valid": true,
+        "k": 6
+      },
+      {
+        "slot": 26,
+        "sim": 1093,
+        "done": 100,
+        "total": 100,
+        "valid": true,
+        "k": 8
+      },
+      {
+        "slot": 26,
+        "sim": 1522,
+        "done": 100,
+        "total": 100,
+        "valid": true,
+        "k": 7
+      },
+      {
+        "slot": 26,
+        "sim": 1156,
+        "done": 100,
+        "total": 100,
+        "valid": true,
+        "k": 9
+      },
+      {
+        "slot": 26,
+        "sim": 1588,
+        "done": 100,
+        "total": 100,
+        "valid": true,
+        "k": 10
+      },
+      {
+        "slot": 26,
+        "sim": 1588,
+        "done": 100,
+        "total": 100,
+        "valid": true,
+        "k": 11
+      },
+      {
+        "slot": 26,
+        "sim": 1588,
+        "done": 100,
+        "total": 100,
+        "valid": true,
+        "k": 12
+      }
+    ],
+    "27": [
+      {
+        "slot": 27,
+        "sim": 1290,
+        "done": 100,
+        "total": 100,
+        "valid": true,
+        "k": 6
+      },
+      {
+        "slot": 27,
+        "sim": 1174,
+        "done": 100,
+        "total": 100,
+        "valid": true,
+        "k": 7
+      },
+      {
+        "slot": 27,
+        "sim": 1182,
+        "done": 100,
+        "total": 100,
+        "valid": true,
+        "k": 8
+      },
+      {
+        "slot": 27,
+        "sim": 1182,
+        "done": 100,
+        "total": 100,
+        "valid": true,
+        "k": 9
+      },
+      {
+        "slot": 27,
+        "sim": 1182,
+        "done": 100,
+        "total": 100,
+        "valid": true,
+        "k": 10
+      },
+      {
+        "slot": 27,
+        "sim": 1182,
+        "done": 100,
+        "total": 100,
+        "valid": true,
+        "k": 11
+      },
+      {
+        "slot": 27,
+        "sim": 1182,
+        "done": 100,
+        "total": 100,
+        "valid": true,
+        "k": 12
+      },
+      {
+        "slot": 27,
+        "sim": 1182,
+        "done": 100,
+        "total": 100,
+        "valid": true,
+        "k": 13
+      },
+      {
+        "slot": 27,
+        "sim": 1182,
+        "done": 100,
+        "total": 100,
+        "valid": true,
+        "k": 14
+      },
+      {
+        "slot": 27,
+        "sim": 1182,
+        "done": 100,
+        "total": 100,
+        "valid": true,
+        "k": 15
+      },
+      {
+        "slot": 27,
+        "sim": 1182,
+        "done": 100,
+        "total": 100,
+        "valid": true,
+        "k": 16
+      }
+    ],
+    "28": [
+      {
+        "slot": 28,
+        "sim": 1267,
+        "done": 100,
+        "total": 100,
+        "valid": true,
+        "k": 6
+      },
+      {
+        "slot": 28,
+        "sim": 1480,
+        "done": 100,
+        "total": 100,
+        "valid": true,
+        "k": 7
+      },
+      {
+        "slot": 28,
+        "sim": 1127,
+        "done": 100,
+        "total": 100,
+        "valid": true,
+        "k": 8
+      },
+      {
+        "slot": 28,
+        "sim": 1143,
+        "done": 100,
+        "total": 100,
+        "valid": true,
+        "k": 9
+      },
+      {
+        "slot": 28,
+        "sim": 1098,
+        "done": 100,
+        "total": 100,
+        "valid": true,
+        "k": 10
+      },
+      {
+        "slot": 28,
+        "sim": 1084,
+        "done": 100,
+        "total": 100,
+        "valid": true,
+        "k": 11
+      },
+      {
+        "slot": 28,
+        "k": 15,
+        "error": "Users\\zkb17\\miniconda3\\Lib\\site-packages\\torch\\cuda\\memory.py\", line 599, in <module>\n    @deprecated(\n     ^^^^^^^^^^^\n  File \"C:\\Users\\zkb17\\miniconda3\\Lib\\site-packages\\typing_extensions.py\", line 2997, in __call__\n    import asyncio.coroutines\n  File \"C:\\Users\\zkb17\\miniconda3\\Lib\\asyncio\\__init__.py\", line 43, in <module>\n    from .windows_events import *\n  File \"C:\\Users\\zkb17\\miniconda3\\Lib\\asyncio\\windows_events.py\", line 8, in <module>\n    import _overlapped\nOSError: [WinError 6] \u53e5\u67c4\u65e0\u6548\u3002\n",
+        "valid": false
+      },
+      {
+        "slot": 28,
+        "sim": 1182,
+        "done": 100,
+        "total": 100,
+        "valid": true,
+        "k": 12
+      },
+      {
+        "slot": 28,
+        "sim": 1145,
+        "done": 100,
+        "total": 100,
+        "valid": true,
+        "k": 13
+      },
+      {
+        "slot": 28,
+        "sim": 1429,
+        "done": 100,
+        "total": 100,
+        "valid": true,
+        "k": 14
+      },
+      {
+        "slot": 28,
+        "sim": 1429,
+        "done": 100,
+        "total": 100,
+        "valid": true,
+        "k": 16
+      }
+    ],
+    "29": [
+      {
+        "slot": 29,
+        "sim": 2298,
+        "done": 100,
+        "total": 100,
+        "valid": true,
+        "k": 6
+      },
+      {
+        "slot": 29,
+        "sim": 2296,
+        "done": 100,
+        "total": 100,
+        "valid": true,
+        "k": 7
+      },
+      {
+        "slot": 29,
+        "sim": 2591,
+        "done": 100,
+        "total": 100,
+        "valid": true,
+        "k": 8
+      }
+    ],
+    "30": [
+      {
+        "slot": 30,
+        "sim": 996,
+        "done": 100,
+        "total": 100,
+        "valid": true,
+        "k": 6
+      },
+      {
+        "slot": 30,
+        "sim": 1067,
+        "done": 100,
+        "total": 100,
+        "valid": true,
+        "k": 7
+      },
+      {
+        "slot": 30,
+        "sim": 967,
+        "done": 100,
+        "total": 100,
+        "valid": true,
+        "k": 8
+      },
+      {
+        "slot": 30,
+        "sim": 1207,
+        "done": 100,
+        "total": 100,
+        "valid": true,
+        "k": 9
+      },
+      {
+        "slot": 30,
+        "sim": 1207,
+        "done": 100,
+        "total": 100,
+        "valid": true,
+        "k": 10
+      },
+      {
+        "slot": 30,
+        "sim": 1207,
+        "done": 100,
+        "total": 100,
+        "valid": true,
+        "k": 11
+      },
+      {
+        "slot": 30,
+        "sim": 1207,
+        "done": 100,
+        "total": 100,
+        "valid": true,
+        "k": 12
+      },
+      {
+        "slot": 30,
+        "sim": 1207,
+        "done": 100,
+        "total": 100,
+        "valid": true,
+        "k": 13
+      },
+      {
+        "slot": 30,
+        "sim": 1207,
+        "done": 100,
+        "total": 100,
+        "valid": true,
+        "k": 14
+      },
+      {
+        "slot": 30,
+        "sim": 1207,
+        "done": 100,
+        "total": 100,
+        "valid": true,
+        "k": 15
+      },
+      {
+        "slot": 30,
+        "sim": 1207,
+        "done": 100,
+        "total": 100,
+        "valid": true,
+        "k": 16
+      }
+    ],
+    "31": [
+      {
+        "slot": 31,
+        "sim": 2582,
+        "done": 100,
+        "total": 100,
+        "valid": true,
+        "k": 7
+      },
+      {
+        "slot": 31,
+        "sim": 3437,
+        "done": 100,
+        "total": 100,
+        "valid": true,
+        "k": 5
+      },
+      {
+        "slot": 31,
+        "sim": 3786,
+        "done": 100,
+        "total": 100,
+        "valid": true,
+        "k": 6
+      },
+      {
+        "slot": 31,
+        "sim": 4302,
+        "done": 100,
+        "total": 100,
+        "valid": true,
+        "k": 8
+      },
+      {
+        "slot": 31,
+        "sim": 3480,
+        "done": 100,
+        "total": 100,
+        "valid": true,
+        "k": 9
+      },
+      {
+        "slot": 31,
+        "sim": 3688,
+        "done": 100,
+        "total": 100,
+        "valid": true,
+        "k": 10
+      }
+    ],
+    "32": [
+      {
+        "slot": 32,
+        "sim": 1162,
+        "done": 100,
+        "total": 100,
+        "valid": true,
+        "k": 6
+      },
+      {
+        "slot": 32,
+        "sim": 1250,
+        "done": 100,
+        "total": 100,
+        "valid": true,
+        "k": 7
+      },
+      {
+        "slot": 32,
+        "sim": 1053,
+        "done": 100,
+        "total": 100,
+        "valid": true,
+        "k": 8
+      },
+      {
+        "slot": 32,
+        "sim": 1312,
+        "done": 100,
+        "total": 100,
+        "valid": true,
+        "k": 9
+      }
+    ],
+    "33": [
+      {
+        "slot": 33,
+        "sim": 941,
+        "done": 100,
+        "total": 100,
+        "valid": true,
+        "k": 6
+      },
+      {
+        "slot": 33,
+        "sim": 1044,
+        "done": 100,
+        "total": 100,
+        "valid": true,
+        "k": 7
+      },
+      {
+        "slot": 33,
+        "sim": 1021,
+        "done": 100,
+        "total": 100,
+        "valid": true,
+        "k": 8
+      },
+      {
+        "slot": 33,
+        "sim": 1108,
+        "done": 100,
+        "total": 100,
+        "valid": true,
+        "k": 9
+      },
+      {
+        "slot": 33,
+        "sim": 1108,
+        "done": 100,
+        "total": 100,
+        "valid": true,
+        "k": 10
+      }
+    ],
+    "34": [
+      {
+        "slot": 34,
+        "sim": 1234,
+        "done": 100,
+        "total": 100,
+        "valid": true,
+        "k": 6
+      }
+    ],
+    "35": [
+      {
+        "slot": 35,
+        "sim": 1141,
+        "done": 100,
+        "total": 100,
+        "valid": true,
+        "k": 6
+      },
+      {
+        "slot": 35,
+        "sim": 1217,
+        "done": 100,
+        "total": 100,
+        "valid": true,
+        "k": 7
+      },
+      {
+        "slot": 35,
+        "sim": 827,
+        "done": 100,
+        "total": 100,
+        "valid": true,
+        "k": 8
+      },
+      {
+        "slot": 35,
+        "sim": 920,
+        "done": 100,
+        "total": 100,
+        "valid": true,
+        "k": 9
+      },
+      {
+        "slot": 35,
+        "sim": 920,
+        "done": 100,
+        "total": 100,
+        "valid": true,
+        "k": 10
+      }
+    ],
+    "36": [
+      {
+        "slot": 36,
+        "sim": 1270,
+        "done": 100,
+        "total": 100,
+        "valid": true,
+        "k": 5
+      },
+      {
+        "slot": 36,
+        "sim": 915,
+        "done": 100,
+        "total": 100,
+        "valid": false,
+        "k": 7
+      },
+      {
+        "slot": 36,
+        "sim": 1170,
+        "done": 100,
+        "total": 100,
+        "valid": true,
+        "k": 6
+      },
+      {
+        "slot": 36,
+        "sim": 958,
+        "done": 100,
+        "total": 100,
+        "valid": true,
+        "k": 8
+      },
+      {
+        "slot": 36,
+        "sim": 1000,
+        "done": 100,
+        "total": 100,
+        "valid": true,
+        "k": 9
+      },
+      {
+        "slot": 36,
+        "sim": 1000,
+        "done": 100,
+        "total": 100,
+        "valid": false,
+        "k": 10
+      },
+      {
+        "slot": 36,
+        "sim": 1000,
+        "done": 100,
+        "total": 100,
+        "valid": true,
+        "k": 11
+      },
+      {
+        "slot": 36,
+        "sim": 1000,
+        "done": 100,
+        "total": 100,
+        "valid": true,
+        "k": 12
+      },
+      {
+        "slot": 36,
+        "sim": 1000,
+        "done": 100,
+        "total": 100,
+        "valid": true,
+        "k": 13
+      },
+      {
+        "slot": 36,
+        "sim": 1000,
+        "done": 100,
+        "total": 100,
+        "valid": true,
+        "k": 14
+      }
+    ],
+    "37": [
+      {
+        "slot": 37,
+        "sim": 1022,
+        "done": 100,
+        "total": 100,
+        "valid": true,
+        "k": 6
+      },
+      {
+        "slot": 37,
+        "sim": 1103,
+        "done": 100,
+        "total": 100,
+        "valid": true,
+        "k": 7
+      },
+      {
+        "slot": 37,
+        "sim": 1428,
+        "done": 100,
+        "total": 100,
+        "valid": true,
+        "k": 8
+      },
+      {
+        "slot": 37,
+        "sim": 1428,
+        "done": 100,
+        "total": 100,
+        "valid": true,
+        "k": 9
+      },
+      {
+        "slot": 37,
+        "sim": 1428,
+        "done": 100,
+        "total": 100,
+        "valid": true,
+        "k": 10
+      },
+      {
+        "slot": 37,
+        "sim": 1428,
+        "done": 100,
+        "total": 100,
+        "valid": true,
+        "k": 11
+      },
+      {
+        "slot": 37,
+        "sim": 1428,
+        "done": 100,
+        "total": 100,
+        "valid": true,
+        "k": 12
+      },
+      {
+        "slot": 37,
+        "sim": 1428,
+        "done": 100,
+        "total": 100,
+        "valid": true,
+        "k": 13
+      },
+      {
+        "slot": 37,
+        "sim": 1428,
+        "done": 100,
+        "total": 100,
+        "valid": true,
+        "k": 14
+      },
+      {
+        "slot": 37,
+        "sim": 1428,
+        "done": 100,
+        "total": 100,
+        "valid": true,
+        "k": 15
+      },
+      {
+        "slot": 37,
+        "sim": 1428,
+        "done": 100,
+        "total": 100,
+        "valid": true,
+        "k": 16
+      }
+    ],
+    "38": [
+      {
+        "slot": 38,
+        "sim": 1133,
+        "done": 100,
+        "total": 100,
+        "valid": true,
+        "k": 5
+      },
+      {
+        "slot": 38,
+        "sim": 1174,
+        "done": 100,
+        "total": 100,
+        "valid": true,
+        "k": 6
+      },
+      {
+        "slot": 38,
+        "sim": 985,
+        "done": 100,
+        "total": 100,
+        "valid": true,
+        "k": 7
+      },
+      {
+        "slot": 38,
+        "sim": 1066,
+        "done": 100,
+        "total": 100,
+        "valid": true,
+        "k": 8
+      },
+      {
+        "slot": 38,
+        "sim": 1066,
+        "done": 100,
+        "total": 100,
+        "valid": true,
+        "k": 10
+      },
+      {
+        "slot": 38,
+        "sim": 1066,
+        "done": 100,
+        "total": 100,
+        "valid": true,
+        "k": 9
+      }
+    ],
+    "39": [
+      {
+        "slot": 39,
+        "sim": 1236,
+        "done": 100,
+        "total": 100,
+        "valid": true,
+        "k": 7
+      },
+      {
+        "slot": 39,
+        "sim": 1056,
+        "done": 100,
+        "total": 100,
+        "valid": true,
+        "k": 9
+      },
+      {
+        "slot": 39,
+        "sim": 1370,
+        "done": 100,
+        "total": 100,
+        "valid": true,
+        "k": 8
+      },
+      {
+        "slot": 39,
+        "sim": 1088,
+        "done": 100,
+        "total": 100,
+        "valid": true,
+        "k": 10
+      },
+      {
+        "slot": 39,
+        "sim": 1088,
+        "done": 100,
+        "total": 100,
+        "valid": true,
+        "k": 11
+      },
+      {
+        "slot": 39,
+        "sim": 1088,
+        "done": 100,
+        "total": 100,
+        "valid": true,
+        "k": 12
+      },
+      {
+        "slot": 39,
+        "sim": 1088,
+        "done": 100,
+        "total": 100,
+        "valid": true,
+        "k": 13
+      },
+      {
+        "slot": 39,
+        "sim": 1088,
+        "done": 100,
+        "total": 100,
+        "valid": true,
+        "k": 14
+      },
+      {
+        "slot": 39,
+        "sim": 1088,
+        "done": 100,
+        "total": 100,
+        "valid": true,
+        "k": 15
+      },
+      {
+        "slot": 39,
+        "sim": 1088,
+        "done": 100,
+        "total": 100,
+        "valid": true,
+        "k": 16
+      },
+      {
+        "slot": 39,
+        "sim": 48485,
+        "done": 98,
+        "total": 100,
+        "valid": true,
+        "k": 6
+      }
+    ],
+    "40": [
+      {
+        "slot": 40,
+        "sim": 1298,
+        "done": 100,
+        "total": 100,
+        "valid": true,
+        "k": 6
+      },
+      {
+        "slot": 40,
+        "sim": 1131,
+        "done": 100,
+        "total": 100,
+        "valid": true,
+        "k": 8
+      },
+      {
+        "slot": 40,
+        "sim": 1131,
+        "done": 100,
+        "total": 100,
+        "valid": true,
+        "k": 9
+      },
+      {
+        "slot": 40,
+        "sim": 1131,
+        "done": 100,
+        "total": 100,
+        "valid": true,
+        "k": 10
+      },
+      {
+        "slot": 40,
+        "sim": 3496,
+        "done": 100,
+        "total": 100,
+        "valid": true,
+        "k": 7
+      }
+    ]
+  },
+  "compare": {
+    "21": {
+      "k_tbc": 6,
+      "facn_k": 6,
+      "facn_delta": 0,
+      "n_updates": 0,
+      "facn_sim": 1085,
+      "best_k": 8,
+      "best_sim": 959,
+      "gap": 126,
+      "rank": 2,
+      "tag": "MISS",
+      "facn_k_sweep_sim": 1085
+    },
+    "22": {
+      "k_tbc": 6,
+      "facn_k": 8,
+      "facn_delta": 2,
+      "n_updates": 0,
+      "facn_sim": 864,
+      "best_k": 8,
+      "best_sim": 823,
+      "gap": 41,
+      "rank": 1,
+      "tag": "BEST",
+      "facn_k_sweep_sim": 823
+    },
+    "23": {
+      "k_tbc": 6,
+      "facn_k": 7,
+      "facn_delta": 1,
+      "n_updates": 0,
+      "facn_sim": 1142,
+      "best_k": 7,
+      "best_sim": 1142,
+      "gap": 0,
+      "rank": 1,
+      "tag": "BEST",
+      "facn_k_sweep_sim": 1142
+    },
+    "24": {
+      "k_tbc": 6,
+      "facn_k": 10,
+      "facn_delta": 4,
+      "n_updates": 0,
+      "facn_sim": 602,
+      "best_k": 15,
+      "best_sim": 811,
+      "gap": -209,
+      "rank": 6,
+      "tag": "NEAR",
+      "facn_k_sweep_sim": 811
+    },
+    "25": {
+      "k_tbc": 6,
+      "facn_k": 8,
+      "facn_delta": 2,
+      "n_updates": 0,
+      "facn_sim": 1269,
+      "best_k": 10,
+      "best_sim": 988,
+      "gap": 281,
+      "rank": 3,
+      "tag": "MISS",
+      "facn_k_sweep_sim": 1257
+    },
+    "26": {
+      "k_tbc": 5,
+      "facn_k": 7,
+      "facn_delta": 2,
+      "n_updates": 0,
+      "facn_sim": 1522,
+      "best_k": 8,
+      "best_sim": 1093,
+      "gap": 429,
+      "rank": 5,
+      "tag": "MISS",
+      "facn_k_sweep_sim": 1522
+    },
+    "27": {
+      "k_tbc": 6,
+      "facn_k": 7,
+      "facn_delta": 1,
+      "n_updates": 0,
+      "facn_sim": 1174,
+      "best_k": 7,
+      "best_sim": 1174,
+      "gap": 0,
+      "rank": 1,
+      "tag": "BEST",
+      "facn_k_sweep_sim": 1174
+    },
+    "28": {
+      "k_tbc": 6,
+      "facn_k": 7,
+      "facn_delta": 1,
+      "n_updates": 14,
+      "facn_sim": 1283,
+      "best_k": 11,
+      "best_sim": 1084,
+      "gap": 199,
+      "rank": 10,
+      "tag": "MISS",
+      "facn_k_sweep_sim": 1480
+    },
+    "29": {
+      "k_tbc": 6,
+      "facn_k": 8,
+      "facn_delta": 2,
+      "n_updates": 0,
+      "facn_sim": 2579,
+      "best_k": 7,
+      "best_sim": 2296,
+      "gap": 283,
+      "rank": 3,
+      "tag": "MISS",
+      "facn_k_sweep_sim": 2591
+    },
+    "30": {
+      "k_tbc": 6,
+      "facn_k": 8,
+      "facn_delta": 2,
+      "n_updates": 0,
+      "facn_sim": 981,
+      "best_k": 8,
+      "best_sim": 967,
+      "gap": 14,
+      "rank": 1,
+      "tag": "BEST",
+      "facn_k_sweep_sim": 967
+    },
+    "31": {
+      "k_tbc": 5,
+      "facn_k": 5,
+      "facn_delta": 0,
+      "n_updates": 0,
+      "facn_sim": 3437,
+      "best_k": 7,
+      "best_sim": 2582,
+      "gap": 855,
+      "rank": 2,
+      "tag": "MISS",
+      "facn_k_sweep_sim": 3437
+    },
+    "32": {
+      "k_tbc": 6,
+      "facn_k": 8,
+      "facn_delta": 2,
+      "n_updates": 0,
+      "facn_sim": 1041,
+      "best_k": 8,
+      "best_sim": 1053,
+      "gap": -12,
+      "rank": 1,
+      "tag": "BEST",
+      "facn_k_sweep_sim": 1053
+    },
+    "33": {
+      "k_tbc": 6,
+      "facn_k": 8,
+      "facn_delta": 2,
+      "n_updates": 0,
+      "facn_sim": 791,
+      "best_k": 6,
+      "best_sim": 941,
+      "gap": -150,
+      "rank": 2,
+      "tag": "NEAR",
+      "facn_k_sweep_sim": 1021
+    },
+    "34": {
+      "k_tbc": 6,
+      "facn_k": 6,
+      "facn_delta": 0,
+      "n_updates": 0,
+      "facn_sim": 1234,
+      "best_k": 6,
+      "best_sim": 1234,
+      "gap": 0,
+      "rank": 1,
+      "tag": "BEST",
+      "facn_k_sweep_sim": 1234
+    },
+    "35": {
+      "k_tbc": 6,
+      "facn_k": 8,
+      "facn_delta": 2,
+      "n_updates": 0,
+      "facn_sim": 846,
+      "best_k": 8,
+      "best_sim": 827,
+      "gap": 19,
+      "rank": 1,
+      "tag": "BEST",
+      "facn_k_sweep_sim": 827
+    },
+    "36": {
+      "k_tbc": 5,
+      "facn_k": 6,
+      "facn_delta": 1,
+      "n_updates": 0,
+      "facn_sim": 1170,
+      "best_k": 8,
+      "best_sim": 958,
+      "gap": 212,
+      "rank": 7,
+      "tag": "MISS",
+      "facn_k_sweep_sim": 1170
+    },
+    "37": {
+      "k_tbc": 6,
+      "facn_k": 8,
+      "facn_delta": 2,
+      "n_updates": 0,
+      "facn_sim": 1086,
+      "best_k": 6,
+      "best_sim": 1022,
+      "gap": 64,
+      "rank": 11,
+      "tag": "MISS",
+      "facn_k_sweep_sim": 1428
+    },
+    "38": {
+      "k_tbc": 5,
+      "facn_k": 5,
+      "facn_delta": 0,
+      "n_updates": 4,
+      "facn_sim": 1168,
+      "best_k": 7,
+      "best_sim": 985,
+      "gap": 183,
+      "rank": 5,
+      "tag": "MISS",
+      "facn_k_sweep_sim": 1133
+    },
+    "39": {
+      "k_tbc": 6,
+      "facn_k": 7,
+      "facn_delta": 1,
+      "n_updates": 0,
+      "facn_sim": 1236,
+      "best_k": 9,
+      "best_sim": 1056,
+      "gap": 180,
+      "rank": 9,
+      "tag": "MISS",
+      "facn_k_sweep_sim": 1236
+    },
+    "40": {
+      "k_tbc": 6,
+      "facn_k": 6,
+      "facn_delta": 0,
+      "n_updates": 0,
+      "facn_sim": 1298,
+      "best_k": 10,
+      "best_sim": 1131,
+      "gap": 167,
+      "rank": 4,
+      "tag": "MISS",
+      "facn_k_sweep_sim": 1298
+    }
+  }
+}

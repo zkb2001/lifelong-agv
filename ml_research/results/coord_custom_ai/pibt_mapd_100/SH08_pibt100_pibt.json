@@ -1,0 +1,19 @@
+{
+  "scenario_id": "SH08_pibt100",
+  "method": "pibt_mapd_v1",
+  "slot": 8,
+  "tasks_total": 100,
+  "tasks_completed": 43,
+  "completion_ratio": 0.43,
+  "sim_time": 87573,
+  "wall_seconds": 51.18,
+  "trajectory": "D:\\compitition\\MioVerse\\final_version\\ml_research\\results\\coord_custom_ai\\pibt_mapd_100\\trajectories\\SH08_pibt100_pibt.csv",
+  "validate_ok": true,
+  "validate_summary": "VALID ok",
+  "n_collisions": 0,
+  "n_swaps": 0,
+  "n_illegal_motion": 0,
+  "n_fifo": 0,
+  "n_display_mismatch": 0,
+  "planner": "pibt"
+}

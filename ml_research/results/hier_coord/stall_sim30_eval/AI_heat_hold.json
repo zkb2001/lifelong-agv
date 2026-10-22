@@ -1,0 +1,58 @@
+[
+  {
+    "slot": 6,
+    "mode": "heat_hold_r1",
+    "sim": 3489,
+    "wall": 839.82,
+    "valid": true,
+    "done": 100,
+    "handoff_t": 900,
+    "handoff_reason": "stall_ai:stall_net:p=0.83",
+    "hier": 3197,
+    "d_hier": 292,
+    "beats_hier": false,
+    "non_worse": false
+  },
+  {
+    "slot": 6,
+    "mode": "heat_hold_r2",
+    "sim": 2307,
+    "wall": 428.04,
+    "valid": true,
+    "done": 100,
+    "handoff_t": 1200,
+    "handoff_reason": "stall_ai:stall_net:p=0.79",
+    "hier": 3197,
+    "d_hier": -890,
+    "beats_hier": true,
+    "non_worse": true
+  },
+  {
+    "slot": 5,
+    "mode": "heat_hold_r1",
+    "sim": 3669,
+    "wall": 605.9,
+    "valid": true,
+    "done": 100,
+    "handoff_t": 225,
+    "handoff_reason": "idle_surface_streak=5",
+    "hier": 2991,
+    "d_hier": 678,
+    "beats_hier": false,
+    "non_worse": false
+  },
+  {
+    "slot": 5,
+    "mode": "heat_hold_r3",
+    "sim": 3525,
+    "wall": 807.54,
+    "valid": true,
+    "done": 100,
+    "handoff_t": 325,
+    "handoff_reason": "done_plateau_streak=7",
+    "hier": 2991,
+    "d_hier": 534,
+    "beats_hier": false,
+    "non_worse": false
+  }
+]

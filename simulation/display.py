@@ -115,11 +115,22 @@ class DisplayManager:
         try:
             if imageio is None:
                 imageio = importlib.import_module('imageio.v2')
-            # 默认 FPS=3、speed=1：每仿真步一帧。可用 --duration 将成片时长压到约 N 秒（不改跳帧逻辑）。
+            # 默认 FPS=3、speed=1：每仿真步一帧。
+            # --duration N：成片约 N 秒。许多播放器无法解码 fps<1，
+            # 因此写盘 fps≥1，并用 _frame_hold 重复写入拉长时长（如 sim×4s）。
+            self._frame_hold = 1
             if self.video_duration_sec and self.max_timestamp >= 0:
-                fps = max(1, round((self.max_timestamp + 1) / float(self.video_duration_sec)))
+                n_frames = float(self.max_timestamp + 1)
+                target_fps = n_frames / float(self.video_duration_sec)
+                if target_fps < 1.0 - 1e-9:
+                    self._frame_hold = max(
+                        1, int(round(float(self.video_duration_sec) / n_frames))
+                    )
+                    fps = 1.0
+                else:
+                    fps = max(1.0, float(target_fps))
             else:
-                fps = max(1, int(FPS * self.speed))
+                fps = float(max(1, int(FPS * self.speed)))
             self._video_fps = fps
             self.video_writer = imageio.get_writer(
                 self.video_filename,
@@ -137,7 +148,9 @@ class DisplayManager:
             return
         frame = pygame.surfarray.array3d(self.screen)
         frame = np.transpose(frame, (1, 0, 2))
-        self.video_writer.append_data(frame)
+        hold = int(getattr(self, "_frame_hold", 1) or 1)
+        for _ in range(max(1, hold)):
+            self.video_writer.append_data(frame)
     
     def close_video_writer(self):
         """关闭视频写入器"""

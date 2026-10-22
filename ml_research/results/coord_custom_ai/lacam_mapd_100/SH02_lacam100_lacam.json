@@ -1,0 +1,19 @@
+{
+  "scenario_id": "SH02_lacam100",
+  "method": "lacam_star_mapd_complete_v3",
+  "slot": 2,
+  "tasks_total": 100,
+  "tasks_completed": 100,
+  "completion_ratio": 1.0,
+  "sim_time": 27469,
+  "wall_seconds": 57.51,
+  "trajectory": "D:\\compitition\\MioVerse\\final_version\\ml_research\\results\\coord_custom_ai\\lacam_mapd_100\\trajectories\\SH02_lacam100_lacam.csv",
+  "validate_ok": true,
+  "validate_summary": "VALID ok",
+  "n_collisions": 0,
+  "n_swaps": 0,
+  "n_illegal_motion": 0,
+  "n_fifo": 0,
+  "n_display_mismatch": 0,
+  "planner": "lacam_star"
+}

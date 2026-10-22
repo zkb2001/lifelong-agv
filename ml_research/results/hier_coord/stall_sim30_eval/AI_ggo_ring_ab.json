@@ -1,0 +1,62 @@
+[
+  {
+    "slot": 9,
+    "mode": "ggo_ring",
+    "sim": 3268,
+    "wall": 1404.63,
+    "valid": true,
+    "done": 100,
+    "handoff_t": 700,
+    "hier": 3366,
+    "d_hier": -98,
+    "beats_hier": true
+  },
+  {
+    "slot": 12,
+    "mode": "ggo_ring",
+    "sim": 4150,
+    "wall": 2816.79,
+    "valid": true,
+    "done": 100,
+    "handoff_t": 1000,
+    "hier": 3932,
+    "d_hier": 218,
+    "beats_hier": false
+  },
+  {
+    "slot": 2,
+    "mode": "ggo_ring",
+    "sim": 3738,
+    "wall": 2343.97,
+    "valid": true,
+    "done": 100,
+    "handoff_t": 1375,
+    "hier": 4117,
+    "d_hier": -379,
+    "beats_hier": true
+  },
+  {
+    "slot": 12,
+    "mode": "ggo_ring_soft",
+    "sim": 3982,
+    "wall": 2032.65,
+    "valid": true,
+    "done": 100,
+    "handoff_t": 725,
+    "hier": 3932,
+    "d_hier": 50,
+    "beats_hier": false
+  },
+  {
+    "slot": 12,
+    "mode": "ggo_ring_cw",
+    "sim": 3912,
+    "wall": 2223.46,
+    "valid": true,
+    "done": 100,
+    "handoff_t": 750,
+    "hier": 3932,
+    "d_hier": -20,
+    "beats_hier": true
+  }
+]

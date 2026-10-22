@@ -1,0 +1,1461 @@
+
+
+===== PAGE 1 =====
+Your Project Title 
+University of Macau 
+Faculty of Science and Technology 
+ 
+Automated GBA Vehicle License Plate 
+Recognition  
+by 
+Jiang, Yifan, Student No: MC257796 
+Project Report submitted in partial fulfillment 
+of the requirements of the Degree of  
+Master of Science in Data Science 
+Project Supervisor 
+Prof. Zhang, Yibo Bob 
+15 September 2026 
+ 
+
+
+===== PAGE 2 =====
+Your Project Title 
+2 of 43 
+ 
+15 September 2026 
+DECLARATION 
+I sincerely declare that:  
+1. I am the sole author of this report, 
+2. All the information contained in this report is certain and correct to the best of 
+my knowledge, 
+3. I declare that the thesis here submitted is original except for the source materials 
+explicitly acknowledged and that this thesis or parts of this thesis have not been 
+previously submitted for the same degree or for a different degree, and 
+4. I also acknowledge that I am aware of the Rules on Handling Student Academic 
+Dishonesty and the Regulations of the Student Discipline of the University of 
+Macau. 
+ 
+Signature 
+: 
+_________________________ 
+ 
+Name 
+: 
+Jiang, Yifan 
+ 
+Student No. 
+: 
+MC257796 
+ 
+Date  
+: 
+15 September 2026 
+ 
+
+
+===== PAGE 3 =====
+Your Project Title 
+3 of 43 
+ 
+15 September 2026 
+ACKNOWLEDGEMENTS 
+First, I would like to express my deepest appreciation to my supervisor Prof. Zhang 
+Yibo Bob for providing me the possibility to complete this project. A special gratitude 
+I give to Prof. Zhang Yibo Bob, whose contribution in patient guidance and continuous 
+encouragement, helped me to coordinate my project especially in writing this report.  
+Second, a special thanks to those who taught and guided me from ICI/FST in the past 
+two years. I have acquired specialized knowledge and extensive experiences during my 
+Master’s degree program. 
+Finally, I must express my profound gratitude to my family for providing me with fully 
+support and continuous encouragement throughout my years of study and the process 
+of researching and writing this report. This accomplishment would not have been 
+possible without them. Thank you! 
+ 
+
+
+===== PAGE 4 =====
+Your Project Title 
+4 of 43 
+ 
+15 September 2026 
+TABLE OF CONTENTS 
+COVER PAGE  
+1 
+DECLARATION 
+2 
+ACKNOWLEDGEMENT 
+3 
+LIST OF FIGURES 
+5 
+LIST OF TABLES 
+6 
+SECTION I 
+ 
+ 
+ABSTRACT 
+ 
+7 
+INTRODUCTION 
+8 
+SECTION II 
+ 
+ 
+RELATED WORK 
+11 
+SECTION III 
+ 
+ 
+METHODOLOGY 
+ERROR! BOOKMARK NOT DEFINED. 
+SECTION IV 
+ 
+ 
+EXPERIMENTS 
+23 
+SECTION V 
+ 
+ 
+CONCLUSIONS AND FUTURE WORK 
+40 
+REFERENCES  
+42 
+ 
+
+
+===== PAGE 5 =====
+Your Project Title 
+5 of 43 
+ 
+15 September 2026 
+LIST OF FIGURES 
+Figure 1: Example of LP Recognition. 
+ 
+ 
+ 
+ 
+ 
+9 
+Figure 2: Difficulty of LP Recognition in Different Scenarios. 
+ 
+ 
+9 
+Figure 3: Proposed ALPR Architecture. 
+ 
+ 
+ 
+ 
+ 
+16 
+Figure 4: Architecture of LPRNet. 
+ 
+ 
+ 
+ 
+ 
+ 
+17 
+Figure 5: Examples of Detection Results and Problems. 
+ 
+ 
+ 
+29 
+Figure 6: Examples of Detected Result with Ground Truth.  
+ 
+ 
+31 
+Figure 7: The accuracy and count of detections of the Proposed Method 
+ 
+37 
+    with respect to IoU interval. 
+ 
+ 
+ 
+ 
+ 
+ 
+Figure 8: Failure Results of the Proposed LP Recognition Method.  
+ 
+39 
+ 
+
+
+===== PAGE 6 =====
+Your Project Title 
+6 of 43 
+ 
+15 September 2026 
+LIST OF TABLES 
+Table 1: LPRNet Back-bone Network Architecture.  
+ 
+ 
+ 
+20 
+Table 2: Proposed LPR Architecture.  
+ 
+ 
+ 
+ 
+ 
+21 
+Table 3: Comparisons of LP Detection Methods on Different Testing Sets.  
+29 
+Table 4: Comparisons of LP Recognition Methods on Different Testing Sets.         35 
+Table 5: Comparisons of LP Recognition Methods on Difficult Scenarios.              36 
+ 
+ 
+
+
+===== PAGE 7 =====
+Your Project Title 
+7 of 43 
+ 
+15 September 2026 
+ABSTRACT 
+This project report presents the development of an Automated Greater Bay Area (GBA) 
+Vehicle License Plate Recognition System aimed at addressing the increasing need for 
+efficient vehicle management in public places such as parking lots, Electronic Toll 
+Collection, and intelligent transportation. With the influx of vehicles from Macau and 
+Hong Kong into the GBA, the demand for advanced vehicle management solution has 
+become significant. Traditional manual methods of vehicle identification are no longer 
+viable due to the high volume of vehicles and the diversity of license plates. This report 
+proposed a system utilizing efficient image processing and machine learning algorithms 
+to accurately and efficiently recognize and process vehicle license plates from Macau, 
+Hong Kong, and the broader Guangdong Province. The system is designed to be 
+integrated with the existing algorithms of parking lot infrastructures, providing the 
+improvements to enhance operations efficiency, reduce human error, and improve the 
+intelligence of parking facilities. Presented in this report are the system’s design, 
+development process, challenges encountered, and solutions applied to overcome them. 
+It also outlines a comprehensive evaluation of the system’s performance, demonstrating 
+the effectiveness and potential future expectations for vehicle management in the GBA 
+region. 
+
+
+===== PAGE 8 =====
+Your Project Title 
+8 of 43 
+ 
+15 September 2026 
+INTRODUCTION 
+Automatic License Plate Recognition (ALPR) is an important research for intelligent 
+transportation systems which can be utilized in parking lot management, vehicle 
+identification and traffic surveillance by extracting and recognizing the characters on 
+license plates (LPs) from image processing and pattern recognition technologies 
+(Examples shown in Figure 1). In recent years, machine learning methods have become 
+mainstream in license plate recognition tasks. Although different deep learning 
+methods have been applied in the market, there are still many problems that need to be 
+optimized and solved such as poor lighting conditions, variability of license plates 
+characters (including special characters), blurry images, and weather conditions (shown 
+in Figure 2). Conventional approaches to license plate recognition (LPR) typically rely 
+on methods based on segmentation, involving the detection of individual characters 
+followed by their recognition. These approaches require precise segmentation of the 
+characters. At the same time, errors in this segmentation process can result in incorrect 
+identification of license plates, even with a reliable character recognition system in 
+place. Nevertheless, in practical settings, factors such as blurred images and 
+environmental conditions compromise the precision of character segmentation. 
+Furthermore, the division of character detection and recognition into separate processes 
+lead to extra computational expenses that can impact the efficiency of the algorithm. A 
+solid ALPR system must effectively handle diverse environmental conditions while 
+ensuring high accuracy and perform reliably under real-world circumstances.  
+
+
+===== PAGE 9 =====
+Your Project Title 
+9 of 43 
+ 
+15 September 2026 
+In this report, a method called Cross-Region License Plate Recognition Net (XRNet) 
+was proposed to handle this problem, which is designed by a segmentation-free neural 
+network architecture for LPR based on YOLO [1] and Deep Convolution Neural 
+Network (DCNN) integrated with LPRNet [2]. Recent research has demonstrated the 
+efficiency and superiority of Convolutional Neural Networks (CNNs) in various 
+Computer Vision tasks, including image classification, object detection, and semantic 
+segmentation. However, the cost of computation is still a problem when implemented 
+to the embedded system in real-world applications. The insight of the algorithm is to 
+construct a neural network for high-quality license plate recognition with real-time 
+approach and lightweight enough to run on variety of platforms including mobile 
+devices. Compared to other machine learning algorithm, the infrastructure proposed in 
+this report is fast and efficient, addition with an integrated affine transformation system 
+top rectify distorted images after detection phase.  
+The proposed method has been validated using multiple datasets, achieving a 95% 
+accuracy rate and an average of over 65 frames per second, demonstrating its 
+Figure 1. Example of LP Recognition 
+Figure 2. Difficulty of LP Recognition in 
+Different Scenarios 
+
+
+===== PAGE 10 =====
+Your Project Title 
+10 of 43 
+ 
+15 September 2026 
+effectiveness across diverse settings and complex scenarios without needing any 
+modifications. In addition to extending the public datasets for training, we introduce 
+the CCPD [3] open dataset, a comprehensive collection of over 30,000 images of 
+vehicles captured from various cameras under a wide range of conditions such as 
+different locations, distances, lighting, and times of the day. This dataset contains a 
+variety of vehicle types (including cars, buses, motorcycles, and trucks), license plates 
+with different background colors (such as white, yellow, green, and blue), and plates 
+featuring characters in multiple colors (like black and white). Figure 2 shows some 
+examples from this dataset. In addition, I collected about 1,000 images manually to 
+form another dataset , which features images containing multiple license plates (Macau, 
+Hong Kong, and Mainland China) within a single image. 
+The contributions are: 
+• A well-designed network is introduced in this report called XRNet, capable of 
+behaving like a real-time system with limited sources, where the infrastructure 
+ensures fast inference speed and decent accuracy. 
+• Proposed a method of LPR without character segmentation based on YOLO and 
+DCNN, which enables it to recognize multi-region (different types) license 
+plates. 
+• Manually collected 1,000 photos from Macau and Hong Kong to form a GBA 
+license plate dataset named Hong Kong Macau License Plate Dataset (HMLPD). 
+The remainder of this report is structured in the following manner: Section II begins 
+with an overview of works related to the topic. In Section III, the proposed approaches 
+are presented in detail. Section IV is dedicated to the discussion of experimental 
+outcomes and ablation studies. Finally, the report is concluded in Section V. 
+
+
+===== PAGE 11 =====
+Your Project Title 
+11 of 43 
+ 
+15 September 2026 
+Related Work 
+Generally, the common task on LPR can be divided into two parts: detecting the LPs 
+and then recognizing the characters on them. This section will first explore the 
+techniques used for LP detection and recognition, as well as a summary of the relevant 
+research in this area. Given that our primary concern is license plate detection and 
+recognition (LPDR), we exclude research related to the detection of vehicles.  
+1. License Plate Detection 
+In traditional approaches, a LP detection algorithm typically involves a series of steps 
+designed to locate and identify the license plate within in image which is relies on 
+specific features like edge, color, texture, and patterns. However, these manually 
+defined features often struggle with complex backgrounds. In contrast, Convolutional 
+Neural Networks (CNNs) have become the leading technique in object detection in 
+recent years. With sufficient training data, CNNs are capable of capturing and 
+representing features with superior performance, delivering significantly better results 
+than traditional methods that depend on predefined features. In this section, we 
+concentrate on detection methods by using CNNs that can be categorized into two main 
+types: two-stage LP detection and one-stage LP detection.  
+1.1 Two-stage LP detection 
+Region-based Convolutional Neural Networks, also known as R-CNNs [4], are at the 
+pioneer of applying deep learning models to detecting objects in two-stage. R-CNNs 
+begin by identifying various potential regions within an image, such as using anchor 
+boxes. And then classify their categories and determine bounding box (for instance, 
+through offsets) based on a set of predefined features. Nevertheless, two-stage detection 
+
+
+===== PAGE 12 =====
+Your Project Title 
+12 of 43 
+ 
+15 September 2026 
+processes are generally less efficient compared to one-stage detection approaches. The 
+majority of LP detection techniques prefer the one-stage detection framework due to its 
+higher efficiency even if two-stage detection methods have higher accuracy. 
+1.2 One-stage LP detection 
+Popular one-stage LP detection methods, such as YOLO (You Only Look Once) series 
+and SSD [5] (Single Shot Multibox Detector), are real-time object detection algorithms 
+used in many commercial products. YOLO predicts class possibility and bounding box 
+in a single shot which significantly improve the speed in the detection phase. The 
+original YOLO object detector was first released in 2016, and the new architecture was 
+significantly faster than many object detectors.  
+SSD is a popular detector that can predict multiple classes. It operates by segmenting 
+the space for potential bounding boxes into a grid of default boxes, varying by aspect 
+ratio and scale across different locations on the feature map through a singular deep 
+neural network. However, SSD can struggle with small objects within an image due to 
+its use of fixed default boxes especially those objects take large part of them. The 
+performance of SSD can be sensitive to the aspect ratios and scales of the objects since 
+it relies on predefined defaulted boxes.  
+Compared to YOLO series, especially the later versions like YOLOv5 [6], and 
+YOLOv7 [7], which are generally optimized for speed. While SSD is also designed for 
+the real-time processing, YOLO’s newer architecture allows it to process image more 
+quickly in some implementations. Detecting small objects within images presents 
+challenges for both SSD and YOLO models, but the problem can be more obvious with 
+SSD. The grid-based system employed by YOLO can handle a more comprehensive 
+understanding of the entire image’s context, potentially improving the detection of 
+
+
+===== PAGE 13 =====
+Your Project Title 
+13 of 43 
+ 
+15 September 2026 
+smaller objects, particularly in dense objects scenarios. In this report, the proposed 
+method adopts the approach based on YOLOv7 which can reach high inference speed 
+in LP detection phase. 
+2. License Plate Recognition 
+License Plate Recognition (LPR) algorithms can be broadly categorized into two types 
+based on their approach to identifying and reading characters and numbers on a given 
+LP: segmentation-based recognition and segmentation-free recognition.  
+2.1 Segmentation-based Recognition 
+The process of segmentation-based LPR typically involves three main steps: Plate 
+detection, character segmentation, and character recognition. The first step is to locate 
+the license plate within the image by using various image processing techniques such 
+as edge detection, morphological operations, combining projections, and other hand-
+crafted algorithms. Then the plates will be segmented into individual characters by 
+algorithms generally from two methods: The first approach utilizes connected 
+component methods that create cohesive regions from images that have been converted 
+to binary, treating each region as an individual character. And the second approach 
+employs projection methods to isolate each character by identifying the upper and lower 
+edges derived from the horizontal projection of binary images [8][9][10][11][12]. 
+Finally, the areas are identified individually through the use of optical character 
+recognition (OCR) methods [13][14]. 
+However, these methods suffer from segmentation errors cause the segmentation 
+quality can be highly affected by the input image noise, blur, deformations, or low 
+
+
+===== PAGE 14 =====
+Your Project Title 
+14 of 43 
+ 
+15 September 2026 
+resolution. In this report, segmentation-free recognition methods are chosen to 
+concentrate on. 
+2.2 Segmentation-free Recognition 
+Segmentation-free LP algorithms do not rely on the individual segmentation of 
+characters on the license plate. Instead, this type of approach directly performs LP 
+recognition in a single step. The process of segmentation-free LPR include more 
+complex model like CNNs that are capable of understanding the plate directly from 
+detected plate region. Techniques like Recurrent Neural Networks (RNNs) [15] or 
+Transformer [16] model can process the entire plate image and output the plate’s text 
+as a sequence of characters. In TE2E [17], Li et al. proposed a bidirectional RNNs 
+(BRNNs) with connectionist temporal classification (CTC) loss [33] to process LP 
+features produced by RPN. Similarly, Wang et al. [18] proposed a convolutional RNN 
+(CRNN) followed by the CTC for character recognition. Generally, CNNs based 
+structures are more efficient than the RNNs based methods when they have the same 
+number of parameters in the LPR. In this report, a proposed method called XRNet is 
+created and has high recognition performance by using CNNs. 
+ 
+
+
+===== PAGE 15 =====
+Your Project Title 
+15 of 43 
+ 
+15 September 2026 
+METHODOLOGY 
+1. ALPR System Design 
+This section delineates the systematical design implemented in the development of the 
+ALPR system. The methodology typically contains image acquisition, preprocessing, 
+license plate detection, character recognition, and post-processing stages, integrated 
+with advanced computer vision and machine learning algorithms. The primary goal of 
+this research is to present a method for detecting and recognizing license plate in real-
+time with accuracy. In contrast to segmentation-based approaches which require the 
+segmentation of characters before their recognition, the proposed method employ the 
+cascade CNNs with Connectionist Temporal Classification (CTC) loss [2] for training, 
+eliminating the requirement to mark the character positions on the license plate. The 
+proposed infrastructure was roughly divided into two parts shown in Figure 3, the 
+detection phase is based on YOLOv7 with some optimized components and the 
+recognition phase is built on the proposed XRNet relying on the insight of SCR-Net 
+[19] and LPRNet. 
+
+
+===== PAGE 16 =====
+Your Project Title 
+16 of 43 
+ 
+15 September 2026 
+ 
+Figure 3. Proposed ALPR Architecture 
+2. License Plate Detection 
+The proposed XRNet adopts a high performance one-stage detector implemented based 
+on YOLOv7, the insight is to build a detector with light-weight architecture to reach a 
+good inference speed. The architecture of XRNet contains three main modules: 
+backbone, head and fusion networks in detection phase as shown in Figure 3. The 
+backbone network is based on the simplified version of YOLOv7. The head network 
+involves box classification, vertices estimation [19], and box-offset estimation. And the 
+Feature Pyramid Network (FPN) is adapted to serve as the fusion network by 
+integrating the features from the backbone network. 
+2.1 Backbone Network 
+The core of the backbone structure is Darknet [24] (shown in Figure 4), it is composed 
+of a series of convolution layers with a focus on 3×3 filters, i.e., convolutional layer 
+      
+   
+   
+     
+        
+  
+  
+  
+  
+  
+   
+   
+  
+  
+  
+     
+        
+         
+           
+        
+        
+           
+      
+     
+      
+                             
+     
+                   
+     
+      
+                   
+     
+    
+                  
+     
+     
+     
+                  
+                   
+                  
+                             
+        
+       
+             
+              
+      
+       
+       
+       
+      
+       
+      
+       
+               
+                 
+
+
+===== PAGE 17 =====
+Your Project Title 
+17 of 43 
+ 
+15 September 2026 
+with the kernel of 3×3 and the stride of 2 followed by the batch normalization and 
+rectified linear unit integrated with residual connections similar to ResNet architectures. 
+These residual connection can help prevent the vanishing gradient problems and 
+improving the effective training for more deeper network layers. The CSPDarknet[6] 
+backbone incorporates Cross Stage Partial connections (CSP) structures, which 
+partition the feature map of each layer into two parts. One part is directly channelled to 
+the layer’s output, while the other undergoes processing through a sequence of 
+convolutional layers before both parts are emerged. This method significantly reduces 
+the computational cost and the number of model’s parameters, making the network 
+more efficiently. 
+ 
+2.2 Head Network 
+The detection head is structured into three sections, each responsible for predictions at 
+a separate scale of features. It employs three grid sizes of 13×13, 26×26, and 52×52, 
+with each cell in these grids generating three bounding boxes. The outputs from each 
+Figure 4. Structure of Darknet [21] 
+
+
+===== PAGE 18 =====
+Your Project Title 
+18 of 43 
+ 
+15 September 2026 
+section include the bounding boxes, probabilities for various classes, and confidence 
+scores. To refine the predictions and eliminate redundancies, the model applies a 
+technique known as Non-maximum Suppression (NMS) to remove any overlapping 
+bounding boxes. 
+2.3 Fusion Network 
+The Feature Pyramid Network (FPN) [20] in fusion network operates by incrementally 
+decreasing the input image's spatial resolution while simultaneously increasing the 
+number of feature channels. This process generates feature maps adept at identifying 
+objects across a variety of scales and resolutions. Two phases are processed on this 
+architecture in the fusion network. Initially, bilinear upsampling is applied to the 
+features with lower resolution, enlarging them by a factor of 2 to align their sizes. 
+Subsequently, the features with higher resolution passing through Batch Normalization 
+(BN) and a Rectified Linear Unit (ReLU). Following this, the two sets of feature maps 
+are combined and then passed through a sequence consisting of a 1×1 stride, 
+convolution, BN, and ReLU. 
+3. License Plate Recognition 
+The LP recognition architecture is described in Table 2. It takes a cropped RGB image 
+as input and evaluates the probability of each sequence characters whose length 
+corresponding to the input image pixel width. First, the input LP image is resized and 
+rectified to a resolution of 256×64 based on its vertices. This process automatically 
+adjusts and normalizes the positions of characters. Then the rectified LP image is input 
+into the recognition system. 
+3.1 License Plate Rectification 
+
+
+===== PAGE 19 =====
+Your Project Title 
+19 of 43 
+ 
+15 September 2026 
+The rectification methods from [19] is adopted in the early stage of the recognition 
+phase. This approach is realized by perspective transformation which rectified the view 
+angle and the resampled LP into predefined size. This process can be divided into 
+several steps below. First, suppose there is a point in an image with the coordinates 
+[u,v,1]. Then the original vertex can be mapped into a desired 3D space by the following 
+equation (1): 
+ 
+Equation (1) 
+where M represents the transformation matrix with eight unknown variables. Second, a 
+compression technique is used to represent the transformed point on a plane which is 
+orthogonal to the camera lens.  By projecting four points from the original plane to the 
+target plane using this method, eight equations from the given equation are established, 
+which can be resolved using methods from linear algebra. Finally, the same projection 
+technique is applied to all pixels in the original plane and the rectified image is shown 
+in Figure 3. 
+3.2 Recognition Architecture 
+The main algorithm of the recognition phase is based on the LPRNet. The backbone of 
+LPRNet consists of several convolutional layers as shown in Table 1. These layers are 
+responsible for extracting features from the input image. After each convolutional layer, 
+batch normalization is applied to stabilize learning and accelerate convergence. 
+Activation functions like Rectified Linear Unit (ReLU) are used following batch 
+normalization. As the description before, due to the mismatch in lengths between the 
+output from the target sequence of characters, Connectionist Temporal Classification 
+
+
+===== PAGE 20 =====
+Your Project Title 
+20 of 43 
+ 
+15 September 2026 
+(CTC) loss is applied for training without segmentation. CTC loss is a widely 
+recognized technique for handling cases where there's a misalignment and varying 
+lengths between input and output sequences. Additionally, CTC offers an effective 
+method for converting the probabilities at each time step into the probability of a given 
+output sequence. The output from the CTC layer is a sequence of probabilities for each 
+character class at each time step. A decoding step, such as greedy decoding which takes 
+the maximum of class probabilities in each position or beam search which maximizes 
+the total probability of the output sequence [21][22], is used to translate these 
+probabilities into the final predicted sequence of characters for the LP. The detailed 
+structure of the proposed LPR method is shown in the Table 2 below.  
+Layer Type 
+Parameters 
+Input 
+94x24 pixels RGB image 
+Convolution 
+3x3 stride 1 
+MaxPooling 
+3x3 stride 1 
+Small Basic Block (1x1,3x1,1x3,1x1 
+Conv. w/stride 1) 
+3x3 stride 1 
+Maxpooling 
+3x3 stride (2, 1) 
+Small Basic Block 
+3x3 stride 1 
+Small Basic Block 
+3x3 stride 1 
+MaxPooling 
+3x3 stride (2, 1) 
+Dropout 
+0.5 ratio 
+Convolution 
+4x1 stride 1 
+Dropout 
+0.5 ratio 
+Convolution 
+# class number 1x13 stride 1 
+Table 1. LPRNet Back-bone Network Architecture [2] 
+ 
+ 
+
+
+===== PAGE 21 =====
+Your Project Title 
+21 of 43 
+ 
+15 September 2026 
+Layer Type 
+Parameters 
+Input 
+128x32 RGB image 
+Convolution 
+Conv3-BN-ReLU 
+Block-1 
+{BN-Conv3-BN-ReLU-Conv3-BN}×3 
+Block-2 
+{BN-Conv3-BN-ReLU-Conv3-BN}×3 
+Block-3 
+{BN-Conv3-BN-ReLU-Conv3-BN}×3 
+Dropout 
+0.5 ratio 
+Convolution 
+Conv4-BN-ReLU 
+Block-4 
+{Res-block}×2-Conv1×3-BN-ReLU 
+Convolution 
+# class number 1x13 stride 1 
+Decoder 
+Beam Search / Greedy Search  
+Table 2.  Proposed LPR Architecture 
+ 
+3.3 Special Case Handling 
+To handle the special characters in ALPR due to the wide variety of license plate 
+formats, symbols, and characters across different regions and countries. Some strategies 
+are adopted as follows: 
+• Extended special character dataset: Use data augmentation techniques by 
+Generative Adversarial Network (GAN) such as StyleText to artificially expand 
+the training dataset with images that include special characters can improve the 
+model’s robustness. 
+• Pre-processing: Apply image preprocessing techniques such as denoising and 
+contrast adjustment to improve the clarity of characters on the license plate. In 
+addition, geometric transformations are utilized to rectify the perspective of 
+license plates in images, ensuring that the characters are aligned for easier 
+recognition. 
+
+
+===== PAGE 22 =====
+Your Project Title 
+22 of 43 
+ 
+15 September 2026 
+• Post-processing: Post-processing rules are implemented based on known license 
+plate formats and conventions to validate and correct recognized outputs by the 
+proposed method. For example, certain symbols may only appear in specific 
+positions such as “CC” in Hong Kong’s LP for diplomatic vehicles. In addition, 
+error correction algorithms are adopted to identify and rectify common 
+recognition mistakes, especially for characters that are easily confused with 
+special symbols. 
+Handling LPs that have characters arranged in two lines presents unique challenges for 
+ALPR systems. These challenges include varying line alignments, different character 
+sizes, and spacing. After the two-line LP is detected by the proposed detection model, 
+the LP is divided by a geometric transformation into two parts in a certain ratio of 5:7. 
+And two parts of LP is aligned into one longer license plate as an input for the LP 
+recognition phase. 
+ 
+ 
+ 
+ 
+
+
+===== PAGE 23 =====
+Your Project Title 
+23 of 43 
+ 
+15 September 2026 
+EXPERIMENTS 
+To evaluate the effectiveness of the proposed model, the experiments on different 
+dataset are conducted for both LP detection and recognition. In this section, the datasets 
+and settings for training and testing will be introduced first. Then the evaluation with 
+implementation details of the proposed methods compared to other popular methods 
+are presented in terms of LP detection and recognition.  
+1. Datasets 
+The proposed ALPR models are evaluated on three datasets, i.e. CCPD, HMLPD, and 
+HMLPD-Mixed. 
+1.1 CCPD dataset 
+CCPD stands for Chinese City Parking Datasets which is an extensive publicly 
+accessible LP dataset with over 250k unique car images in proving annotations for the 
+vertices’ locations. Each image in the dataset has dimensions of 720 pixels in width, 
+1160 pixels in height, and 3 color channels. This resolution ensures that the license 
+plates within each image are clear and readable. On average, the size of each file is 
+approximately 200 kilobytes, cumulatively amounting to more than 48 gigabytes for 
+the entire dataset. Except the large amount of data contains in the dataset, one of the 
+advantages of the dataset is that it has images under diverse illuminations, environments 
+in different weather, and different angle of views to ensure distinct evaluation 
+conditions.  
+1.2 HMLPD and HMLPD-Mixed dataset 
+
+
+===== PAGE 24 =====
+Your Project Title 
+24 of 43 
+ 
+15 September 2026 
+HMLPD is a private image dataset mainly contains the license plates in the regions 
+from Macau and Hong Kong. It has about 2000 images collected from Internet and 
+1000 images collected from handmade. Another specialty of this dataset is that some of 
+them involve multiple plates in one image for cross-region vehicles. In addition, from 
+the images collected by handmade, the images are taken in different angle of views for 
+a single plate which can be benefit for testing. HMLPD-Mixed is created by randomly 
+selected images from both CCPD and HMLPD datasets especially for testing. It 
+contains about 1000 images, half from Macau and Hong Kong and half from the 
+mainland. In order to enlarge more LP images from Macau and Hong Kong, the tool 
+called StyleText [23] is utilized for fake LP images generation. There are about 50k LP 
+images are created in different characters combinations with different license plates 
+background. Postprocessing techniques such as random augmentations, fuzzy 
+processing, and transformations are also applied randomly during the generation. 
+2. Evaluation Metrics 
+To evaluate the effectiveness of trained models, the evaluation metrics are adopted as 
+follows: 
+• Accuracy: The percentage of correctly recognized license plates. 
+• Character Recognition Rate (CRR): The accuracy of correctly recognized 
+individual characters on the license plate. 
+• Processing Time: The average time taken to recognize a license plate from an 
+image. 
+All the training processes were done with the framework of PyTorch, all the models 
+were trained and tested on a NVIDIA GTX 4090 gpu and with Python 3.8.10.  
+
+
+===== PAGE 25 =====
+Your Project Title 
+25 of 43 
+ 
+15 September 2026 
+3. Implementation Details 
+3.1 LP Detection Training 
+The detection model is trained by 100 epochs with the batch size of 128 on the GPU. 
+The adaptive learning rate strategy was applied in the training with initially 0.01 and 
+cut it by a factor of 0.5 every 20 epochs to improve training efficiency and model 
+performance. For optimization, we chose the SGD optimizer, setting a weight decay of 
+0.0005 and a momentum value of 0.9. The model processes all input images after 
+resizing them to a uniform width of 160 pixels, maintaining their original aspect ratios. 
+To enhance the robustness of the model, the vertex-based data augmentation techniques 
+is incorporated, including random flipping and affine transformation implemented by 
+OpenCV library with rotating, scaling, and fuzzy. 
+3.2 LP Recognition Training 
+The recognition model is trained with ‘Adam’ optimizer with a batch size of 64, an 
+initial learning rate of 0.001, and a gradient noise scale of 0.001. The learning rate is 
+reduced by a factor of 10 every 10 epochs, with a total training for 200 epochs. To 
+enhance the model’s robustness, some data augmentation techniques are applied before 
+training phase such as random affine transformations, which include horizonal rotations, 
+scaling, shifts, and resizes. The selection of all other hyper-parameters was selected 
+based on cross-validation on the target dataset. 
+4. Evaluation on LP Detection 
+The proposed method of LP detection is compared to the real-time detection algorithm 
+like YOLO series and R-CNN series. For the one-stage approaches comparison, the 
+YOLOv3 [24], YOLOv5 are selected as the baseline in this section since there are some 
+
+
+===== PAGE 26 =====
+Your Project Title 
+26 of 43 
+ 
+15 September 2026 
+limitations on the original YOLO algorithm such as strong spatial constraints on 
+predicting bounding box. YOLOv3 and newest version have significant improvements. 
+And Faster R-CNN [25] is chosen for the two-stage approach compared to the proposed 
+model since the popularity and the efficiency of the model. The testing result shown on 
+Table 3 and the detailed evaluation metrics are introduced in the following sections. 
+4.1 YOLOv3, YOLOv5, Faster R-CNN Overview 
+4.1.1 Yolov3 Overview:  
+YOLOv3 is a widely recognized object detection model known for its speed and 
+accuracy. It’s the third version of the YOLO series, developed by Joseph Redmon et al. 
+The model’s ability to perform real-time object detection makes it highly relevant for 
+projects that require fast and efficient detection tasks, including those in surveillance, 
+autonomous driving, and other various real-time monitoring systems. 
+Key Features: 
+• Speed and Real-Time Processing: One of the standout features of YOLOv3 is 
+its capability to process images in real-time, making it incredibly fast compared 
+to some of its counterparts. This is achieved through a single neural network 
+that predicts bounding boxes and class probabilities directly from full images in 
+one evaluation. 
+• Darknet-53 [24] Backbone: YOLOv3 uses Darknet-53 as its feature extractor, 
+which is a convolutional neural network with 53 convolutional layers, 
+contributing to its strong performance in detecting objects. 
+• Multi-Scale Predictions: It makes predictions at three different scales, which are 
+obtained by downsampling the dimensions of the input image by 32, 16, and 8 
+
+
+===== PAGE 27 =====
+Your Project Title 
+27 of 43 
+ 
+15 September 2026 
+times respectively. This allows YOLOv3 to detect small, medium, and large 
+objects more effectively. 
+4.1.2 YOLOv5 Overview 
+Although YOLOv5 is not an official release from the original YOLO developers, it is 
+recognized for its improvements in accuracy and speed over previous version. YOLOv5 
+builds upon the strengths of YOLOv3 while addressing some of its limitations. The 
+enhancements in speed and accuracy make YOLOv5 a powerful baseline, particularly 
+in applications where real-time processing and high accuracy are significant.  
+Key features: 
+• Enhanced Speed and Accuracy: YOLOv5 provides significant improvements in 
+detection speed and accuracy compared to YOLOv3, making it more effective 
+for real-time applications. 
+• Simplified Model Structure: Features a more streamlined and simplified 
+architecture, making it easier to train and deploy even on devices with limited 
+computational power. 
+• Automatic Optimization: Includes automatic learning rate scheduling and 
+model pruning, which optimize the model’s performance without extensive 
+manual tuning. 
+4.1.3 Faster R-CNN Overview 
+Faster R-CNN is an advanced object detector developed by Kaiming He et al. which 
+integrates the region proposal process directly into the network. It significantly 
+increasing the speed over its predecessor, Fast R-CNN by using a Region Proposal 
+Network (RPN) to generate object proposals in a nearly cost-free manner as part of the 
+
+
+===== PAGE 28 =====
+Your Project Title 
+28 of 43 
+ 
+15 September 2026 
+networks. While Faster R-CNN significantly improved the speed of region-based object 
+detection methods, the YOLO series, particularly YOLOv5 and YOLOv7, are 
+optimized for real-time detection and are generally faster in processing images. Faster 
+R-CNN is known for its high precision and accuracy, particularly in handling complex 
+scenes with small or overlapping objects. Faster R-CNN's dual-component structure 
+(RPN and detection network) can make it more complex and computationally intensive 
+to train compared to the more straightforward single-network architecture of YOLO 
+models which traded some precision for speed. However, the YOLO series, especially 
+in its later versions, offers outstanding advantages for scenarios requiring fast and 
+efficient real-time object detection, with considerations around the balance of speed and 
+accuracy. 
+Key Features: 
+• Region Proposal Network: The RPN in Faster R-CNN allows for the generation 
+of high-quality object proposals, which are used by the detection network for 
+accurate object detection. 
+• Anchor Boxes: It utilizes anchor boxes with varying scales and aspect ratios, 
+improving the model's ability to handle objects of different sizes and shapes. 
+• End-to-End Training: The model can be trained end-to-end, allowing for the 
+RPN and the detection network to benefit from shared convolutional features, 
+leading to more efficient training and better performance. 
+• Feature Sharing: The sharing of convolutional features between the RPN and 
+the detection network reduces the computational load and enhances the speed 
+of the model. 
+ 
+
+
+===== PAGE 29 =====
+Your Project Title 
+29 of 43 
+ 
+15 September 2026 
+4.2 Evaluation Results 
+Firstly, the proposed method is compared to with HMLPD datasets. HMLPD dataset 
+contains the LP images from Macau, Hong Kong and Guangdong province in Mainland 
+China. Most of the images shot in daytime and some of them in night from different 
+angle views. The training, validating, and testing datasets are separated on the rate of 
+7:2:1 respectively. The precision in these evaluations is determined by a high 
+Intersection over Union (IoU) threshold of 0.7, which required highly accurate 
+bounding boxes from the detectors. As the detailed data from Table 3, it’s observed that 
+object detection model such as YOLOv3-320 and Fast-RCNN is underperformed in 
+comparison to the YOLOv5s and the proposed method. Among all the LP detection 
+models, the proposed design model improves the precision by 2.3% from YOLOv5s 
+reaching to 93.4% which is highest in the performance test. The proposed method 
+demonstrated superior performance across all HMLPD subsets. For the inference time 
+speed testing, the proposed method is the most fast one reaching average time for 14.8 
+ms/image, compared to YOLOv3-320 is 18.2 ms/image and YOLOv5s for 15.7 
+ms/image. The results from the Table 3 shows the good effective and efficiency of the 
+proposed method for LP detection on HMLPD dataset. Figure 5 shows some results in 
+different scenarios on the detected LPs, the green box indicates corrected (true positive) 
+bounding box and red indicates the failure (false) one, the blue shows the ground truth 
+of the bounding box. The top image presents the condition that does not recognize 
+anything. The bottom-left image shows the corrected bounding box and the bottom-
+right one indicates the false detection (two LPs in one bounding box). More scenarios 
+of the detection results are analyzed in the following section. 
+ 
+
+
+===== PAGE 30 =====
+Your Project Title 
+30 of 43 
+ 
+15 September 2026 
+ 
+Methods 
+Overall 
+Precision 
+HMLPD 
+CCPD 
+HMLPD-Mixed 
+Inference Time 
+ms/image 
+YOLOv3-320 
+87.4% 
+88.6% 
+90.3% 
+83.3% 
+18.2 
+YOLOv5s 
+90.2% 
+91.1% 
+94.4% 
+85.2% 
+15.7 
+Faster R-CNN 
+91.5% 
+91.8% 
+95.8% 
+88.2% 
+32.8 
+XRNet (Proposed) 
+91.7% 
+93.4% 
+95.2% 
+86.5% 
+14.8 
+Table 3. Comparisons of LP Detection Methods on Different Testing Sets. 
+Secondly, the result is compared in different methods on HMLPD-Mixed dataset. 
+HMLPD-Mixed dataset is an expansive dataset created based on the LP images from 
+CCPD and HMLPD. Half of the images are from CCPD and half from HMLPD. The 
+training, validating, and testing datasets are separated on the rate of 6:2:2 respectively 
+in this time. The precision is evaluated based on the same IoU threshold of 0.7 as above 
+testing. From the result in Table 3, the proposed method shows lower average precision 
+compared to the result from HMLPD since the images from HMLPD-Mixed are from 
+different regions with distinct characters combination and some of them contains 
+multiple LPs in challenged angle of views. The precision of the proposed LPD is 86.5% 
+which is higher than YOLOv3 (83.3%) and YOLOv5 (85.2%) but lower 1.7% than the 
+Faster R-CNN detector (88.2%). At a first glance, the precision of the proposed method 
+is lower than the two-stage RCNN method. However, the precision of the proposed 
+method can achieve 95% if the threshold of IoU is set to 0.5 in the testing set. Figure 6 
+shows some outcomes of the proposed method tested on the dataset. It demonstrates the 
+low failure rate, with only 77 images out of 5000 testing images with the IoU threshold 
+below 0.5 and most of the failure cases are classified as misidentification. 
+
+
+===== PAGE 31 =====
+Your Project Title 
+31 of 43 
+ 
+15 September 2026 
+ 
+Figure 5. Examples of Detection Results and Problems 
+Thirdly, testing in a public dataset is necessary for reliability and robustness in 
+experimental comparisons. CCPD is a large dataset for the license plate in Mainland 
+China and the images in this dataset are captured from static cameras which are divided 
+into different subsets for distinct testing conditions. All the selected models are tested 
+in the same 10k images and the result is shown on Table 3. The proposed LPD has the 
+Figure 6. Examples of Detected Results with Ground Truth 
+
+
+===== PAGE 32 =====
+Your Project Title 
+32 of 43 
+ 
+15 September 2026 
+good performance compared to other methods, it reaches 95.2% which similar to the 
+result of the Faster R-CNN. Although it is not the best in the baseline testing, it has the 
+decent accuracy with dominant inference time. Compared to other results, the overall 
+accuracy in CCPD is higher than others because each LP images from CCPD is only 
+include one LP. Some failures are presented when detecting multiple LP at a time due 
+to the limitation of the training datasets. 
+Overall, the qualitative result is shown on proposed LP detection method on different 
+datasets as in Figure 6, highlighting its effectiveness in handling varied and challenging 
+conditions such as inconsistent lighting and angled perspectives. Some failure cases are 
+discussed and illustrated in the section 6 below which shows the weakness and the room 
+of improvement of this model. It should be noted that the rectification strategy is applied 
+after that improves the accuracy before the LP recognition even if some detection error 
+exists. 
+5. Comparison to other LPR methods 
+The proposed LP recognition method is compared to other the segmentation-free 
+methods since the overall accuracy is greater than segmentation-based approaches. In 
+this section, the selected baseline models are Convolution Recurrent Neural Network 
+(CRNN) [26], LPRNet, Zou et al. (Bi-LSTM) [27]. 
+5.1 CRNN and Bi-LSTM Overview 
+5.1.1 CRNN Overview 
+The CRNN method merges the capabilities of CNNs and Recurrent Neural Networks 
+(RNNs) to create a powerful model for sequence recognition tasks, such as text 
+recognition in images. This model stands out for its proficiency in processing images 
+
+
+===== PAGE 33 =====
+Your Project Title 
+33 of 43 
+ 
+15 September 2026 
+and predict character sequences without the need for explicit segmentation. This makes 
+it particularly relevant for applications like LP recognition, where it can directly 
+interpret the characters on a LP from the image data.  
+Key Features: 
+• Hybrid Architecture: Combines CNN layers for feature extraction from images 
+with RNN layers for sequence modeling, capturing spatial hierarchies and 
+dependencies between characters in sequences. 
+• End-to-End Trainability: CRNN is designed for end-to-end training, that is the 
+model’s learning from raw image data to sequence output to enhance its 
+efficiency and overall performance. 
+• CTC Decoding: Employs CTC for decoding the character sequences from the 
+RNN outputs, enabling the model to handle sequences of variable lengths and 
+to predict sequences without segmentation. 
+CRNN’s integration of CNN and RNN architectures allows for effective handling of 
+the complex patterns and sequences in LP characters, making it a robust baseline for 
+LP recognition projects. 
+5.1.2 Bi-LSTM Overview 
+The Bi-LSTM (Bidirectional Long Short-Term Memory) model from Zou et al. 
+enhances traditional LSTM networks by processing data in both forward and reverse 
+directions, offering a comprehensive mechanism for tasks involving sequential data, 
+such as image-based text recognition. Its dual-direction processing capability is 
+especially beneficial for applications like LP recognition, enabling the model to capture 
+contextual information from both preceding and succeeding characters in a LP sequence. 
+
+
+===== PAGE 34 =====
+Your Project Title 
+34 of 43 
+ 
+15 September 2026 
+ 
+Key Attributes: 
+• Bidirectional Processing: Bi-LSTM layers analyze sequences from both ends, 
+forward and backward, providing a richer context and understanding of the 
+sequence’s dynamics, which is crucial for accurately recognizing the order and 
+relationship of characters in sequences on LPs. 
+• Enhanced Memory Capabilities: Bi-LSTM extends the ability to remember 
+long-term dependencies by maintaining two separate memory paths for both 
+directions of the sequence that can improve the model’s ability to preserve 
+relevant information across long sequences. 
+• One-Dimensional (1D) attention: 1D attention is implemented to improve the 
+key character features and minimize the irrelevant character features in LPs, 
+which can effectively extract features and improve the accuracy of LP 
+recognition. 
+In summary, the BiLSTM architecture improves contextual comprehension via 
+bidirectional analysis of sequences, potentially yielding enhanced performance in 
+scenarios where an exhaustive understanding of context is significant. In contrast, the 
+CRNN framework engages in unidirectional sequence processing and incorporates 
+convolutional layers designed for the extraction of spatial features that is beneficial for 
+image processing tasks such as LP Recognition, in which initial extraction of spatial 
+attributes is critical. Conversely, BiLSTM configurations may require the integration 
+of additional mechanisms or layers to effectively perform feature extraction from image 
+data. 
+
+
+===== PAGE 35 =====
+Your Project Title 
+35 of 43 
+ 
+15 September 2026 
+5.2 Evaluation Result 
+Initially, we conducted a comparative analysis between the proposed LP recognition 
+method utilizing the HMLPD and HMLPD-Mixed datasets. Subsequently, to validate 
+the generalization of the proposed approach, the method is trained and evaluated on the 
+CCPD datasets. 
+Methods 
+Overall 
+Accuracy 
+HMLPD 
+HMLPD-Mixed 
+CCPD 
+Inference Time 
+ms/image 
+CRNN 
+85.7% 
+89.3% 
+77.5% 
+90.3% 
+58.2 
+Zou et al. 
+86.5% 
+88.9% 
+82.5% 
+88.2% 
+63.7 
+LPRNet 
+90.8% 
+90.8% 
+88.4% 
+93.2% 
+33.4 
+XRNet (Proposed) 
+93.7% 
+93.4% 
+92.1% 
+95.5% 
+36.9 
+Table 4. Comparisons of LP Recognition Methods on Different Testing Sets. 
+ 
+Table 4 shows the comparisons of the LP recognition method on different datasets for 
+1000 images in each one. In this test, the subsets are created for more distinct scenarios 
+such as weather set and challenge set. The proposed LP recognition method obtains the 
+best accuracy (93.7%) from all testing datasets. The inference time of the proposed 
+method is at second place (36.9 ms/image) compared to the LPRNet (33.4 ms/image) 
+which is fast enough for the real-time recognition system. From the HMLPD dataset, 
+most of the LPs are generated by the Style-Text generator in different style such as 
+different background color, fuzzy processing, or distortion. Meanwhile, the images of 
+testing datasets are selected from the real-world images to simulate and evaluate the 
+performance in reality. From the Table 4, the accuracy from the HMLPD-Mixed is 
+lower than CCPD and HMLPD since it contains different LPs from different regions. 
+It should be noted that the methods like CRNN originally cannot recognize 2-line LPs. 
+
+
+===== PAGE 36 =====
+Your Project Title 
+36 of 43 
+ 
+15 September 2026 
+In all testing preparations, the 2-line images are pre-processed into one line by the same 
+strategy implemented in the proposed method first for all the testing. These two factors 
+are the main disadvantages for the LPR method based on RNN. The proposed LPR 
+method utilize corresponding rectify techniques to reduce the impact from them which 
+improves at least 3-5% accuracy. The environment can pose challenges to impact 
+accuracy and reliability for ALPR, including different lighting conditions, weather 
+conditions, motion blur, obstructions, and variations of LP designs. Therefore, three 
+distinct testing subsets are created as distortion, weather, and challenge respectively 
+shown on Table 5 below. 
+The advantages of proposed LP recognition method are obviously presented especially 
+on the challenge testing from Table 5, which improves about 9% accuracy from the 
+second place LPRNet. The proposed method has good performance on the weather and 
+challenge condition compared to other methods. There are 11 images out of 103 images 
+failure cases from the distortion scenarios, defeating around 8% from the method 
+created by Zou et.al. Among failure cases, even human observation struggle to 
+recognize certain characters such as “q” and “9” under uneven lighting conditions. 
+Moreover, additional analysis of the failure cases are discussed in the next section. 
+Methods 
+Overall 
+Accuracy 
+Random 
+Distortion 
+Weather 
+Challenge 
+CRNN 
+59.5% 
+76.7% 
+55.7% 
+46.1% 
+Zou et al. 
+66.2% 
+83.2% 
+62.2% 
+53.3% 
+LPRNet 
+75.2% 
+90.3% 
+72.9% 
+62.3% 
+XRNet (Proposed) 
+80.6% 
+91.8% 
+78.4% 
+71.6% 
+Table 5. Comparisons of LP Recognition Methods on Difficult Scenarios. 
+ 
+
+
+===== PAGE 37 =====
+Your Project Title 
+37 of 43 
+ 
+15 September 2026 
+6. Discussion and Analysis 
+6.1 Results Analysis of LP Detection 
+In Figure. 6, we present some typical outcomes of proposed LP detection method tested 
+on the HMLPD-Mixed dataset, highlighting its effectiveness in handling varied and 
+challenging conditions such as inconsistent lighting and angled perspectives, as 
+showcased (1) to (6) in the figure. The proposed LP detection demonstrates a low failure 
+rate, with only 77 misidentifications out of 5000 test images below the IoU score of 0.5, 
+translating to an error rate of 1.54%. This marks a tremendous relative improvement 
+over the 1.8% error rate observed with YOLOv5s. The instance where it did not perform 
+as expected is described in (6) of Figure 6, categorized into three groups based on their 
+IoU scores: 359 cases with IoU ranging from 0.6 to just under 0.7, 164 cases with IoU 
+from 0.5 to just under 0.6, and 77 cases with IoU below 0.5, as detailed in Figure 7 
+below.  
+Figure 7. The accuracy and count of detections of the Proposed Method with respect to IoU interval.  
+ 
+A notable observation is that the majority of errors occurred in detections with IoU 
+scores between 0.5 and 0.7. By adjusting the IoU threshold to 0.6, as indicated by the 
+green line in Figure 7, the precision of the proposed method could potentially reach 
+
+
+===== PAGE 38 =====
+Your Project Title 
+38 of 43 
+ 
+15 September 2026 
+95%. In the interval between 0 and 0.5, the most cases are misidentification since some 
+plates are too small or hazy to detect. And another problem is that sometimes the multi-
+plates in one image cannot be detected correctly due to the limitation of the number of 
+multi-plates datasets. Overall, the results show the decent performance of the proposed 
+algorithms which can reach a decent accuracy and speed for real-time applications. 
+ 
+6.2 Results Analysis of LP Recognition 
+Although the proposed LP recognition method has demonstrated effectiveness and 
+efficiency by the evaluation of the results, it still has some problems during recognition 
+phase in certain cases. Figure 8 below indicates some failure cases for the proposed LP 
+recognition approach. These failure cases reflect the method's limitations in 
+encountering difficulties under specific conditions that lead to misrecognition. For 
+example, some LPs are only partially visible or have characters that are blurred or 
+obscured by environmental factors such as poor lighting or motion. This emphasizes 
+the requirement for further refinement in the algorithm to improve its robustness and 
+accuracy under certain circumstances. The recognition errors are marked by the red 
+characters to illustrate the limitations and weakness of the proposed method. For 
+instance, the top left image labeled ‘AB3632’ has been incorrectly recognized as 
+‘AB3832’, highlighting the challenge with distinguish number between ‘6’ and ‘8’. 
+Similarly, ‘MX9236’ is misrecognized as ‘MX9238’ which shows a potential issue in 
+differentiating between similar characters. The results from the second row shows the 
+misidentification on characters and numbers, such as misread between ‘Z’ and ‘2’, ‘M’ 
+and ‘H’, and add one more number due to the reflected light. The fuzzy effect can lead 
+to less recognition of LP such as missing ‘Yue’ in Chinese at the beginning. The image 
+
+
+===== PAGE 39 =====
+Your Project Title 
+39 of 43 
+ 
+15 September 2026 
+from bottom-right shows the misidentification of the LP, since the image is slight 
+blurring and indecipherable even from the human eyes.  
+ 
+Figure 8. Failure Results of the Proposed LP Recognition Method 
+ 
+The diverse set of failure cases indicates the complexity of LP recognition in real-world 
+scenarios, where each unique situation can present a different challenge. These 
+examples provide valuable insights for future improvements, such as augmenting the 
+training dataset with more varied images, including those with challenging lighting and 
+angles, and employing more sophisticated image preprocessing techniques to improve 
+character visibility before recognition. In addition, integrating adaptive thresholding 
+techniques could help in distinguishing characters from different scenarios that may 
+cause confusion for the recognition algorithm. And post-processing strategies such as 
+‘Z’ followed by “Yue” in Chinese can be corrected due to the certain format of GBA 
+plates.  
+ 
+ 
+
+
+===== PAGE 40 =====
+Your Project Title 
+40 of 43 
+ 
+15 September 2026 
+CONCLUSION AND FUTURE WORK 
+In this project report, a comprehensive overview is present for the proposed ALPR 
+system. The research and findings indicate that the light-weight system could achieve 
+at most about 95% of accuracy in general tasks with real-time speed. The proposed LP 
+detection based on YOLOv7 followed by a recognition method based on LPRNet are 
+evaluated on three different datasets and compare the results with some popular 
+baseline models such as YOLO, R-CNN, CRNN, etc. The robustness and effectiveness 
+of the proposed approach has been demonstrated through multiple testing across distinct 
+testing sets, including HMLPD, CCPD and public datasets. Through this project, 
+several challenges are addressed in the ALPR system such as variable lighting 
+conditions, different LP formats, fuzzy effect, etc. Some pre-processing and post-
+processing techniques are applied to the proposed system such as image rectification, 
+geometric transformation, and image augmentation that can improve the accuracy and 
+efficiency to the model. This project report provides valuable insights for the future 
+ALPR applications such as AI in traffic systems.   
+There are several schemes for the future improvement of the proposed model that may 
+further enhance its capabilities. Firstly, further refinement of both detection and 
+recognition model such as referring some techniques in the newer version of YOLOv8 
+or YOLOv9 or newer CNN architecture is significant to improve the accuracy and 
+reduce false positives. Secondly, more extensive datasets that include a wider variety 
+of LP designs could be created and utilized in the training, especially for the Macau and 
+Hong Kong region. Thirdly, testing and refining the system’s compatibility with 
+different camera technologies and exploring the potential for on-device processing. 
+Lastly, exploring self-attention mechanisms and generative models to handle 
+
+
+===== PAGE 41 =====
+Your Project Title 
+41 of 43 
+ 
+15 September 2026 
+challenging conditions and unbalanced training data, which could further improve the 
+character recognition performance. 
+ 
+
+
+===== PAGE 42 =====
+Your Project Title 
+42 of 43 
+ 
+15 September 2026 
+REFERENCES 
+ 
+[1]  Joseph Redmon, Santosh Divvala, Ross Girshick, and Ali Farhadi, “You only look once: Unified, real-time 
+object detection,” in Proceedings of the IEEE Conference on Computer Vision and Pattern Recognition, 2016, 
+pp. 779–788. 
+[2]  S. V. Zherzdev and A. Gruzdev, “LPRNET: License plate recognition via deep neural networks.,” arXiv 
+(Cornell University), Jun. 2018, [Online]. Available: https://arxiv.org/pdf/1806.10447.pdf 
+[3]  Zhenbo Xu, Wei Yang, Ajin Meng, Nanxue Lu, Huan Huang, Changchun Ying, and Liusheng Huang, 
+“Towards end-to-end license plate detection and recognition: A large dataset and baseline,” in Proceedings 
+of the European Conference on Computer Vision, 2018, pp. 255–271. 
+[4] 
+R. Girshick, J. Donahue, T. Darrell, and J. Malik, “Rich Feature Hierarchies for Accurate Object Detection 
+and Semantic Segmentation,” in Proceedings of the IEEE Conference on Computer Vision and Pattern 
+Recognition,, Jun. 2014, doi: 10.1109/cvpr.2014.81. 
+[5] 
+W. Liu et al., “SSD: Single Shot MultiBox Detector,” in Lecture Notes in Computer Science, 2016, pp. 21–
+37. doi: 10.1007/978-3-319-46448-0_2. 
+[6] 
+Y. Jia, J. Qi, J. Zhang, H. Shao, J. Yang, and X. Li, “A Real-Time Detection algorithm for kiwifruit defects 
+based 
+on 
+YOLOV5,” 
+Electronics 
+(Basel), 
+vol. 
+10, 
+no. 
+14, 
+p. 
+1711, 
+Jul. 
+2021, 
+doi: 
+10.3390/electronics10141711. 
+[7] 
+C.-Y. Wang, A. Bochkovskiy, and H.-Y. M. Liao, “YOLOV7: Trainable Bag-of-Freebies sets new State-of-
+the-Art for Real-Time object Detectors,” Computer Vision and Pattern Recognition, Jun. 2023, doi: 
+10.1109/cvpr52729.2023.00721. 
+[8] 
+K. W. Maglad, “A vehicle license plate detection and recognition system,” Journal of Computer Science, vol. 
+8, no. 3, p. 310, 2012. 
+[9] 
+F. Xie, M. Zhang, J. Zhao, J. Yang, Y. Liu, and X. Yuan, “A robust license plate detection and character 
+recognition algorithm based on a combined feature extraction model and bpnn,” Journal of Advanced 
+Transportation, vol. 2018, pp. 1–14, 09 2018. 
+[10] Z. Abderaouf, B. Nadjia, and O.-K. Saliha, “License plate character segmentation based on horizontal 
+projection and connected component analysis,” in 2014 World Symposium on Computer Applications & 
+Research (WSCAR). IEEE, 2014, pp. 1–5. 
+[11] H. Li and C. Shen, “Reading car license plates using deep convolutional neural networks and lstms,” arXiv 
+preprint arXiv:1601.05610, 2016. 
+[12] M. Khalil, “Car plate recognition using the template matching method,” International Journal of Computer 
+Theory and Engineering, vol. 2, no. 5, p. 683, 2010. 
+[13] C.-H. Lin, Y.-S. Lin, and W.-C. Liu, “An efficient license plate recognition system using convolution neural 
+networks,” in 2018 IEEE International Conference on Applied System Invention (ICASI). IEEE, 2018, pp. 
+224–227. 
+[14] F. Xie, M. Zhang, J. Zhao, J. Yang, Y. Liu, and X. Yuan, “A robust license plate detection and character 
+recognition algorithm based on a combined feature extraction model and bpnn,” Journal of Advanced 
+Transportation, vol. 2018, pp. 1–14, 09 2018. 
+[15] A. Sherstinsky, “Fundamentals of Recurrent Neural Network (RNN) and Long Short-Term Memory (LSTM) 
+network,” Physica. D, Nonlinear Phenomena (Print), vol. 404, p. 132306, Mar. 2020, doi: 
+10.1016/j.physd.2019.132306. 
+[16] A. Vaswani et al., “Attention is All you Need,” arXiv (Cornell University), vol. 30, pp. 5998–6008, Jun. 2017, 
+[Online]. Available: https://arxiv.org/pdf/1706.03762v5 
+[17] L. Wan, Q. Wang, A. Papir, and I. L. Moreno, Generalized End-to-End Loss for Speaker Verification. 2018. 
+doi: 10.1109/icassp.2018.8462665. 
+[18] Wanwei Wang, Jun Yang, Min Chen, and Peng Wang, “A light cnn for end-to-end car license plates detection 
+and recognition,” IEEE Access, vol. 7, pp. 173875–173883, 2019. 
+
+
+===== PAGE 43 =====
+Your Project Title 
+43 of 43 
+ 
+15 September 2026 
+[19] Y. Wang, Z.-P. Bian, Y. Zhou, and L.-P. Chau, “Rethinking and designing a High-Performing Automatic 
+License Plate Recognition Approach,” IEEE Transactions on Intelligent Transportation Systems, vol. 23, no. 
+7, pp. 8868–8880, Jul. 2022, doi: 10.1109/tits.2021.3087158. 
+[20] T.-Y. Lin, P. Dollár, R. Girshick, K. He, B. Hariharan, and S. Belongie, Feature Pyramid Networks for Object 
+Detection. 2017. doi: 10.1109/cvpr.2017.106. 
+[21] A. Graves, Supervised Sequence Labelling with Recurrent Neural Networks, 2012th ed. Heidelberg ; New 
+York: Springer, Feb. 2012. 
+[22] A. Graves, S. Fernndez, F. Gomez, and J. Schmidhuber, “Connectionist temporal classification: labelling 
+unsegmented sequence data with recurrent neural networks,” in Proceedings of the 23rd international 
+conference on Machine learning. ACM, 2006, pp. 369–376. 
+[23] L. 
+Wu 
+et 
+al., 
+Editing 
+Text 
+in 
+the 
+Wild. 
+2019. 
+doi: 
+10.1145/3343031.3350929. 
+https://paddleocr.bj.bcebos.com/dygraph_v2.0/style_text/style_text_models.zip 
+[24] J. Redmon and A. Farhadi, “YOLOV3: an incremental improvement.,” arXiv (Cornell University), Apr. 2018, 
+[Online]. Available: https://arxiv.org/pdf/1804.02767 
+[25] S. Ren, K. He, R. Girshick, and J. Sun, “Faster R-CNN: Towards Real-Time Object Detection with Region 
+Proposal Networks,” IEEE Transactions on Pattern Analysis and Machine Intelligence, vol. 39, no. 6, pp. 
+1137–1149, Jun. 2017, doi: 10.1109/tpami.2016.2577031. 
+[26] B. Shi, X. Bai, and C. Yao, “An End-to-End Trainable Neural Network for Image-Based Sequence 
+Recognition and Its Application to Scene Text Recognition,” IEEE Transactions on Pattern Analysis and 
+Machine Intelligence, vol. 39, no. 11, pp. 2298–2304, Nov. 2017, doi: 10.1109/tpami.2016.2646371. 
+[27] Yongjie Zou, Yongjun Zhang, Jun Yan, Xiaoxu Jiang, Tengjie Huang, Haisheng Fan, and Zhongwei Cui, “A 
+robust license plate recognition model based on bi-lstm,” IEEE Access, vol. 8, pp. 211630–211641, 2020. 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 

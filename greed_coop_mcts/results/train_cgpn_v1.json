@@ -1,0 +1,6 @@
+{
+  "ckpt": "D:\\compitition\\MioVerse\\final_version\\greed_coop_mcts\\checkpoints\\cgpn_v1.pt",
+  "steps": 4000,
+  "seed": 2,
+  "final_loss": 0.8941601410436879
+}

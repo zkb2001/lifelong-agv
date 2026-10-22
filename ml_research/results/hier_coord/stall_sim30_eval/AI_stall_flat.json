@@ -1,0 +1,40 @@
+[
+  {
+    "slot": 6,
+    "mode": "stall_flat",
+    "sim": 5035,
+    "wall": 663.34,
+    "valid": true,
+    "done": 100,
+    "handoff_t": 725,
+    "handoff_reason": "stall_ai:stall_net:p=0.71",
+    "hier": 3197,
+    "d_hier": 1838,
+    "beats_hier": false,
+    "non_worse": false
+  },
+  {
+    "slot": 6,
+    "mode": "stall_flat_r2",
+    "sim": 4410,
+    "wall": 920.72,
+    "valid": true,
+    "done": 100,
+    "handoff_t": 1175,
+    "handoff_reason": "stall_ai:stall_net:p=0.81",
+    "hier": 3197,
+    "d_hier": 1213,
+    "beats_hier": false,
+    "non_worse": false
+  },
+  {
+    "slot": 6,
+    "mode": "stall_flat_r3_deleted",
+    "sim": null,
+    "valid": false,
+    "done": 0,
+    "hier": 3197,
+    "beats_hier": false,
+    "note": "r1/r2 mid-run ECBS handoff raised sim. r3 would veto (= Hier, sim>=hier). Method deleted; stall_flat gates reverted."
+  }
+]

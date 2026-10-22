@@ -1,0 +1,39 @@
+{
+  "best": {
+    "20": 12
+  },
+  "rows": [
+    {
+      "slot": 20,
+      "sim": 883,
+      "done": 100,
+      "total": 100,
+      "valid": true,
+      "k": 7
+    },
+    {
+      "slot": 20,
+      "sim": 695,
+      "done": 100,
+      "total": 100,
+      "valid": true,
+      "k": 10
+    },
+    {
+      "slot": 20,
+      "sim": 695,
+      "done": 100,
+      "total": 100,
+      "valid": true,
+      "k": 12
+    },
+    {
+      "slot": 20,
+      "sim": 706,
+      "done": 100,
+      "total": 100,
+      "valid": true,
+      "k": 14
+    }
+  ]
+}

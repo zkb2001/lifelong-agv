@@ -1,0 +1,26 @@
+[
+  {
+    "slot": 12,
+    "mode": "hier_stall_on",
+    "sim": 5479,
+    "wall": 1553.25,
+    "valid": true,
+    "done": 100,
+    "handoff_t": 625,
+    "handoff_reason": "stall_ai:stall_net:p=0.73",
+    "d_base": 1547,
+    "d_v3": 708
+  },
+  {
+    "slot": 2,
+    "mode": "hier_stall_on",
+    "sim": 5001,
+    "wall": 1330.29,
+    "valid": true,
+    "done": 100,
+    "handoff_t": 800,
+    "handoff_reason": "stall_ai:stall_net:p=0.77",
+    "d_base": 884,
+    "d_v3": 143
+  }
+]

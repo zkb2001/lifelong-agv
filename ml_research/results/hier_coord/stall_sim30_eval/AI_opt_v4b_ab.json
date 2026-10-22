@@ -1,0 +1,18 @@
+[
+  {
+    "slot": 9,
+    "mode": "ct_hswitch_v4b",
+    "sim": 4404,
+    "wall": 663.02,
+    "valid": true,
+    "done": 100,
+    "handoff_t": 575,
+    "handoff_reason": "hswitch_lns_cap force=3 idle=15 plat=10 rem=39",
+    "base": 3366,
+    "champ": 2471,
+    "d_base": 1038,
+    "d_champ": 1933,
+    "beats_base": false,
+    "beats_champ": false
+  }
+]

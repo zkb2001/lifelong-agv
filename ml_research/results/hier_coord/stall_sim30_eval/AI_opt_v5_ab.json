@@ -1,0 +1,34 @@
+[
+  {
+    "slot": 9,
+    "mode": "soft_local",
+    "sim": 4633,
+    "wall": 1438.86,
+    "valid": true,
+    "done": 100,
+    "handoff_t": 825,
+    "handoff_reason": "stall_ai:stall_net:p=0.75",
+    "base": 3366,
+    "champ": 2471,
+    "d_base": 1267,
+    "d_champ": 2162,
+    "beats_base": false,
+    "beats_champ": false
+  },
+  {
+    "slot": 2,
+    "mode": "soft_ct",
+    "sim": 3641,
+    "wall": 2497.68,
+    "valid": true,
+    "done": 100,
+    "handoff_t": 1025,
+    "handoff_reason": "stall_ai:stall_net:p=0.86",
+    "base": 4117,
+    "champ": 3776,
+    "d_base": -476,
+    "d_champ": -135,
+    "beats_base": true,
+    "beats_champ": true
+  }
+]

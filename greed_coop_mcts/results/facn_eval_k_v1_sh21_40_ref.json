@@ -1,0 +1,394 @@
+{
+  "ckpt": "d:\\compitition\\MioVerse\\final_version\\greed_coop_mcts\\checkpoints\\facn_k_v1.pt",
+  "facn": {
+    "21": {
+      "slot": 21,
+      "sim": 869,
+      "done": 100,
+      "total": 100,
+      "valid": true,
+      "k": 8,
+      "delta": 2,
+      "n_updates": 0,
+      "use_facn": true
+    },
+    "22": {
+      "slot": 22,
+      "sim": 657,
+      "done": 100,
+      "total": 100,
+      "valid": true,
+      "k": 10,
+      "delta": 4,
+      "n_updates": 0,
+      "use_facn": true
+    },
+    "23": {
+      "slot": 23,
+      "sim": 1170,
+      "done": 100,
+      "total": 100,
+      "valid": true,
+      "k": 9,
+      "delta": 3,
+      "n_updates": 0,
+      "use_facn": true
+    },
+    "24": {
+      "slot": 24,
+      "sim": 602,
+      "done": 100,
+      "total": 100,
+      "valid": true,
+      "k": 10,
+      "delta": 4,
+      "n_updates": 0,
+      "use_facn": true
+    },
+    "25": {
+      "slot": 25,
+      "sim": 960,
+      "done": 100,
+      "total": 100,
+      "valid": true,
+      "k": 10,
+      "delta": 4,
+      "n_updates": 0,
+      "use_facn": true
+    },
+    "26": {
+      "slot": 26,
+      "sim": 1485,
+      "done": 100,
+      "total": 100,
+      "valid": true,
+      "k": 7,
+      "delta": 2,
+      "n_updates": 32,
+      "use_facn": true
+    },
+    "27": {
+      "slot": 27,
+      "sim": 1202,
+      "done": 100,
+      "total": 100,
+      "valid": true,
+      "k": 10,
+      "delta": 4,
+      "n_updates": 0,
+      "use_facn": true
+    },
+    "28": {
+      "slot": 28,
+      "sim": 1222,
+      "done": 100,
+      "total": 100,
+      "valid": true,
+      "k": 7,
+      "delta": 1,
+      "n_updates": 6,
+      "use_facn": true
+    },
+    "29": {
+      "slot": 29,
+      "sim": 2296,
+      "done": 100,
+      "total": 100,
+      "valid": true,
+      "k": 7,
+      "delta": 1,
+      "n_updates": 0,
+      "use_facn": true
+    },
+    "30": {
+      "slot": 30,
+      "sim": 939,
+      "done": 100,
+      "total": 100,
+      "valid": true,
+      "k": 10,
+      "delta": 4,
+      "n_updates": 0,
+      "use_facn": true
+    },
+    "31": {
+      "slot": 31,
+      "sim": 2582,
+      "done": 100,
+      "total": 100,
+      "valid": true,
+      "k": 7,
+      "delta": 2,
+      "n_updates": 0,
+      "use_facn": true
+    },
+    "32": {
+      "slot": 32,
+      "sim": 965,
+      "done": 100,
+      "total": 100,
+      "valid": true,
+      "k": 9,
+      "delta": 3,
+      "n_updates": 0,
+      "use_facn": true
+    },
+    "33": {
+      "slot": 33,
+      "sim": 766,
+      "done": 100,
+      "total": 100,
+      "valid": true,
+      "k": 10,
+      "delta": 4,
+      "n_updates": 0,
+      "use_facn": true
+    },
+    "34": {
+      "slot": 34,
+      "sim": 1234,
+      "done": 100,
+      "total": 100,
+      "valid": true,
+      "k": 6,
+      "delta": 0,
+      "n_updates": 0,
+      "use_facn": false
+    },
+    "35": {
+      "slot": 35,
+      "sim": 824,
+      "done": 100,
+      "total": 100,
+      "valid": true,
+      "k": 10,
+      "delta": 4,
+      "n_updates": 0,
+      "use_facn": true
+    },
+    "36": {
+      "slot": 36,
+      "sim": 1084,
+      "done": 100,
+      "total": 100,
+      "valid": true,
+      "k": 8,
+      "delta": 3,
+      "n_updates": 19,
+      "use_facn": true
+    },
+    "37": {
+      "slot": 37,
+      "sim": 907,
+      "done": 100,
+      "total": 100,
+      "valid": true,
+      "k": 10,
+      "delta": 4,
+      "n_updates": 0,
+      "use_facn": true
+    },
+    "38": {
+      "slot": 38,
+      "sim": 818,
+      "done": 100,
+      "total": 100,
+      "valid": true,
+      "k": 7,
+      "delta": 2,
+      "n_updates": 18,
+      "use_facn": true
+    },
+    "39": {
+      "slot": 39,
+      "sim": 1323,
+      "done": 100,
+      "total": 100,
+      "valid": true,
+      "k": 10,
+      "delta": 4,
+      "n_updates": 0,
+      "use_facn": true
+    },
+    "40": {
+      "slot": 40,
+      "sim": 3496,
+      "done": 100,
+      "total": 100,
+      "valid": true,
+      "k": 7,
+      "delta": 1,
+      "n_updates": 0,
+      "use_facn": true
+    }
+  },
+  "compare": {
+    "21": {
+      "facn_k": 8,
+      "best_k": 8,
+      "facn_sim": 869,
+      "best_sim": 959,
+      "gap": -90,
+      "tag": "BEST"
+    },
+    "22": {
+      "facn_k": 10,
+      "best_k": 8,
+      "facn_sim": 657,
+      "best_sim": 823,
+      "gap": -166,
+      "tag": "BEST"
+    },
+    "23": {
+      "facn_k": 9,
+      "best_k": 7,
+      "facn_sim": 1170,
+      "best_sim": 1142,
+      "gap": 28,
+      "tag": "NEAR"
+    },
+    "24": {
+      "facn_k": 10,
+      "best_k": 15,
+      "facn_sim": 602,
+      "best_sim": 811,
+      "gap": -209,
+      "tag": "BEST"
+    },
+    "25": {
+      "facn_k": 10,
+      "best_k": 10,
+      "facn_sim": 960,
+      "best_sim": 988,
+      "gap": -28,
+      "tag": "BEST"
+    },
+    "26": {
+      "facn_k": 7,
+      "best_k": 8,
+      "facn_sim": 1485,
+      "best_sim": 1093,
+      "gap": 392,
+      "tag": "MISS"
+    },
+    "27": {
+      "facn_k": 10,
+      "best_k": 7,
+      "facn_sim": 1202,
+      "best_sim": 1174,
+      "gap": 28,
+      "tag": "NEAR"
+    },
+    "28": {
+      "facn_k": 7,
+      "best_k": 11,
+      "facn_sim": 1222,
+      "best_sim": 1084,
+      "gap": 138,
+      "tag": "MISS"
+    },
+    "29": {
+      "facn_k": 7,
+      "best_k": 7,
+      "facn_sim": 2296,
+      "best_sim": 2296,
+      "gap": 0,
+      "tag": "BEST"
+    },
+    "30": {
+      "facn_k": 10,
+      "best_k": 8,
+      "facn_sim": 939,
+      "best_sim": 967,
+      "gap": -28,
+      "tag": "BEST"
+    },
+    "31": {
+      "facn_k": 7,
+      "best_k": 7,
+      "facn_sim": 2582,
+      "best_sim": 2582,
+      "gap": 0,
+      "tag": "BEST"
+    },
+    "32": {
+      "facn_k": 9,
+      "best_k": 8,
+      "facn_sim": 965,
+      "best_sim": 1053,
+      "gap": -88,
+      "tag": "BEST"
+    },
+    "33": {
+      "facn_k": 10,
+      "best_k": 6,
+      "facn_sim": 766,
+      "best_sim": 941,
+      "gap": -175,
+      "tag": "BEST"
+    },
+    "34": {
+      "facn_k": 6,
+      "best_k": 6,
+      "facn_sim": 1234,
+      "best_sim": 1234,
+      "gap": 0,
+      "tag": "BEST"
+    },
+    "35": {
+      "facn_k": 10,
+      "best_k": 8,
+      "facn_sim": 824,
+      "best_sim": 827,
+      "gap": -3,
+      "tag": "BEST"
+    },
+    "36": {
+      "facn_k": 8,
+      "best_k": 8,
+      "facn_sim": 1084,
+      "best_sim": 958,
+      "gap": 126,
+      "tag": "BEST"
+    },
+    "37": {
+      "facn_k": 10,
+      "best_k": 6,
+      "facn_sim": 907,
+      "best_sim": 1022,
+      "gap": -115,
+      "tag": "BEST"
+    },
+    "38": {
+      "facn_k": 7,
+      "best_k": 7,
+      "facn_sim": 818,
+      "best_sim": 985,
+      "gap": -167,
+      "tag": "BEST"
+    },
+    "39": {
+      "facn_k": 10,
+      "best_k": 9,
+      "facn_sim": 1323,
+      "best_sim": 1056,
+      "gap": 267,
+      "tag": "MISS"
+    },
+    "40": {
+      "facn_k": 7,
+      "best_k": 10,
+      "facn_sim": 3496,
+      "best_sim": 1131,
+      "gap": 2365,
+      "tag": "MISS"
+    }
+  },
+  "summary": {
+    "best": 14,
+    "near": 2,
+    "miss": 4,
+    "updates": 4,
+    "mean_sim": 1270.05
+  }
+}

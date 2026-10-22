@@ -187,21 +187,28 @@ def gen_map(style: str, seed: int) -> Dict:
         obs = build_corridor_obstacles(seed, density="hard")
     elif style in ("hutong", "snake"):
         obs = gen_hutong(seed)
+    elif style in ("hutong_mild", "hutong_open"):
+        obs = gen_hutong(seed, density=0.55)
     elif style in ("maze", "maze_dfs"):
         obs = gen_maze_dfs(seed)
+    elif style in ("maze_mild", "maze_open"):
+        obs = gen_maze_dfs(seed, carve_prob=0.85)
     elif style in ("open", "sprinkle_mild"):
         obs = gen_sprinkle(seed, n_extra=18)
     elif style in ("sprinkle", "sprinkle_hard"):
         obs = gen_sprinkle(seed, n_extra=55)
+    elif style == "sprinkle_dense":
+        obs = gen_sprinkle(seed, n_extra=70)
     else:
         raise ValueError(f"unknown map style: {style}")
     obs_set = punch_to_connect(set(map(tuple, obs)), random.Random(seed))
+    assert is_connected(obs_set), f"gen_map({style},{seed}) failed connectivity"
     return {
         "style": style,
         "seed": int(seed),
         "obstacles": [[int(x), int(y)] for x, y in sorted(obs_set)],
         "n_obstacles": len(obs_set),
-        "connected": bool(is_connected(obs_set)),
+        "connected": True,
     }
 
 

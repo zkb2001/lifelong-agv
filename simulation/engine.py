@@ -246,10 +246,18 @@ _conflict_p = None
 _residual_load_attempted = False
 _conflict_load_attempted = False
 
+# Online guidance graph (GGO / OnlineGGO-style human online baseline):
+# inflate A* edge costs into cells with high near-term occupancy.
+# Toggle: AGV_ONLINE_GUIDANCE=1; alpha via AGV_GUIDANCE_ALPHA (default 0.75).
+ONLINE_GUIDANCE = _env_flag("AGV_ONLINE_GUIDANCE", False)
+GUIDANCE_ALPHA = float(os.environ.get("AGV_GUIDANCE_ALPHA", "0.75"))
+GUIDANCE_HORIZON = int(os.environ.get("AGV_GUIDANCE_HORIZON", "8"))
+_guidance_heat = None  # np.ndarray (GRID_MAX+1, GRID_MAX+1) or None
 
-def set_neural_astar(residual=None, residual_mode=None, conflict=None):
+
+def set_neural_astar(residual=None, residual_mode=None, conflict=None, online_guidance=None):
     """Runtime toggle used by benchmarks (no process restart)."""
-    global RESIDUAL_HEURISTIC, RESIDUAL_MODE, CONFLICT_PRED
+    global RESIDUAL_HEURISTIC, RESIDUAL_MODE, CONFLICT_PRED, ONLINE_GUIDANCE
     if residual is not None:
         RESIDUAL_HEURISTIC = bool(residual)
     if residual_mode is not None:
@@ -258,6 +266,8 @@ def set_neural_astar(residual=None, residual_mode=None, conflict=None):
             RESIDUAL_MODE = m
     if conflict is not None:
         CONFLICT_PRED = bool(conflict)
+    if online_guidance is not None:
+        ONLINE_GUIDANCE = bool(online_guidance)
 
 
 def _lazy_residual():
@@ -310,8 +320,9 @@ def astar_heuristic(pos1, pos2) -> float:
     return float(rh.h(pos1, pos2, mode=RESIDUAL_MODE))
 
 
-def _begin_astar_search(start_t=None):
+def _begin_astar_search(start_t=None, moving_obstacles=None, self_name=None):
     global _conflict_inflate_cache, _conflict_occ_cache, _conflict_search_calls, _conflict_t0
+    global _guidance_heat
     rh = _lazy_residual() if RESIDUAL_HEURISTIC else None
     if rh is not None:
         rh.begin_search()
@@ -319,6 +330,76 @@ def _begin_astar_search(start_t=None):
     _conflict_occ_cache = {}
     _conflict_search_calls = 0
     _conflict_t0 = int(start_t) if start_t is not None else None
+    if ONLINE_GUIDANCE and moving_obstacles:
+        _guidance_heat = _build_guidance_heat(
+            int(_conflict_t0 or 0), moving_obstacles, self_name
+        )
+    else:
+        _guidance_heat = None
+
+
+def _build_guidance_heat(timestamp, moving_obstacles, self_name):
+    """Near-term occupancy heat for Online-GGO-style edge inflation."""
+    heat = np.zeros((GRID_MAX + 1, GRID_MAX + 1), dtype=np.float32)
+    H = max(1, int(GUIDANCE_HORIZON))
+    for name, traj in (moving_obstacles or {}).items():
+        if name == self_name or not traj:
+            continue
+        for dt in range(0, H + 1):
+            t = int(timestamp) + dt
+            p = traj[t][:2] if t < len(traj) else traj[-1][:2]
+            x, y = int(p[0]), int(p[1])
+            if _in_playable(x, y):
+                # nearer-in-time occupancy weighs more
+                heat[y, x] += 1.0 / (1.0 + 0.25 * dt)
+    return heat
+
+
+def guidance_move_inflate(pos) -> float:
+    """Return >=1.0 cost multiplier from online occupancy guidance heat."""
+    if not ONLINE_GUIDANCE or _guidance_heat is None:
+        return 1.0
+    x, y = int(pos[0]), int(pos[1])
+    if not _in_playable(x, y):
+        return 1.0
+    h = float(_guidance_heat[y, x])
+    if h <= 0.0:
+        return 1.0
+    return 1.0 + max(0.0, float(GUIDANCE_ALPHA)) * h
+
+
+def ggo_step_inflate(cur, nxt, moving_obstacles=None, self_name=None, timestamp=None) -> float:
+    """Zhang-Li GGO: directed edge / wait cost inside A* (not a 3rd planner)."""
+    try:
+        from ml_research.benchmarks.hier_coord.ggo_guidance import (
+            ggo_step_inflate as _g,
+        )
+
+        return float(
+            _g(
+                tuple(cur[:2]),
+                tuple(nxt[:2]),
+                moving_obstacles,
+                None if self_name is None else str(self_name),
+                timestamp,
+            )
+        )
+    except Exception:
+        return 1.0
+
+
+def magat_step_inflate(
+    cur, nxt, goal=None, moving_obstacles=None, self_name=None, timestamp=None
+) -> float:
+    """MAGAT action prior as a small A* g-bias (search ranking, not a planner)."""
+    try:
+        from ml_research.benchmarks.hier_coord.magat_rank import magat_step_inflate as _m
+
+        return float(
+            _m(cur, nxt, goal, moving_obstacles, self_name, timestamp)
+        )
+    except Exception:
+        return 1.0
 
 
 def _conflict_occ_pair(timestamp, moving_obstacles, self_name, x, y):
@@ -966,6 +1047,7 @@ class Simulation:
         """Nearest free holding cell around pos (not on unload slots / static)."""
         holding = []
         for radius in range(min_r, max_r + 1):
+            ring = []
             for dx in range(-radius, radius + 1):
                 for dy in range(-radius, radius + 1):
                     if abs(dx) + abs(dy) != radius:
@@ -975,9 +1057,12 @@ class Simulation:
                         continue
                     if cand in static_obs or cand in forbidden or cand in occupied:
                         continue
-                    holding.append(cand)
+                    ring.append(cand)
+            holding.extend(ring)
             if holding:
                 break
+        if not holding:
+            return None
         holding.sort(key=lambda c: abs(c[0] - pos[0]) + abs(c[1] - pos[1]))
         return holding[0] if holding else None
 
@@ -3265,7 +3350,11 @@ def plan_relocation(task, start, goal, obstacles, moving_obstacles, grid_size=DE
     mo_h = int(obstacle_horizon if obstacle_horizon is not None else MOVING_OBSTACLE_HORIZON)
     plan_t0 = int(start[2]) if start and len(start) > 2 else 0
     t_deadline = _time.perf_counter() + max(0.05, float(wall_budget_s))
-    _begin_astar_search(start[2] if start and len(start) > 2 else 0)
+    _begin_astar_search(
+        start[2] if start and len(start) > 2 else 0,
+        moving_obstacles=moving_obstacles,
+        self_name=task.get("agv"),
+    )
 
     def has_temp(pos, timestamp, temp_obstacle_positions):
         for _, temp in temp_obstacle_positions.items():
@@ -3351,8 +3440,22 @@ def plan_relocation(task, start, goal, obstacles, moving_obstacles, grid_size=DE
             neighbor_state = neighbor[:3]
             if neighbor_state in visited:
                 continue
-            inflate = conflict_move_inflate(
-                neighbor[:2], neighbor[3], current[2], moving_obstacles, task["agv"]
+            inflate = (
+                conflict_move_inflate(
+                    neighbor[:2], neighbor[3], current[2], moving_obstacles, task["agv"]
+                )
+                * guidance_move_inflate(neighbor[:2])
+                * ggo_step_inflate(
+                    current[:2], neighbor[:2], moving_obstacles, task["agv"], current[2]
+                )
+                * magat_step_inflate(
+                    current[:2],
+                    neighbor[:2],
+                    goal,
+                    moving_obstacles,
+                    task["agv"],
+                    current[2],
+                )
             )
             new_cost = cost + move_cost * inflate
             predicted = new_cost + astar_heuristic(neighbor[:2], goal)
@@ -3467,7 +3570,11 @@ def A_Star(task, start: tuple, pickup_point: tuple, end_points: tuple, obstacles
     mo_h = int(obstacle_horizon if obstacle_horizon is not None else MOVING_OBSTACLE_HORIZON)
     plan_t0 = int(start[2]) if start and len(start) > 2 else 0
     t_deadline = _time.perf_counter() + max(0.05, float(wall_budget_s))
-    _begin_astar_search(start[2] if start and len(start) > 2 else 0)
+    _begin_astar_search(
+        start[2] if start and len(start) > 2 else 0,
+        moving_obstacles=moving_obstacles,
+        self_name=task.get("agv"),
+    )
     
     def has_temp(pos, timestamp, temp_obstacle_positions):
         has_temp = False
@@ -3502,8 +3609,6 @@ def A_Star(task, start: tuple, pickup_point: tuple, end_points: tuple, obstacles
             (0, 1, 90),   # 上
             (0, -1, 270)  # 下
         ]
-        
-        
         # 检查原地等待: 1. 不在障碍物中 2. 不在移动障碍物中 
         if (x,y) not in obstacles and (x,y) not in moving_obstacle_positions:
             if not has_temp((x,y),timestamp,temp_obstacle_positions):
@@ -3599,8 +3704,22 @@ def A_Star(task, start: tuple, pickup_point: tuple, end_points: tuple, obstacles
             if neighbor_state in visited:
                 continue
                 
-            inflate = conflict_move_inflate(
-                neighbor[:2], neighbor[3], current[2], moving_obstacles, task["agv"]
+            inflate = (
+                conflict_move_inflate(
+                    neighbor[:2], neighbor[3], current[2], moving_obstacles, task["agv"]
+                )
+                * guidance_move_inflate(neighbor[:2])
+                * ggo_step_inflate(
+                    current[:2], neighbor[:2], moving_obstacles, task["agv"], current[2]
+                )
+                * magat_step_inflate(
+                    current[:2],
+                    neighbor[:2],
+                    pickup_point,
+                    moving_obstacles,
+                    task["agv"],
+                    current[2],
+                )
             )
             new_cost = cost + move_cost * inflate
             predicted_cost = new_cost + astar_heuristic(neighbor[:2], pickup_point)
@@ -3689,8 +3808,22 @@ def A_Star(task, start: tuple, pickup_point: tuple, end_points: tuple, obstacles
                 neighbor_state = neighbor[:3]
                 if neighbor_state in visited:
                     continue
-                inflate = conflict_move_inflate(
-                    neighbor[:2], neighbor[3], current[2], moving_obstacles, task["agv"]
+                inflate = (
+                    conflict_move_inflate(
+                        neighbor[:2], neighbor[3], current[2], moving_obstacles, task["agv"]
+                    )
+                    * guidance_move_inflate(neighbor[:2])
+                    * ggo_step_inflate(
+                    current[:2], neighbor[:2], moving_obstacles, task["agv"], current[2]
+                )
+                    * magat_step_inflate(
+                        current[:2],
+                        neighbor[:2],
+                        end_point,
+                        moving_obstacles,
+                        task["agv"],
+                        current[2],
+                    )
                 )
                 new_cost = cost + move_cost * inflate
                 predicted_cost = new_cost + astar_heuristic(neighbor[:2], end_point)

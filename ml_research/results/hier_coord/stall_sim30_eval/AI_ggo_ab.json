@@ -1,0 +1,26 @@
+[
+  {
+    "slot": 9,
+    "mode": "ggo_highway",
+    "sim": 3793,
+    "wall": 1827.28,
+    "valid": true,
+    "done": 100,
+    "handoff_t": 675,
+    "hier": 3366,
+    "d_hier": 427,
+    "beats_hier": false
+  },
+  {
+    "slot": 12,
+    "mode": "ggo_highway",
+    "sim": 3997,
+    "wall": 1821.48,
+    "valid": true,
+    "done": 100,
+    "handoff_t": 700,
+    "hier": 3932,
+    "d_hier": 65,
+    "beats_hier": false
+  }
+]

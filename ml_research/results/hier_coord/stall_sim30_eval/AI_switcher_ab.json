@@ -1,0 +1,50 @@
+[
+  {
+    "slot": 12,
+    "mode": "tier_switcher",
+    "sim": 4629,
+    "wall": 2442.84,
+    "valid": true,
+    "done": 100,
+    "handoff_t": 775,
+    "handoff_reason": "stall_ai:stall_net:p=0.79+switcher_local_dead fail=6",
+    "base": 3932,
+    "prev_local_on": 3816,
+    "d_base": 697,
+    "d_prev": 813,
+    "beats_base": false,
+    "beats_prev": false
+  },
+  {
+    "slot": 9,
+    "mode": "tier_switcher",
+    "sim": 2471,
+    "wall": 1010.47,
+    "valid": true,
+    "done": 100,
+    "handoff_t": 650,
+    "handoff_reason": "stall_ai:stall_net:p=0.79+switcher_local_dead fail=7",
+    "base": 3366,
+    "prev_local_on": 3342,
+    "d_base": -895,
+    "d_prev": -871,
+    "beats_base": true,
+    "beats_prev": true
+  },
+  {
+    "slot": 12,
+    "mode": "tier_switcher_v2",
+    "sim": 4021,
+    "wall": 1710.04,
+    "valid": true,
+    "done": 100,
+    "handoff_t": 675,
+    "handoff_reason": "stall_ai:stall_net:p=0.73+switcher_local_dead fail=9",
+    "base": 3932,
+    "prev_local_on": 3816,
+    "d_base": 89,
+    "d_prev": 205,
+    "beats_base": false,
+    "beats_prev": false
+  }
+]

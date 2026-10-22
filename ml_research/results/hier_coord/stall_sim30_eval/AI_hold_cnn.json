@@ -1,0 +1,44 @@
+[
+  {
+    "slot": 6,
+    "mode": "hold_cnn_r1",
+    "sim": 3815,
+    "wall": 812.4,
+    "valid": true,
+    "done": 100,
+    "handoff_t": 1025,
+    "handoff_reason": "stall_ai:stall_net:p=0.77",
+    "hier": 3197,
+    "d_hier": 618,
+    "beats_hier": false,
+    "non_worse": false
+  },
+  {
+    "slot": 6,
+    "mode": "hold_cnn_r2",
+    "sim": 3347,
+    "wall": 981.03,
+    "valid": true,
+    "done": 100,
+    "handoff_t": 1325,
+    "handoff_reason": "stall_ai:stall_net:p=0.81",
+    "hier": 3197,
+    "d_hier": 150,
+    "beats_hier": false,
+    "non_worse": false
+  },
+  {
+    "slot": 6,
+    "mode": "hold_cnn_r3",
+    "sim": 3312,
+    "wall": 807.44,
+    "valid": true,
+    "done": 100,
+    "handoff_t": 1100,
+    "handoff_reason": "stall_ai:stall_net:p=0.79",
+    "hier": 3197,
+    "d_hier": 115,
+    "beats_hier": false,
+    "non_worse": false
+  }
+]

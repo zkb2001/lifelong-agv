@@ -1,0 +1,6 @@
+{
+  "ckpt": "D:\\compitition\\MioVerse\\final_version\\ml_research\\checkpoints\\mats_local_cost_tracer_v1.pt",
+  "steps": 800,
+  "final_loss": 0.7284100067615509,
+  "n_params": 269414
+}

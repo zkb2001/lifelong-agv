@@ -1,0 +1,205 @@
+{
+  "id": "SH_custom_34",
+  "map_id": "SH_custom_34",
+  "format_version": 2,
+  "grid_min": 1,
+  "grid_max": 20,
+  "n_agvs": 6,
+  "n_pickups": 6,
+  "n_dropoffs": 16,
+  "n_tasks": 100,
+  "pickups": [
+    {
+      "name": "Tiger",
+      "x": 1,
+      "y": 6
+    },
+    {
+      "name": "Dragon",
+      "x": 1,
+      "y": 10
+    },
+    {
+      "name": "Horse",
+      "x": 1,
+      "y": 14
+    },
+    {
+      "name": "Rabbit",
+      "x": 20,
+      "y": 6
+    },
+    {
+      "name": "Ox",
+      "x": 20,
+      "y": 10
+    },
+    {
+      "name": "Monkey",
+      "x": 20,
+      "y": 14
+    }
+  ],
+  "dropoffs": [
+    {
+      "name": "Beijing",
+      "x": 6,
+      "y": 4
+    },
+    {
+      "name": "Shanghai",
+      "x": 6,
+      "y": 8
+    },
+    {
+      "name": "Suzhou",
+      "x": 6,
+      "y": 12
+    },
+    {
+      "name": "Hangzhou",
+      "x": 6,
+      "y": 16
+    },
+    {
+      "name": "Nanjing",
+      "x": 9,
+      "y": 4
+    },
+    {
+      "name": "Wuhan",
+      "x": 9,
+      "y": 8
+    },
+    {
+      "name": "Changsha",
+      "x": 9,
+      "y": 12
+    },
+    {
+      "name": "Guangzhou",
+      "x": 9,
+      "y": 16
+    },
+    {
+      "name": "Chengdu",
+      "x": 12,
+      "y": 4
+    },
+    {
+      "name": "Xiamen",
+      "x": 12,
+      "y": 8
+    },
+    {
+      "name": "Kunming",
+      "x": 12,
+      "y": 12
+    },
+    {
+      "name": "Urumqi",
+      "x": 12,
+      "y": 16
+    },
+    {
+      "name": "Shenzhen",
+      "x": 15,
+      "y": 4
+    },
+    {
+      "name": "Dalian",
+      "x": 15,
+      "y": 8
+    },
+    {
+      "name": "Tianjin",
+      "x": 15,
+      "y": 12
+    },
+    {
+      "name": "Chongqing",
+      "x": 15,
+      "y": 16
+    }
+  ],
+  "extra_obstacles": [
+    [
+      2,
+      17
+    ],
+    [
+      7,
+      3
+    ],
+    [
+      7,
+      10
+    ],
+    [
+      7,
+      19
+    ],
+    [
+      8,
+      13
+    ],
+    [
+      9,
+      2
+    ],
+    [
+      9,
+      14
+    ],
+    [
+      10,
+      3
+    ],
+    [
+      10,
+      7
+    ],
+    [
+      10,
+      10
+    ],
+    [
+      10,
+      13
+    ],
+    [
+      12,
+      10
+    ],
+    [
+      15,
+      19
+    ],
+    [
+      17,
+      2
+    ],
+    [
+      17,
+      5
+    ],
+    [
+      18,
+      17
+    ],
+    [
+      19,
+      5
+    ],
+    [
+      19,
+      19
+    ]
+  ],
+  "notes": "gen style=open seed=3402 difficulty=easy pattern=mixed",
+  "map_shape": "open",
+  "difficulty": "easy",
+  "gen_seed": 3402,
+  "connected": true,
+  "compatible_with": "curriculum_shape ladder (position CSV + task CSV + extra_obstacles)"
+}

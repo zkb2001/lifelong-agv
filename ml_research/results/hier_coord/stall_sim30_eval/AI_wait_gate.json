@@ -1,0 +1,16 @@
+[
+  {
+    "slot": 6,
+    "mode": "wait_gate_r3",
+    "sim": 3310,
+    "wall": 865.78,
+    "valid": true,
+    "done": 100,
+    "handoff_t": 1275,
+    "handoff_reason": "stall_ai:stall_net:p=0.78",
+    "hier": 3197,
+    "d_hier": 113,
+    "beats_hier": false,
+    "non_worse": false
+  }
+]

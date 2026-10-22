@@ -56,6 +56,24 @@ docs/~$*
 *.log
 archive/old_logs/
 
+# greed_coop_mcts: keep code/ckpts/summaries; drop bulk regenerables
+greed_coop_mcts/results/trajectories/
+greed_coop_mcts/results/videos/
+greed_coop_mcts/results/SYN*.json
+greed_coop_mcts/results/facn_oracle_synth*.json
+greed_coop_mcts/map_exports_synth/
+greed_coop_mcts/results/**/*.bak*
+greed_coop_mcts/results/**/*_live.json
+greed_coop_mcts/results/**/*_viz.csv
+greed_coop_mcts/results/**/*.err
+greed_coop_mcts/results/**/*.out
+greed_coop_mcts/results/**/*.flag
+greed_coop_mcts/**/__pycache__/
+
+# Local package backups / mirrors (not for remote)
+greed_coop_mcts - */
+greed_coop_mcts_ref/
+
 # OS / IDE
 .DS_Store
 Thumbs.db

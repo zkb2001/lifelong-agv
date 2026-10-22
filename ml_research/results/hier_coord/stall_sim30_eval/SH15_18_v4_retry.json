@@ -1,0 +1,38 @@
+[
+  {
+    "slot": 15,
+    "eval": "stall_v4_wall_rate_early_flat",
+    "tasks_completed": 100,
+    "tasks_total": 100,
+    "validate_ok": true,
+    "sim_time": 5011,
+    "wall_seconds": 468.94,
+    "m0_handoff_t": 125,
+    "m0_handoff_reason": "stall_ai:stall_net+wall_rate:p=0.79",
+    "prev_v3": {
+      "sim": 4105,
+      "wall": 2236.56,
+      "ho": "stall_net@1200 done=43"
+    },
+    "d_sim_vs_v3": 906,
+    "d_wall_vs_v3": -1767.62
+  },
+  {
+    "slot": 18,
+    "eval": "stall_v4_wall_rate_early_flat",
+    "tasks_completed": 100,
+    "tasks_total": 100,
+    "validate_ok": true,
+    "sim_time": 12998,
+    "wall_seconds": 880.35,
+    "m0_handoff_t": 100,
+    "m0_handoff_reason": "stall_ai:stall_net+early_flat:p=0.83",
+    "prev_v3": {
+      "sim": 12715,
+      "wall": 2562.56,
+      "ho": "hard_livelock@600 done=9"
+    },
+    "d_sim_vs_v3": 283,
+    "d_wall_vs_v3": -1682.21
+  }
+]

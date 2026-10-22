@@ -1,0 +1,224 @@
+{
+  "best": {
+    "20": 12
+  },
+  "delta_star": {
+    "20": 5
+  },
+  "geoms": {
+    "20": {
+      "n": 30,
+      "free": 378,
+      "near": 12,
+      "k_tbc": 7,
+      "idle_pool": 0.7666666666666667
+    }
+  },
+  "rows": [
+    {
+      "slot": 20,
+      "sim": 883,
+      "done": 100,
+      "total": 100,
+      "valid": true,
+      "k": 7
+    },
+    {
+      "slot": 20,
+      "sim": 695,
+      "done": 100,
+      "total": 100,
+      "valid": true,
+      "k": 10
+    },
+    {
+      "slot": 20,
+      "sim": 695,
+      "done": 100,
+      "total": 100,
+      "valid": true,
+      "k": 12
+    },
+    {
+      "slot": 20,
+      "sim": 706,
+      "done": 100,
+      "total": 100,
+      "valid": true,
+      "k": 14
+    },
+    {
+      "slot": 20,
+      "sim": 835,
+      "done": 100,
+      "total": 100,
+      "valid": true,
+      "k": 8
+    },
+    {
+      "slot": 20,
+      "sim": 977,
+      "done": 100,
+      "total": 100,
+      "valid": true,
+      "k": 6
+    },
+    {
+      "slot": 20,
+      "sim": 1249,
+      "done": 100,
+      "total": 100,
+      "valid": true,
+      "k": 11
+    },
+    {
+      "slot": 20,
+      "sim": 1249,
+      "done": 100,
+      "total": 100,
+      "valid": true,
+      "k": 9
+    },
+    {
+      "slot": 20,
+      "sim": 1249,
+      "done": 100,
+      "total": 100,
+      "valid": true,
+      "k": 13
+    },
+    {
+      "slot": 20,
+      "sim": 1249,
+      "done": 100,
+      "total": 100,
+      "valid": true,
+      "k": 15
+    },
+    {
+      "slot": 20,
+      "sim": 1249,
+      "done": 100,
+      "total": 100,
+      "valid": true,
+      "k": 17
+    },
+    {
+      "slot": 20,
+      "sim": 1249,
+      "done": 100,
+      "total": 100,
+      "valid": true,
+      "k": 16
+    },
+    {
+      "slot": 20,
+      "sim": 1249,
+      "done": 100,
+      "total": 100,
+      "valid": true,
+      "k": 18
+    },
+    {
+      "slot": 20,
+      "sim": 1249,
+      "done": 100,
+      "total": 100,
+      "valid": true,
+      "k": 19
+    },
+    {
+      "slot": 20,
+      "sim": 1249,
+      "done": 100,
+      "total": 100,
+      "valid": true,
+      "k": 20
+    },
+    {
+      "slot": 20,
+      "sim": 1249,
+      "done": 100,
+      "total": 100,
+      "valid": true,
+      "k": 21
+    },
+    {
+      "slot": 20,
+      "sim": 1249,
+      "done": 100,
+      "total": 100,
+      "valid": true,
+      "k": 22
+    },
+    {
+      "slot": 20,
+      "sim": 1249,
+      "done": 100,
+      "total": 100,
+      "valid": true,
+      "k": 23
+    },
+    {
+      "slot": 20,
+      "sim": 1249,
+      "done": 100,
+      "total": 100,
+      "valid": true,
+      "k": 25
+    },
+    {
+      "slot": 20,
+      "sim": 1249,
+      "done": 100,
+      "total": 100,
+      "valid": true,
+      "k": 24
+    },
+    {
+      "slot": 20,
+      "sim": 1249,
+      "done": 100,
+      "total": 100,
+      "valid": true,
+      "k": 27
+    },
+    {
+      "slot": 20,
+      "sim": 1249,
+      "done": 100,
+      "total": 100,
+      "valid": true,
+      "k": 26
+    },
+    {
+      "slot": 20,
+      "sim": 1249,
+      "done": 100,
+      "total": 100,
+      "valid": true,
+      "k": 28
+    },
+    {
+      "slot": 20,
+      "sim": 1249,
+      "done": 100,
+      "total": 100,
+      "valid": true,
+      "k": 29
+    },
+    {
+      "slot": 20,
+      "sim": 1249,
+      "done": 100,
+      "total": 100,
+      "valid": true,
+      "k": 30
+    }
+  ],
+  "slots_planned": [
+    20
+  ],
+  "auto_idle": 0.0,
+  "pending_left": 0
+}

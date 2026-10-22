@@ -1,0 +1,16 @@
+[
+  {
+    "slot": 6,
+    "mode": "hold_score_r1",
+    "sim": 1375,
+    "wall": 546.67,
+    "valid": true,
+    "done": 100,
+    "handoff_t": null,
+    "handoff_reason": null,
+    "hier": 3197,
+    "d_hier": -1822,
+    "beats_hier": true,
+    "non_worse": true
+  }
+]

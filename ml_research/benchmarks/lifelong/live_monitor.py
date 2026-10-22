@@ -9,6 +9,7 @@ from __future__ import annotations
 
 import argparse
 import csv
+import json
 from collections import defaultdict
 from pathlib import Path
 from typing import Dict, List, Optional, Set, Tuple
@@ -19,7 +20,8 @@ from ml_research.common.paths import POSITION_CSV, RESULTS
 
 GRID_SIZE = 36
 WINDOW = (20 * GRID_SIZE, 20 * GRID_SIZE + 48)
-FPS_DEFAULT = 10
+FPS_DEFAULT = 5
+SPEED_DEFAULT = 1  # sim-seconds advanced per displayed frame (~5 steps/s wall)
 
 WHITE = (255, 255, 255)
 BLUE = (100, 149, 237)
@@ -28,6 +30,7 @@ BLACK = (0, 0, 0)
 RED = (220, 40, 40)
 PINK = (255, 182, 193)
 GRAY = (200, 200, 200)
+OBS = (55, 55, 62)
 HUD_BG = (30, 30, 36)
 HUD_FG = (230, 230, 230)
 
@@ -81,6 +84,60 @@ def load_positions(path: Path):
             elif t == "end_point":
                 ends[name] = (x - 1, y - 1)
     return starts, ends
+
+
+def _ingest_obstacle_cells(cells, out: Set[Tuple[int, int]]) -> None:
+    """Map JSON obstacles are 1-indexed like position.csv; store 0-indexed cells."""
+    for o in cells or []:
+        if isinstance(o, dict):
+            x, y = int(o["x"]), int(o["y"])
+        elif isinstance(o, (list, tuple)) and len(o) >= 2:
+            x, y = int(o[0]), int(o[1])
+        else:
+            continue
+        if 1 <= x <= 20 and 1 <= y <= 20:
+            out.add((x - 1, y - 1))
+
+
+def load_obstacles(
+    *,
+    map_json: Optional[Path] = None,
+    obstacles_json: Optional[Path] = None,
+    position_csv: Optional[Path] = None,
+) -> Set[Tuple[int, int]]:
+    """Load blocked cells for the same map as position_csv / map json."""
+    obs: Set[Tuple[int, int]] = set()
+    candidates: List[Path] = []
+    if map_json:
+        candidates.append(Path(map_json))
+    if obstacles_json:
+        candidates.append(Path(obstacles_json))
+    if position_csv:
+        p = Path(position_csv)
+        stem = p.name.replace("_position.csv", "")
+        exports = p.parent
+        candidates.extend(
+            [
+                exports / f"{stem}.json",
+                exports / f"{stem}_obstacles.json",
+            ]
+        )
+    seen: Set[Path] = set()
+    for path in candidates:
+        path = Path(path)
+        if path in seen or not path.is_file():
+            continue
+        seen.add(path)
+        try:
+            raw = json.loads(path.read_text(encoding="utf-8"))
+        except (OSError, json.JSONDecodeError):
+            continue
+        if isinstance(raw, list):
+            _ingest_obstacle_cells(raw, obs)
+        elif isinstance(raw, dict):
+            _ingest_obstacle_cells(raw.get("obstacles"), obs)
+            _ingest_obstacle_cells(raw.get("extra_obstacles"), obs)
+    return obs
 
 
 def load_task_info(path: Path) -> Dict[str, dict]:
@@ -194,7 +251,10 @@ class LiveMonitor:
         traj_csv: Path,
         task_csv: Path,
         position_csv: Path,
+        map_json: Optional[Path] = None,
+        obstacles_json: Optional[Path] = None,
         fps: float = FPS_DEFAULT,
+        speed: int = SPEED_DEFAULT,
         follow: bool = True,
         start_at_live: bool = False,
     ):
@@ -207,9 +267,16 @@ class LiveMonitor:
         self.traj_csv = Path(traj_csv)
         self.task_csv = Path(task_csv)
         self.fps = float(fps)
+        self.speed = max(1, int(speed))
         self.follow = follow
         self.start_at_live = start_at_live
-        self.starts, self.ends = load_positions(Path(position_csv))
+        pos = Path(position_csv)
+        self.starts, self.ends = load_positions(pos)
+        self.obstacles = load_obstacles(
+            map_json=map_json,
+            obstacles_json=obstacles_json,
+            position_csv=pos,
+        )
         self.task_info = load_task_info(self.task_csv)
         self.task_sequence = build_task_sequence(self.task_info)
         self.frames: List[Dict[str, dict]] = []
@@ -253,6 +320,7 @@ class LiveMonitor:
         if st.st_mtime == self._traj_mtime and st.st_size == self._traj_size:
             return
 
+        prev_size = self._traj_size
         frames, times, n_agv = load_frame_list(self.traj_csv)
         self._traj_mtime = st.st_mtime
         self._traj_size = st.st_size
@@ -270,8 +338,11 @@ class LiveMonitor:
             self.idx = self.max_idx if self.start_at_live else 0
             self._bootstrapped = True
         else:
-            # Keep playhead; clamp if file shrank (rewrite).
-            self.idx = min(self.idx, self.max_idx)
+            # Rolling viz rewrite shrinks then rewrites — snap follow tip.
+            if prev_size > 0 and st.st_size < prev_size and self.follow:
+                self.idx = max(0, self.max_idx - self.speed * 2)
+            else:
+                self.idx = min(self.idx, self.max_idx)
 
         self.status = f"n_agv={self.n_agv} frames={len(self.frames)}"
 
@@ -320,6 +391,16 @@ class LiveMonitor:
             pygame.draw.line(self.screen, GRAY, (i * GRID_SIZE, 0), (i * GRID_SIZE, 20 * GRID_SIZE))
             pygame.draw.line(self.screen, GRAY, (0, i * GRID_SIZE), (20 * GRID_SIZE, i * GRID_SIZE))
 
+    def _draw_obstacles(self) -> None:
+        for x, y in self.obstacles:
+            if not (0 <= x < 20 and 0 <= y < 20):
+                continue
+            pygame.draw.rect(
+                self.screen,
+                OBS,
+                (x * GRID_SIZE, _cy(y) * GRID_SIZE, GRID_SIZE, GRID_SIZE),
+            )
+
     def _draw_stations(self) -> None:
         for name, (x, y) in self.starts.items():
             pygame.draw.rect(
@@ -360,6 +441,7 @@ class LiveMonitor:
         self._sync_task_state(idx)
         sim_t = self.times[idx] if 0 <= idx < len(self.times) else idx
         self._draw_grid()
+        self._draw_obstacles()
         self._draw_stations()
         for start, (x, y) in self.starts.items():
             tid = self._surface_display_task(start, sim_t)
@@ -407,10 +489,11 @@ class LiveMonitor:
         mode = "[PAUSED]" if self.paused else ("[PLAY]" if self.follow else "[HOLD]")
         line = (
             f"frame={idx}/{self.max_idx}  t={sim_t}  "
-            f"block={self.n_agv}rows/s  lag={lag}  picked={len(self.completed)}  {mode}"
+            f"spd={self.speed}x  fps={self.fps:.0f}  lag={lag}  "
+            f"picked={len(self.completed)}  {mode}"
         )
         self.screen.blit(self.big.render(line, True, HUD_FG), (8, 20 * GRID_SIZE + 12))
-        tip = "Space pause | F play | 0 restart | ←/→ ±1s | R reload | Esc quit"
+        tip = "Space pause | F follow | [/] speed | ,/. fps | 0 restart | ←/→ | R | Esc"
         self.screen.blit(self.font.render(tip, True, (160, 160, 170)), (8, 20 * GRID_SIZE + 32))
         pygame.display.flip()
 
@@ -439,22 +522,29 @@ class LiveMonitor:
                         self._traj_size = -1
                         self._task_mtime = -1.0
                         self._state_idx = -1
+                    elif event.key in (pygame.K_LEFTBRACKET, pygame.K_MINUS):
+                        self.speed = max(1, self.speed - 1)
+                    elif event.key in (pygame.K_RIGHTBRACKET, pygame.K_EQUALS):
+                        self.speed = min(120, self.speed + 1)
+                    elif event.key == pygame.K_COMMA:
+                        self.fps = max(10.0, self.fps - 10.0)
+                    elif event.key == pygame.K_PERIOD:
+                        self.fps = min(120.0, self.fps + 10.0)
                     elif event.key == pygame.K_LEFT:
                         self.follow = False
-                        self.idx = max(0, self.idx - 1)
+                        self.idx = max(0, self.idx - self.speed)
                         self._state_idx = -1
                     elif event.key == pygame.K_RIGHT:
                         self.follow = False
                         if self.max_idx >= 0:
-                            self.idx = min(self.max_idx, self.idx + 1)
+                            self.idx = min(self.max_idx, self.idx + self.speed)
                             self._state_idx = -1
 
             self.refresh()
-            # One AGV-block (= one sim second) per displayed frame — never skip.
+            # Advance `speed` sim-seconds per displayed frame (no big jump catch-up).
             if not self.paused and self.follow and self.max_idx >= 0:
                 if self.idx < self.max_idx:
-                    self.idx += 1
-                # else: wait at tip for new complete blocks (live) or stay (finished)
+                    self.idx = min(self.max_idx, self.idx + self.speed)
 
             if self.max_idx >= 0:
                 self.draw_frame(self.idx)
@@ -475,7 +565,20 @@ def main(argv: Optional[List[str]] = None) -> int:
     ap.add_argument("--traj", type=Path, default=out / "live_trajectory.csv")
     ap.add_argument("--tasks", type=Path, default=out / "live_tasks.csv")
     ap.add_argument("--position", type=Path, default=POSITION_CSV)
+    ap.add_argument(
+        "--map-json",
+        type=Path,
+        default=None,
+        help="map json with extra_obstacles (default: derive from --position)",
+    )
+    ap.add_argument("--obstacles-json", type=Path, default=None)
     ap.add_argument("--fps", type=float, default=FPS_DEFAULT)
+    ap.add_argument(
+        "--speed",
+        type=int,
+        default=SPEED_DEFAULT,
+        help="sim-seconds advanced per displayed frame (higher = faster)",
+    )
     ap.add_argument("--no-follow", action="store_true", help="start paused at frame 0")
     ap.add_argument(
         "--start-at-live",
@@ -487,7 +590,10 @@ def main(argv: Optional[List[str]] = None) -> int:
         traj_csv=args.traj,
         task_csv=args.tasks,
         position_csv=args.position,
+        map_json=args.map_json,
+        obstacles_json=args.obstacles_json,
         fps=args.fps,
+        speed=int(args.speed),
         follow=not args.no_follow,
         start_at_live=args.start_at_live,
     )

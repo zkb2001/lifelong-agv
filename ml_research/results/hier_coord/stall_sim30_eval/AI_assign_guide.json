@@ -1,0 +1,34 @@
+[
+  {
+    "slot": 6,
+    "mode": "assign_guide_r1",
+    "sim": null,
+    "valid": false,
+    "done": 68,
+    "abort_t": 1575,
+    "hier": 3197,
+    "beats_hier": false
+  },
+  {
+    "slot": 6,
+    "mode": "assign_guide_r2",
+    "sim": null,
+    "valid": false,
+    "done": 76,
+    "abort_t": 1725,
+    "hier": 3197,
+    "beats_hier": false
+  },
+  {
+    "slot": 6,
+    "mode": "assign_guide_r3",
+    "sim": null,
+    "valid": false,
+    "done": 66,
+    "abort_t": 1000,
+    "handoff_reason": "stall_ai:stall_net:p=0.74",
+    "hier": 3197,
+    "beats_hier": false,
+    "note": "3rd fail: GNN scatter then full ECBS handoff. Method deleted."
+  }
+]

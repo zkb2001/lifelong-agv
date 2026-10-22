@@ -1,0 +1,20 @@
+{
+  "method": "Hier_M0_ECBS",
+  "method_id": "hier",
+  "slot": 20,
+  "scenario_id": "SH20_cmp100_hier",
+  "tasks_total": 100,
+  "tasks_completed": 100,
+  "completion_ratio": 1.0,
+  "sim_time": 894,
+  "wall_seconds": 1031.89,
+  "validate_ok": true,
+  "validate_summary": "VALID ok",
+  "n_collisions": 0,
+  "n_swaps": 0,
+  "n_fifo": 0,
+  "trajectory": "D:\\compitition\\MioVerse\\final_version\\ml_research\\results\\coord_custom_ai\\ecbs\\trajectories\\SH20_cmp100_hier_ecbs_joint_w1.5_k6_hier.csv",
+  "notes": "M0 + StallEscalateNet handoff + ECBS",
+  "error": null,
+  "wall_seconds_outer": 1032.87
+}

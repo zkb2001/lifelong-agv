@@ -1,0 +1,50 @@
+[
+  {
+    "slot": 9,
+    "mode": "hier_stall_on",
+    "sim": 2878,
+    "wall": 649.31,
+    "valid": true,
+    "done": 100,
+    "handoff_t": 550,
+    "handoff_reason": "stall_ai:stall_net:p=0.75",
+    "d_base": -488,
+    "d_v3": -1295
+  },
+  {
+    "slot": 9,
+    "mode": "hier_stall_off",
+    "sim": 4252,
+    "wall": 1320.39,
+    "valid": true,
+    "done": 100,
+    "handoff_t": 775,
+    "handoff_reason": "hard_livelock plateau=20",
+    "d_base": 886,
+    "d_v3": 79
+  },
+  {
+    "slot": 9,
+    "mode": "hier_online_guidance",
+    "sim": 4344,
+    "wall": 1291.88,
+    "valid": true,
+    "done": 100,
+    "handoff_t": 825,
+    "handoff_reason": "hard_livelock plateau=20 idle=21 idle_all=True surface=3 sim/task=15.3",
+    "d_base": 978,
+    "d_v3": 171
+  },
+  {
+    "slot": 9,
+    "mode": "hier_guidance_plus_stall",
+    "sim": 3141,
+    "wall": 866.24,
+    "valid": true,
+    "done": 100,
+    "handoff_t": 600,
+    "handoff_reason": "stall_ai:stall_net:p=0.75",
+    "d_base": -225,
+    "d_v3": -1032
+  }
+]

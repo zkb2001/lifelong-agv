@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<style xmlns="http://purl.org/net/xbiblio/csl" class="in-text" version="1.0">
+  <info>
+    <title>IEEE numeric (local)</title>
+    <id>http://www.zotero.org/styles/ieee-local</id>
+    <updated>2026-01-01T00:00:00+00:00</updated>
+  </info>
+  <citation collapse="citation-number">
+    <sort><key variable="citation-number"/></sort>
+    <layout prefix="[" suffix="]" delimiter=", ">
+      <text variable="citation-number"/>
+    </layout>
+  </citation>
+  <bibliography entry-spacing="0" second-field-align="flush">
+    <sort><key variable="citation-number"/></sort>
+    <layout>
+      <text variable="citation-number" prefix="[" suffix="] "/>
+      <names variable="author"><name name-as-sort-order="all" sort-separator=", " initialize-with=". " delimiter=", " delimiter-precedes-last="always"/><label form="short" prefix=", "/></names>
+      <text variable="title" prefix=", " quotes="true"/>
+      <text variable="container-title" prefix=", " font-style="italic"/>
+      <group prefix=", ">
+        <text variable="volume"/>
+        <text variable="page" prefix=", pp. "/>
+      </group>
+      <date variable="issued" prefix=", "><date-part name="year"/></date>
+      <text variable="DOI" prefix=", doi: "/>
+    </layout>
+  </bibliography>
+</style>

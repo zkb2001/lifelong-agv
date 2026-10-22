@@ -1,0 +1,9 @@
+{
+  "ckpt": "D:\\compitition\\MioVerse\\final_version\\greed_coop_mcts\\checkpoints\\stage_selector_v1.pt",
+  "steps": 500,
+  "final_loss": 0.012126619047485292,
+  "final_acc": 0.0,
+  "agent_feat": 8,
+  "cand_feat": 10,
+  "global_feat": 10
+}

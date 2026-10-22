@@ -1,0 +1,38 @@
+[
+  {
+    "slot": 6,
+    "mode": "lns_neigh_r1",
+    "sim": 3921,
+    "wall": 917.1,
+    "valid": true,
+    "done": 100,
+    "handoff_t": 875,
+    "handoff_reason": "stall_ai:stall_net:p=0.83",
+    "hier": 3197,
+    "d_hier": 724,
+    "beats_hier": false,
+    "non_worse": false
+  },
+  {
+    "slot": 6,
+    "mode": "lns_neigh_r2",
+    "sim": null,
+    "valid": false,
+    "done": 73,
+    "abort_t": 1700,
+    "hier": 3197,
+    "beats_hier": false,
+    "note": "Stay-M0 but assign_ok=0; 27 remaining would exceed hier."
+  },
+  {
+    "slot": 6,
+    "mode": "lns_neigh_r3",
+    "sim": 24950,
+    "valid": false,
+    "done": 66,
+    "abort_t": 24950,
+    "hier": 3197,
+    "beats_hier": false,
+    "note": "User-stopped; frozen at 66. Method deleted after 3 SH06 fails."
+  }
+]

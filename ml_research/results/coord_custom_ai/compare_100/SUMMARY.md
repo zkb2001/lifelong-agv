@@ -35,4 +35,4 @@ Methods: PIBT_reactive, M0_spacetime_Astar, PP_priority_Astar, ECBS_windowed, Hi
 | M0_spacetime_Astar | 20 | 4/20 | 20/20 | 44.6 | 942 | 1478.5 |
 | PP_priority_Astar | 20 | 1/20 | 7/20 | 32.4 | 848 | 1716.1 |
 | ECBS_windowed | 20 | 20/20 | 20/20 | 100.0 | 7364 | 542.7 |
-| Hier_M0_ECBS | 20 | 20/20 | 20/20 | 100.0 | 4616 | 703.7 |
+| Hier_M0_ECBS | 20 | 20/20 | 20/20 | 100.0 | 4018 | 1032.1 |

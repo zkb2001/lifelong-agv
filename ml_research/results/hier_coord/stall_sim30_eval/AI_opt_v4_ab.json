@@ -1,0 +1,34 @@
+[
+  {
+    "slot": 9,
+    "mode": "classic_local",
+    "sim": 3131,
+    "wall": 965.0,
+    "valid": true,
+    "done": 100,
+    "handoff_t": 625,
+    "handoff_reason": "stall_ai:stall_net:p=0.79",
+    "base": 3366,
+    "champ": 2471,
+    "d_base": -235,
+    "d_champ": 660,
+    "beats_base": true,
+    "beats_champ": false
+  },
+  {
+    "slot": 9,
+    "mode": "hswitch_v4",
+    "sim": 3502,
+    "wall": 1433.6,
+    "valid": true,
+    "done": 100,
+    "handoff_t": 700,
+    "handoff_reason": "hswitch_lns_cap force=2 idle=15 plat=9 rem=46",
+    "base": 3366,
+    "champ": 2471,
+    "d_base": 136,
+    "d_champ": 1031,
+    "beats_base": false,
+    "beats_champ": false
+  }
+]

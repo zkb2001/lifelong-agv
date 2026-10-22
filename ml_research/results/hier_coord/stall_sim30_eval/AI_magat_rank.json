@@ -1,0 +1,16 @@
+[
+  {
+    "slot": 6,
+    "mode": "magat_rank_r1",
+    "sim": 5935,
+    "wall": 2296.46,
+    "valid": true,
+    "done": 100,
+    "handoff_t": 1475,
+    "handoff_reason": "stall_ai:stall_net:p=0.79",
+    "hier": 3197,
+    "d_hier": 2738,
+    "beats_hier": false,
+    "non_worse": false
+  }
+]

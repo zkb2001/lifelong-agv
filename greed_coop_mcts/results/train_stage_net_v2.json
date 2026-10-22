@@ -1,0 +1,11 @@
+{
+  "ckpt": "D:\\compitition\\MioVerse\\final_version\\greed_coop_mcts\\checkpoints\\stage_selector_setattn_v2.pt",
+  "steps": 4000,
+  "final_loss": 0.753983590900898,
+  "final_acc": 0.993238787651062,
+  "agent_feat": 12,
+  "cand_feat": 10,
+  "pair_feat": 6,
+  "global_feat": 10,
+  "arch": "set_attn_v2"
+}

@@ -1,0 +1,25 @@
+{
+  "use_local_az": true,
+  "tasks_completed": 100,
+  "tasks_total": 100,
+  "sim_time": 4784,
+  "wall_seconds": 1710.63,
+  "validate_ok": true,
+  "validate_summary": "VALID ok",
+  "m0_handoff": true,
+  "m0_handoff_t": 1000,
+  "m0_handoff_reason": "hard_livelock plateau=20 idle=20 idle_all=True surface=4 sim/task=21.3",
+  "n_local_az_defer": 6,
+  "local_az_last": {
+    "t": 975,
+    "useful": true,
+    "why": "waits=3/k=3",
+    "acts": {
+      "Optimus": "Wait",
+      "Ironhide": "Wait",
+      "Bumblebee": "Wait"
+    }
+  },
+  "local_az_enabled": true,
+  "trajectory": "D:\\compitition\\MioVerse\\final_version\\ml_research\\results\\coord_custom_ai\\ecbs\\trajectories\\SH02_localaz_on_ecbs_joint_w1.5_k6_hier.csv"
+}

@@ -1,0 +1,26 @@
+[
+  {
+    "slot": 9,
+    "mode": "hier_stall_on",
+    "sim": 2878,
+    "wall": 649.31,
+    "valid": true,
+    "done": 100,
+    "handoff_t": 550,
+    "handoff_reason": "stall_ai:stall_net:p=0.75",
+    "d_base": -488,
+    "d_v3": -1295
+  },
+  {
+    "slot": 9,
+    "mode": "hier_stall_off",
+    "sim": 4252,
+    "wall": 1320.39,
+    "valid": true,
+    "done": 100,
+    "handoff_t": 775,
+    "handoff_reason": "hard_livelock plateau=20 idle=20 idle_all=True surface=5 sim/task=15.5",
+    "d_base": 886,
+    "d_v3": 79
+  }
+]

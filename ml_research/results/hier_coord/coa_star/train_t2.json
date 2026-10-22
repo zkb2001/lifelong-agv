@@ -1,0 +1,156 @@
+{
+  "best_val_loss": 1.0528550148010254,
+  "hist": [
+    {
+      "epoch": 1,
+      "train_loss": 1.2968,
+      "val_loss": 1.2863,
+      "val_top1": 0.575
+    },
+    {
+      "epoch": 2,
+      "train_loss": 1.2562,
+      "val_loss": 1.2376,
+      "val_top1": 0.6583
+    },
+    {
+      "epoch": 3,
+      "train_loss": 1.1711,
+      "val_loss": 1.1182,
+      "val_top1": 0.7667
+    },
+    {
+      "epoch": 4,
+      "train_loss": 1.0825,
+      "val_loss": 1.0715,
+      "val_top1": 0.765
+    },
+    {
+      "epoch": 5,
+      "train_loss": 1.0611,
+      "val_loss": 1.0612,
+      "val_top1": 0.7967
+    },
+    {
+      "epoch": 6,
+      "train_loss": 1.0539,
+      "val_loss": 1.0565,
+      "val_top1": 0.815
+    },
+    {
+      "epoch": 7,
+      "train_loss": 1.0512,
+      "val_loss": 1.0559,
+      "val_top1": 0.8733
+    },
+    {
+      "epoch": 8,
+      "train_loss": 1.0485,
+      "val_loss": 1.0542,
+      "val_top1": 0.8567
+    },
+    {
+      "epoch": 9,
+      "train_loss": 1.0481,
+      "val_loss": 1.0538,
+      "val_top1": 0.8667
+    },
+    {
+      "epoch": 10,
+      "train_loss": 1.048,
+      "val_loss": 1.0538,
+      "val_top1": 0.8667
+    },
+    {
+      "epoch": 11,
+      "train_loss": 1.049,
+      "val_loss": 1.0531,
+      "val_top1": 0.8683
+    },
+    {
+      "epoch": 12,
+      "train_loss": 1.0467,
+      "val_loss": 1.053,
+      "val_top1": 0.86
+    },
+    {
+      "epoch": 13,
+      "train_loss": 1.0445,
+      "val_loss": 1.0536,
+      "val_top1": 0.86
+    },
+    {
+      "epoch": 14,
+      "train_loss": 1.0459,
+      "val_loss": 1.0531,
+      "val_top1": 0.8567
+    },
+    {
+      "epoch": 15,
+      "train_loss": 1.047,
+      "val_loss": 1.0529,
+      "val_top1": 0.8683
+    },
+    {
+      "epoch": 16,
+      "train_loss": 1.0487,
+      "val_loss": 1.0543,
+      "val_top1": 0.8633
+    },
+    {
+      "epoch": 17,
+      "train_loss": 1.047,
+      "val_loss": 1.0529,
+      "val_top1": 0.86
+    },
+    {
+      "epoch": 18,
+      "train_loss": 1.0443,
+      "val_loss": 1.0545,
+      "val_top1": 0.85
+    },
+    {
+      "epoch": 19,
+      "train_loss": 1.0449,
+      "val_loss": 1.053,
+      "val_top1": 0.87
+    },
+    {
+      "epoch": 20,
+      "train_loss": 1.0496,
+      "val_loss": 1.0535,
+      "val_top1": 0.865
+    },
+    {
+      "epoch": 21,
+      "train_loss": 1.045,
+      "val_loss": 1.053,
+      "val_top1": 0.8567
+    },
+    {
+      "epoch": 22,
+      "train_loss": 1.0456,
+      "val_loss": 1.0529,
+      "val_top1": 0.865
+    },
+    {
+      "epoch": 23,
+      "train_loss": 1.0453,
+      "val_loss": 1.053,
+      "val_top1": 0.8583
+    },
+    {
+      "epoch": 24,
+      "train_loss": 1.0463,
+      "val_loss": 1.0539,
+      "val_top1": 0.8633
+    },
+    {
+      "epoch": 25,
+      "train_loss": 1.0465,
+      "val_loss": 1.0536,
+      "val_top1": 0.855
+    }
+  ],
+  "ckpt": "D:\\compitition\\MioVerse\\final_version\\ml_research\\checkpoints\\coa_priority_t2.pt"
+}

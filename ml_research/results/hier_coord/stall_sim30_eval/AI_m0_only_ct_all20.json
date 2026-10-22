@@ -1,0 +1,47 @@
+[
+  {
+    "slot": 1,
+    "mode": "m0_ct_no_ecbs",
+    "sim": 575,
+    "wall": 26.54,
+    "valid": true,
+    "done": 100,
+    "full100": true,
+    "handoff": false,
+    "handoff_t": null,
+    "m0_cmp_sim": 546,
+    "m0_cmp_done": 100,
+    "hier_sim": 568,
+    "beats_m0_done": false
+  },
+  {
+    "slot": 20,
+    "mode": "m0_ct_no_ecbs",
+    "sim": 414,
+    "wall": 380.7,
+    "valid": true,
+    "done": 100,
+    "full100": true,
+    "handoff": false,
+    "handoff_t": null,
+    "m0_cmp_sim": 541,
+    "m0_cmp_done": 100,
+    "hier_sim": 532,
+    "beats_m0_done": false
+  },
+  {
+    "slot": 4,
+    "mode": "m0_ct_no_ecbs",
+    "sim": 747,
+    "wall": 107.36,
+    "valid": true,
+    "done": 100,
+    "full100": true,
+    "handoff": false,
+    "handoff_t": null,
+    "m0_cmp_sim": 684,
+    "m0_cmp_done": 100,
+    "hier_sim": 729,
+    "beats_m0_done": false
+  }
+]
