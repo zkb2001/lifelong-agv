@@ -626,10 +626,26 @@ def solve(
     livelock_mode = str(os.environ.get("GREED_LIVELOCK_MODE", "full")).strip().lower()
     if livelock_mode not in ("full", "detect", "plan", "off"):
         livelock_mode = "full"
+    # SH17-class: small fleet + extreme near-pad labyrinth.
+    # Default unlock (AI@~40 + soft@300 + claim_freeze~80) thrash-deadlocks
+    # after ~60 done. Use rare soft-only unlock with short freeze instead.
+    # SH03 (near≈74) keeps the normal unlock stack.
+    unlock_gated = (
+        (not lifelong_random)
+        and len(names) <= 9
+        and int(near_pad_deg2) >= 100
+    )
+    if unlock_gated and livelock_mode != "off":
+        livelock_mode = "off"  # soft-only; no early AI detect
     livelock_det = LivelockDetector(
         window=48, score_th=0.70, min_freeze_ticks=36, cooldown=90
     )
-    print(f"[greed_coop] livelock_mode={livelock_mode}", flush=True)
+    print(
+        f"[greed_coop] livelock_mode={livelock_mode}"
+        f" unlock_gated={int(unlock_gated)}"
+        f" near_pad_deg2={int(near_pad_deg2)} n={len(names)}",
+        flush=True,
+    )
     clear_cool: Dict[str, int] = defaultdict(int)
     yield_cool: Dict[str, int] = defaultdict(int)
     endgame_lead: Optional[str] = None
@@ -1367,9 +1383,19 @@ def solve(
         )
 
         # Soft corridor unlock (stall clock) — used by off/plan, or as detect fallback.
+        # SH17-class: much higher threshold + short freeze so unlock does not thrash.
         _rem = int(total) - int(done)
-        _soft_th = 300
-        _soft_cd = 250
+        if unlock_gated:
+            # Endgame: unlock more often — each soft cycle only frees ~1 task.
+            if _rem <= 10:
+                _soft_th, _soft_cd = 220, 280
+            elif _rem <= 25:
+                _soft_th, _soft_cd = 320, 400
+            else:
+                _soft_th, _soft_cd = 550, 800
+        else:
+            _soft_th = 300
+            _soft_cd = 250
         _want_soft = (
             (not _ai_detect)
             and (use_rrsc or use_rules or lifelong_random)
@@ -1377,7 +1403,7 @@ def solve(
             and int(stall) >= int(_soft_th)
             and (
                 bool(assigned)
-                or int(stall) >= 450
+                or int(stall) >= (int(_soft_th) + 150)
                 or _rem <= 8
             )
         )
@@ -1385,7 +1411,7 @@ def solve(
             now - int(last_stall_drop_t)
         ) >= (60 if _ai_detect else int(_soft_cd))
         if _do_unlock:
-            use_plan = livelock_mode in ("full", "plan") and (
+            use_plan = (not unlock_gated) and livelock_mode in ("full", "plan") and (
                 _ai_detect or livelock_mode == "plan"
             )
             tag = (
@@ -1439,12 +1465,40 @@ def solve(
                 n_crit = len(plan.critical_cells)
             else:
                 n_rel = _release_approachers()
-                n_esc = _evacuate_blockers(ttl=56)
+                n_esc = _evacuate_blockers(ttl=72 if unlock_gated else 56)
                 n_crit = 0
+                # SH17 soft path: also path-guided escapes (evacuate alone is thin).
+                if unlock_gated:
+                    _pre_goals = _goals_and_priority()
+                    plan = plan_unblock(
+                        names=names,
+                        poses=pose,
+                        goals=_pre_goals,
+                        carrying=set(carrying),
+                        assigned=set(assigned),
+                        blocked=blocked,
+                        free=free,
+                        escape_ttl=72,
+                    )
+                    for agv, dest_c in plan.escape.items():
+                        if agv in carrying or agv in force_stay:
+                            continue
+                        if agv in escape_goal:
+                            continue
+                        escape_goal[agv] = dest_c
+                        escape_ttl[agv] = 72
+                        face_commit.pop(agv, None)
+                        n_esc += 1
+                    for agv in plan.boost_carriers:
+                        wait_pri[agv] = float(wait_pri.get(agv, 0.0)) + 800.0
+                    n_crit = len(plan.critical_cells)
             face_commit.clear()
             sticky_winners.clear()
             last_stall_drop_t = int(now)
-            claim_freeze_until = int(now) + (70 if use_plan else 80)
+            # SH17-class: avoid long claim_freeze (starves recovery).
+            claim_freeze_until = int(now) + (
+                8 if unlock_gated else (70 if use_plan else 80)
+            )
             if _ai_detect:
                 livelock_det.mark_fired(int(now))
             if lifelong_random and (_ai_detect or int(stall) >= 400):
@@ -1457,6 +1511,13 @@ def solve(
                 f"crit={n_crit} freeze->{claim_freeze_until}",
                 flush=True,
             )
+            # Deep SH17 stall: clear lock so contested gate can re-pick holder.
+            if unlock_gated:
+                progress.lock_holder = None
+                progress.lock_pad = None
+                progress.lock_ttl = 0
+                stall = 0
+                livelock_det.reset()
 
         true_goals = _goals_and_priority()
         goals = dict(true_goals)

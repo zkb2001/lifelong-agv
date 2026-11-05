@@ -1,0 +1,226 @@
+{
+  "created_at": "2026-11-05 17:21:59",
+  "rows": [
+    {
+      "slot": 1,
+      "done": 100,
+      "total": 100,
+      "sim": 815,
+      "wall": 12.74,
+      "ok": true,
+      "near": 14,
+      "n": 8,
+      "facn": true
+    },
+    {
+      "slot": 2,
+      "done": 100,
+      "total": 100,
+      "sim": 1803,
+      "wall": 37.38,
+      "ok": true,
+      "near": 45,
+      "n": 12,
+      "facn": true
+    },
+    {
+      "slot": 3,
+      "done": 100,
+      "total": 100,
+      "sim": 4049,
+      "wall": 48.62,
+      "ok": true,
+      "near": 74,
+      "n": 8,
+      "facn": true
+    },
+    {
+      "slot": 4,
+      "done": 100,
+      "total": 100,
+      "sim": 1267,
+      "wall": 15.38,
+      "ok": true,
+      "near": 54,
+      "n": 9,
+      "facn": true
+    },
+    {
+      "slot": 5,
+      "done": 100,
+      "total": 100,
+      "sim": 1592,
+      "wall": 20.04,
+      "ok": true,
+      "near": 62,
+      "n": 9,
+      "facn": true
+    },
+    {
+      "slot": 6,
+      "done": 100,
+      "total": 100,
+      "sim": 1920,
+      "wall": 20.72,
+      "ok": true,
+      "near": 37,
+      "n": 9,
+      "facn": true
+    },
+    {
+      "slot": 7,
+      "done": 100,
+      "total": 100,
+      "sim": 2836,
+      "wall": 38.4,
+      "ok": true,
+      "near": 67,
+      "n": 8,
+      "facn": true
+    },
+    {
+      "slot": 8,
+      "done": 100,
+      "total": 100,
+      "sim": 1271,
+      "wall": 16.97,
+      "ok": true,
+      "near": 108,
+      "n": 12,
+      "facn": true
+    },
+    {
+      "slot": 9,
+      "done": 100,
+      "total": 100,
+      "sim": 1105,
+      "wall": 17.38,
+      "ok": true,
+      "near": 49,
+      "n": 15,
+      "facn": true
+    },
+    {
+      "slot": 10,
+      "done": 100,
+      "total": 100,
+      "sim": 2831,
+      "wall": 28.78,
+      "ok": true,
+      "near": 100,
+      "n": 8,
+      "facn": true
+    },
+    {
+      "slot": 11,
+      "done": 100,
+      "total": 100,
+      "sim": 3447,
+      "wall": 71.2,
+      "ok": true,
+      "near": 83,
+      "n": 16,
+      "facn": true
+    },
+    {
+      "slot": 12,
+      "done": 100,
+      "total": 100,
+      "sim": 1569,
+      "wall": 36.01,
+      "ok": true,
+      "near": 77,
+      "n": 20,
+      "facn": true
+    },
+    {
+      "slot": 13,
+      "done": 100,
+      "total": 100,
+      "sim": 697,
+      "wall": 14.76,
+      "ok": true,
+      "near": 34,
+      "n": 24,
+      "facn": true
+    },
+    {
+      "slot": 14,
+      "done": 100,
+      "total": 100,
+      "sim": 1517,
+      "wall": 21.88,
+      "ok": true,
+      "near": 97,
+      "n": 9,
+      "facn": true
+    },
+    {
+      "slot": 15,
+      "done": 100,
+      "total": 100,
+      "sim": 2493,
+      "wall": 24.75,
+      "ok": true,
+      "near": 63,
+      "n": 12,
+      "facn": true
+    },
+    {
+      "slot": 16,
+      "done": 100,
+      "total": 100,
+      "sim": 1136,
+      "wall": 14.94,
+      "ok": true,
+      "near": 71,
+      "n": 15,
+      "facn": true
+    },
+    {
+      "slot": 17,
+      "done": 100,
+      "total": 100,
+      "sim": 4448,
+      "wall": 60.15,
+      "ok": true,
+      "near": 116,
+      "n": 8,
+      "facn": true
+    },
+    {
+      "slot": 18,
+      "done": 100,
+      "total": 100,
+      "sim": 1194,
+      "wall": 17.46,
+      "ok": true,
+      "near": 71,
+      "n": 18,
+      "facn": true
+    },
+    {
+      "slot": 19,
+      "done": 100,
+      "total": 100,
+      "sim": 1591,
+      "wall": 13.66,
+      "ok": true,
+      "near": 118,
+      "n": 11,
+      "facn": true
+    },
+    {
+      "slot": 20,
+      "done": 100,
+      "total": 100,
+      "sim": 737,
+      "wall": 17.39,
+      "ok": true,
+      "near": 12,
+      "n": 30,
+      "facn": true
+    }
+  ],
+  "wall_total": 548.8
+}
