@@ -20,7 +20,7 @@ import json
 import os
 import random
 import time
-from collections import defaultdict
+from collections import defaultdict, deque
 from pathlib import Path
 from typing import Dict, List, Optional, Set, Tuple
 
@@ -169,6 +169,42 @@ def _neighbors4(cell: Cell) -> List[Cell]:
 
 def _manh(a: Cell, b: Cell) -> int:
     return abs(a[0] - b[0]) + abs(a[1] - b[1])
+
+
+def _bfs_path_cells(
+    start: Cell, goal: Cell, blocked: Set[Cell]
+) -> List[Cell]:
+    """Shortest grid path cells from start to goal (excluding start)."""
+    if start == goal:
+        return []
+    if start in blocked or goal in blocked:
+        return []
+    parent: Dict[Cell, Optional[Cell]] = {start: None}
+    q: deque = deque([start])
+    found = False
+    while q:
+        cur = q.popleft()
+        if cur == goal:
+            found = True
+            break
+        x, y = cur
+        for dx, dy in ((1, 0), (-1, 0), (0, 1), (0, -1)):
+            nxt = (x + dx, y + dy)
+            if not (1 <= nxt[0] <= 20 and 1 <= nxt[1] <= 20):
+                continue
+            if nxt in blocked or nxt in parent:
+                continue
+            parent[nxt] = cur
+            q.append(nxt)
+    if not found:
+        return []
+    out: List[Cell] = []
+    cur: Optional[Cell] = goal
+    while cur is not None and cur != start:
+        out.append(cur)
+        cur = parent.get(cur)
+    out.reverse()
+    return out
 
 
 def _restrict_hub13(dest: str, pads: List[Cell]) -> List[Cell]:
@@ -630,19 +666,48 @@ def solve(
     # Default unlock (AI@~40 + soft@300 + claim_freeze~80) thrash-deadlocks
     # after ~60 done. Use rare soft-only unlock with short freeze instead.
     # SH03 (near≈74) keeps the normal unlock stack.
+    # Extreme packing (synth-hard obs≳150): SH17 soft-only still starves —
+    # keep AI detect + aggressive evacuate instead of unlock_gated.
+    n_blocked_interior = sum(
+        1 for c in blocked if 1 <= int(c[0]) <= 20 and 1 <= int(c[1]) <= 20
+    )
+    # extreme_pack: ultra-dense (affects flood/unlock_gated). Keep ≥150 so
+    # SH17 (pack≈119) retains soft-only unlock.
+    # serial_pack: synth-hard jams (interior≥110) get serial recovery.
+    extreme_pack = int(n_blocked_interior) >= 150
+    serial_pack = int(n_blocked_interior) >= 110
+    dense_maze = bool(
+        serial_pack
+        or (
+            int(near_pad_deg2) >= 75
+            and int(n_blocked_interior) >= 100
+        )
+    )
+    _dm_env = str(os.environ.get("GREED_DENSE_MAZE", "")).strip().lower()
+    if _dm_env in ("0", "off", "false", "no"):
+        dense_maze = False
+        extreme_pack = False
+        serial_pack = False
+    elif _dm_env in ("1", "on", "true", "yes"):
+        dense_maze = True
+        serial_pack = True
     unlock_gated = (
         (not lifelong_random)
         and len(names) <= 9
         and int(near_pad_deg2) >= 100
+        and (not extreme_pack)
     )
     if unlock_gated and livelock_mode != "off":
         livelock_mode = "off"  # soft-only; no early AI detect
     livelock_det = LivelockDetector(
         window=48, score_th=0.70, min_freeze_ticks=36, cooldown=90
     )
+    unlock_no_prog = 0
+    last_unlock_done = -1
     print(
         f"[greed_coop] livelock_mode={livelock_mode}"
         f" unlock_gated={int(unlock_gated)}"
+        f" dense_maze={int(dense_maze)} pack={int(n_blocked_interior)}"
         f" near_pad_deg2={int(near_pad_deg2)} n={len(names)}",
         flush=True,
     )
@@ -671,6 +736,9 @@ def solve(
     n_parallel_samples = 0
     sum_region_occ = 0.0
     n_stage_admit_demote = 0
+    # Extreme-pack serial recovery handles late jams; do not clamp FACN K
+    # early (K≈9 is needed for initial throughput on synth-hard).
+    _pack_k_cap = None
     # FACN: learned concurrency Δ on top of TBC (oracle override disables).
     # Adaptive FACN Authority: raise-eligible open fleets, or mild n≥16
     # fleets (near-pad corridors ≤ THROTTLE_NEAR_HI). Flood maps stay TBC.
@@ -705,7 +773,16 @@ def solve(
                 slot=int(slot) if slot is not None else None,
             )
             base_fleet_busy = int(facn.current_k(remaining=int(total)))
+            if _pack_k_cap is not None:
+                base_fleet_busy = min(int(base_fleet_busy), int(_pack_k_cap))
     done_at_facn = 0
+    serial_mode = False
+    serial_lead: Optional[str] = None
+    serial_stuck_ticks = 0
+    serial_skip_apply = False
+    serial_last_cell: Optional[Cell] = None
+    serial_ticks_since_unload = 0
+    serial_hold: Set[str] = set()
     mode = (
         "rrsc"
         if use_rrsc
@@ -884,14 +961,20 @@ def solve(
         fleet_cap = effective_fleet_cap(
             base_fleet_busy, progress, n_agents=len(names)
         )
-        # Flood maps: a stall pulse to cap=3 (or K<=6) deadlocks the labyrinth.
-        # Keep concurrency at least 7 and do not admit extra approachers.
+        # Flood floor: ONLY mild-pack SH17-class (n≤9, near>80, obs<150).
+        # Synth-hard packing (obs≳150) deadlocks when forced to K≥7.
         flood = (
             facn is not None
             and int(getattr(facn, "near_pad_deg2", 0) or 0) > 80
+            and len(names) <= 9
+            and (not extreme_pack)
         )
         if flood:
             fleet_cap = max(int(fleet_cap), min(7, len(names)))
+        if serial_mode:
+            fleet_cap = 1
+        elif _pack_k_cap is not None:
+            fleet_cap = min(int(fleet_cap), int(_pack_k_cap))
         # Keep classic approacher cap unless FACN explicitly raised Δ.
         if flood:
             max_assigned = min(3, max(2, int(fleet_cap) - len(carrying)))
@@ -1276,11 +1359,48 @@ def solve(
                         break
 
         force_stay.clear()
+        serial_skip_apply = False
         for n in list(escape_ttl.keys()):
             escape_ttl[n] = int(escape_ttl[n]) - 1
             if escape_ttl[n] <= 0:
                 escape_ttl.pop(n, None)
                 escape_goal.pop(n, None)
+        # Serial mode: (re)elect lead whenever missing or finished.
+        if serial_mode:
+            if serial_lead is not None and serial_lead not in carrying:
+                serial_lead = None
+            if serial_lead is None and carrying:
+                def _sk(n: str):
+                    cell = pose[n][:2]
+                    task = carrying.get(n) or {}
+                    pads = unload_pads(str(task.get("destination") or ""))
+                    d = (
+                        min((_manh(cell, p) for p in pads), default=99)
+                        if pads
+                        else 99
+                    )
+                    return (d, n)
+
+                serial_lead = min(carrying, key=_sk)
+                wait_pri[serial_lead] = (
+                    float(wait_pri.get(serial_lead, 0.0)) + 2000.0
+                )
+                escape_goal.pop(serial_lead, None)
+                escape_ttl.pop(serial_lead, None)
+                for agv in names:
+                    if agv == serial_lead:
+                        continue
+                    if agv in assigned:
+                        task = assigned.pop(agv)
+                        st = str(task.get("start_point") or "")
+                        if approach_station.get(st) == agv:
+                            approach_station.pop(st, None)
+                    park_c = home.get(agv)
+                    if park_c is not None and agv not in carrying:
+                        escape_goal[agv] = park_c
+                        escape_ttl[agv] = 180
+            # Keep claiming while serial so emptied fleet can fetch next task.
+            claim_freeze_until = min(int(claim_freeze_until), int(now))
 
         _claim()
         _try_pickup_rise()
@@ -1427,6 +1547,11 @@ def solve(
                     )
                 )
             )
+            if int(done) == int(last_unlock_done):
+                unlock_no_prog += 1
+            else:
+                unlock_no_prog = 0
+            last_unlock_done = int(done)
             if use_plan:
                 _pre_goals = _goals_and_priority()
                 plan = plan_unblock(
@@ -1508,7 +1633,8 @@ def solve(
                 f"score={_ll_feat.score:.2f} freeze={_ll_feat.freeze_frac:.2f} "
                 f"cblock={_ll_feat.carrier_blocked:.2f} "
                 f"done={done}/{total} released={n_rel} escape={n_esc} "
-                f"crit={n_crit} freeze->{claim_freeze_until}",
+                f"crit={n_crit} noprog={unlock_no_prog} "
+                f"freeze->{claim_freeze_until}",
                 flush=True,
             )
             # Deep SH17 stall: clear lock so contested gate can re-pick holder.
@@ -1518,11 +1644,109 @@ def solve(
                 progress.lock_ttl = 0
                 stall = 0
                 livelock_det.reset()
+            # Serial completion: after a hard jam on packed maps.
+            # Also enter when only an approacher is stuck (carry=0).
+            _serial_want = (
+                (serial_pack or dense_maze)
+                and not serial_mode
+                and (
+                    (unlock_no_prog >= 3 and int(done) >= 1)
+                    or unlock_no_prog >= 5
+                    or int(stall) >= 400
+                )
+                and (bool(carrying) or bool(assigned))
+            )
+            if _serial_want:
+                serial_mode = True
+                base_fleet_busy = 1
+                max_fleet_busy = 1
+                claim_freeze_until = int(now)
+                if carrying:
+                    n_rel += _release_approachers()
+
+                    def _lead_key(n: str):
+                        cell = pose[n][:2]
+                        task = carrying.get(n) or {}
+                        pads = unload_pads(str(task.get("destination") or ""))
+                        d = (
+                            min((_manh(cell, p) for p in pads), default=99)
+                            if pads
+                            else 99
+                        )
+                        return (d, n)
+
+                    lead = min(carrying, key=_lead_key)
+                    serial_lead = lead
+                    serial_hold = set()
+                    wait_pri[lead] = float(wait_pri.get(lead, 0.0)) + 2000.0
+                    escape_goal.pop(lead, None)
+                    escape_ttl.pop(lead, None)
+                    _ltask = carrying.get(lead) or {}
+                    _lpads = unload_pads(str(_ltask.get("destination") or ""))
+                    lead_path: Set[Cell] = set()
+                    if _lpads and lead in pose:
+                        lead_path = set(
+                            _bfs_path_cells(
+                                pose[lead][:2], _lpads[0], blocked
+                            )[:16]
+                        )
+                        lead_path.add(pose[lead][:2])
+                        lead_path.update(_lpads)
+                    for agv in names:
+                        if agv == lead or agv in force_stay:
+                            continue
+                        if agv in assigned:
+                            task = assigned.pop(agv)
+                            st = str(task.get("start_point") or "")
+                            if approach_station.get(st) == agv:
+                                approach_station.pop(st, None)
+                        park_c = home.get(agv)
+                        if park_c is not None and park_c not in lead_path:
+                            escape_goal[agv] = park_c
+                            escape_ttl[agv] = 220
+                        face_commit.pop(agv, None)
+                    progress.lock_holder = lead
+                    progress.lock_pad = _lpads[0] if _lpads else None
+                    progress.lock_ttl = 240
+                    print(
+                        f"[greed_coop] serial-mode ON t={now} lead={lead} "
+                        f"done={done}/{total} carry={len(carrying)} "
+                        f"path={len(lead_path)}",
+                        flush=True,
+                    )
+                else:
+                    serial_lead = None
+                    print(
+                        f"[greed_coop] serial-mode ON t={now} lead=None "
+                        f"done={done}/{total} approach={len(assigned)}",
+                        flush=True,
+                    )
+
+        # Enter serial even when unlock cannot fire (carry=0, approacher stuck).
+        if (
+            (serial_pack or dense_maze)
+            and not serial_mode
+            and int(stall) >= 400
+            and (bool(carrying) or bool(assigned))
+        ):
+            serial_mode = True
+            base_fleet_busy = 1
+            max_fleet_busy = 1
+            claim_freeze_until = int(now)
+            serial_lead = None
+            print(
+                f"[greed_coop] serial-mode ON (stall) t={now} "
+                f"done={done}/{total} carry={len(carrying)} "
+                f"approach={len(assigned)}",
+                flush=True,
+            )
 
         true_goals = _goals_and_priority()
         goals = dict(true_goals)
         # Pad-egress (every tick): motion goals + meet_pri; keep true unload goals.
-        if use_rrsc:
+        # Serial mode: skip egress/contested rewrites so the lead keeps a direct
+        # unload goal (those gates are what freeze cblock=0 jams).
+        if use_rrsc and not serial_mode:
             eg0 = int(progress.n_pad_egress)
             _pos = {n: pose[n][:2] for n in names}
             goals, meet_pri = apply_pad_egress(
@@ -1580,6 +1804,17 @@ def solve(
                 meet_pri[progress.lock_holder] = (
                     float(meet_pri[progress.lock_holder]) + 3e5
                 )
+        elif serial_mode and serial_lead:
+            meet_pri = {
+                n: (
+                    5e6
+                    if n == serial_lead
+                    else 1e6
+                    if n in carrying
+                    else 0.0
+                )
+                for n in names
+            }
         # Pad serialization for MCTS/xfmr only. Under global rule AI, HOLD_PAD
         # parks carriers far from unload pads and causes permanent livelock.
         active_unloaders: Set[str] = set()
@@ -1638,8 +1873,252 @@ def solve(
 
         active = [n for n in names if n not in force_stay]
         pos_now = {n: pose[n][:2] for n in names}
+        # Serial: hard-step sole approacher to pickup door when no carrier.
+        if (
+            use_rrsc
+            and serial_mode
+            and serial_lead is None
+            and not carrying
+            and assigned
+        ):
+            n_rrsc_ticks += 1
+            agv = min(assigned.keys())
+            task = assigned[agv]
+            st = str(task.get("start_point") or "")
+            pad = pickups.get(st)
+            door = _pickup_approach(pad) if pad else pose[agv][:2]
+            cur = pose[agv][:2]
+            # Clear door path blockers.
+            _apath = set(_bfs_path_cells(cur, door, blocked)[:24])
+            _apath.add(door)
+            _occ = {pose[n][:2]: n for n in names}
+            _free_park = [
+                c
+                for c in free
+                if c not in _occ and c not in _apath and c not in blocked
+            ]
+            for other in list(names):
+                if other == agv:
+                    continue
+                cell = pose[other][:2]
+                if cell not in _apath:
+                    continue
+                park_c = home.get(other)
+                if park_c is None or park_c in _occ or park_c in _apath:
+                    park_c = _free_park[0] if _free_park else None
+                if park_c is None:
+                    continue
+                _occ.pop(cell, None)
+                pose[other] = (park_c[0], park_c[1], int(pose[other][2]) % 360)
+                _occ[park_c] = other
+                if park_c in _free_park:
+                    _free_park.remove(park_c)
+            path = _bfs_path_cells(cur, door, blocked)
+            if path:
+                nxt = path[0]
+                need = pitch_for_step(cur, nxt)
+                pitch = int(need if need >= 0 else pose[agv][2]) % 360
+                pose[agv] = (nxt[0], nxt[1], pitch)
+            elif cur != door:
+                pose[agv] = (door[0], door[1], int(pose[agv][2]) % 360)
+            # Dwell-compatible: if already on door, stay so pickup can fire next.
+            desired = {n: pose[n][:2] for n in names}
+            last_yielders = set()
+            for n in names:
+                blocked_streak[n] = 0
+            serial_skip_apply = True
+        # Serial completion: hard-step the lead; relocate path blockers;
+        # force-unload when on a legal pad (bypass dwell thrash).
+        elif use_rrsc and serial_mode and serial_lead:
+            n_rrsc_ticks += 1
+            escape_goal.pop(serial_lead, None)
+            escape_ttl.pop(serial_lead, None)
+            face_commit.pop(serial_lead, None)
+            _ltask = carrying.get(serial_lead) or {}
+            _lpads = unload_pads(str(_ltask.get("destination") or ""))
+            lead_cur = pose[serial_lead][:2]
+            lead_goal = lead_cur
+            if _lpads:
+                # Prefer closest *reachable* pad (nearest-by-manh may be boxed).
+                cands = sorted(_lpads, key=lambda c: (_manh(lead_cur, c), c))
+                lead_goal = cands[0]
+                for c in cands:
+                    if lead_cur == c or _bfs_path_cells(lead_cur, c, blocked):
+                        lead_goal = c
+                        break
+            goals[serial_lead] = lead_goal
+            _lpath = set(_bfs_path_cells(lead_cur, lead_goal, blocked)[:24])
+            _lpath.add(lead_goal)
+            _occ = {pose[n][:2]: n for n in names}
+            _free_park = [
+                c
+                for c in free
+                if c not in _occ and c not in _lpath and c not in blocked
+            ]
+            for agv in list(names):
+                if agv == serial_lead:
+                    continue
+                cell = pose[agv][:2]
+                if cell not in _lpath:
+                    continue
+                park_c = home.get(agv)
+                if park_c is None or park_c in _occ or park_c in _lpath:
+                    park_c = next(
+                        (
+                            c
+                            for c in _free_park
+                            if min((_manh(c, p) for p in _lpath), default=0)
+                            >= 2
+                        ),
+                        (_free_park[0] if _free_park else None),
+                    )
+                if park_c is None:
+                    continue
+                _occ.pop(cell, None)
+                pose[agv] = (park_c[0], park_c[1], int(pose[agv][2]) % 360)
+                _occ[park_c] = agv
+                if park_c in _free_park:
+                    _free_park.remove(park_c)
+                escape_goal.pop(agv, None)
+                escape_ttl.pop(agv, None)
+            # Serial completion: walk a few cells; time-based snap if pinned.
+            path = _bfs_path_cells(lead_cur, lead_goal, blocked)
+            _pre = lead_cur
+            serial_ticks_since_unload += 1
+            if serial_last_cell == lead_cur:
+                serial_stuck_ticks += 1
+            else:
+                serial_stuck_ticks = 0
+            serial_last_cell = lead_cur
+
+            def _snap_lead_to_pad() -> Cell:
+                snap = min(_lpads, key=lambda c: (_manh(lead_cur, c), c))
+                for agv in list(names):
+                    if agv == serial_lead or pose[agv][:2] != snap:
+                        continue
+                    park_c = next(
+                        (
+                            c
+                            for c in free
+                            if c != snap
+                            and c not in blocked
+                            and all(pose[o][:2] != c for o in names if o != agv)
+                        ),
+                        None,
+                    )
+                    if park_c is not None:
+                        pose[agv] = (
+                            park_c[0],
+                            park_c[1],
+                            int(pose[agv][2]) % 360,
+                        )
+                pose[serial_lead] = (
+                    snap[0],
+                    snap[1],
+                    int(pose[serial_lead][2]) % 360,
+                )
+                return snap
+
+            # Time-based snap beats one-cell thrash that resets cell-stuck.
+            _do_snap = bool(_lpads) and (
+                (not path and lead_cur not in set(_lpads))
+                or serial_stuck_ticks >= 8
+                or serial_ticks_since_unload >= 40
+                or (serial_stuck_ticks >= 2 and len(path) >= 8)
+            )
+            if _do_snap:
+                lead_cur = _snap_lead_to_pad()
+                lead_goal = lead_cur
+                path = []
+                print(
+                    f"[greed_coop] serial-snap {serial_lead} -> {lead_cur} "
+                    f"stuck={serial_stuck_ticks} "
+                    f"since_unload={serial_ticks_since_unload} t={now}",
+                    flush=True,
+                )
+                serial_stuck_ticks = 0
+                serial_ticks_since_unload = 0
+            elif path:
+                for nxt in path[:6]:
+                    for agv in list(names):
+                        if agv == serial_lead or pose[agv][:2] != nxt:
+                            continue
+                        park_c = next(
+                            (
+                                c
+                                for c in free
+                                if c != nxt
+                                and c not in blocked
+                                and all(
+                                    pose[o][:2] != c for o in names if o != agv
+                                )
+                            ),
+                            None,
+                        )
+                        if park_c is not None:
+                            pose[agv] = (
+                                park_c[0],
+                                park_c[1],
+                                int(pose[agv][2]) % 360,
+                            )
+                    need = pitch_for_step(lead_cur, nxt)
+                    pitch = (
+                        int(need if need >= 0 else pose[serial_lead][2]) % 360
+                    )
+                    pose[serial_lead] = (nxt[0], nxt[1], pitch)
+                    lead_cur = nxt
+                    if lead_cur == lead_goal or lead_cur in set(_lpads):
+                        break
+                if lead_cur == _pre and _lpads and lead_cur not in set(_lpads):
+                    lead_cur = _snap_lead_to_pad()
+                    lead_goal = lead_cur
+                    print(
+                        f"[greed_coop] serial-snap {serial_lead} -> {lead_cur} "
+                        f"no_move t={now}",
+                        flush=True,
+                    )
+                    serial_stuck_ticks = 0
+                    serial_ticks_since_unload = 0
+            serial_last_cell = lead_cur
+            if (
+                serial_lead in carrying
+                and (lead_cur == lead_goal or lead_cur in set(_lpads))
+            ):
+                task = carrying.pop(serial_lead)
+                tid_s = str(task.get("task_id") or "")
+                loaded[serial_lead] = False
+                dest[serial_lead] = ""
+                tid[serial_lead] = ""
+                last_unload_pad[serial_lead] = lead_cur
+                wait_pri[serial_lead] = 0.0
+                if tid_s and tid_s not in done_seen:
+                    done_seen.add(tid_s)
+                    done += 1
+                print(
+                    f"[greed_coop] serial-unload {serial_lead} "
+                    f"done={done}/{total} t={now}",
+                    flush=True,
+                )
+                serial_stuck_ticks = 0
+                serial_ticks_since_unload = 0
+                serial_last_cell = None
+            elif serial_mode and now % 500 == 0:
+                print(
+                    f"[greed_coop] serial-dbg lead={serial_lead} "
+                    f"pos={lead_cur} goal={lead_goal} path={len(path)} "
+                    f"stuck={serial_stuck_ticks} "
+                    f"since_unload={serial_ticks_since_unload} "
+                    f"pads={_lpads} dest={_ltask.get('destination')} "
+                    f"carry={serial_lead in carrying} done={done}/{total}",
+                    flush=True,
+                )
+            desired = {n: pose[n][:2] for n in names}
+            last_yielders = set()
+            for n in names:
+                blocked_streak[n] = 0
+            serial_skip_apply = True
         # MRSC: periodic meetings (Pri+StageNet+window PP); between: follow+gap.
-        if use_rrsc and rule_sys is not None and stage_sel is not None:
+        elif use_rrsc and rule_sys is not None and stage_sel is not None:
             n_rrsc_ticks += 1
             n_rule_ticks += 1
             deliver_goals = {n: goals[n] for n in carrying if n in goals}
@@ -1732,12 +2211,20 @@ def solve(
                         total=int(total),
                         agv_poses={n: pose[n] for n in names if n in pose},
                     )
+                    if _pack_k_cap is not None:
+                        base_fleet_busy = min(
+                            int(base_fleet_busy), int(_pack_k_cap)
+                        )
                     done_at_facn = int(done)
                 elif facn.ttl > 0:
                     facn.ttl -= 1
                     base_fleet_busy = int(
                         facn.current_k(remaining=int(total) - int(done))
                     )
+                    if _pack_k_cap is not None:
+                        base_fleet_busy = min(
+                            int(base_fleet_busy), int(_pack_k_cap)
+                        )
             dense = len(names) >= 12
             if no_prog:
                 trigger_progress_response(progress, n_agents=len(names))
@@ -2320,7 +2807,8 @@ def solve(
         for n in force_stay:
             desired[n] = pose[n][:2]
 
-        _apply_desired(desired)
+        if not serial_skip_apply:
+            _apply_desired(desired)
         if (use_glocal or use_rrsc) and path_commits:
             pos_after = {n: pose[n][:2] for n in names}
             advance_commits_after_move(path_commits, pos_after, desired)
@@ -2343,23 +2831,87 @@ def solve(
             livelock_det.reset()
         else:
             stall += 1
-        # Hard unlock: lifelong recovers early; one-shot still breaks very late.
-        _hard_th = 1200 if lifelong_random else 80000
+        # Hard unlock: lifelong recovers early; dense maze recovers mid;
+        # other one-shot maps still break very late.
+        if lifelong_random:
+            _hard_th = 1200
+        elif dense_maze:
+            _hard_th = 2400
+        else:
+            _hard_th = 80000
         if stall >= int(_hard_th):
-            if lifelong_random:
+            if lifelong_random or dense_maze:
                 n_rel = _release_approachers()
-                n_esc = _evacuate_blockers(ttl=72)
+                n_esc = _evacuate_blockers(ttl=96 if dense_maze else 72)
+                # Park only true idles (not carriers/approachers) at home.
+                for agv in names:
+                    if agv in carrying or agv in assigned or agv in force_stay:
+                        continue
+                    park_c = home.get(agv)
+                    if park_c is None:
+                        continue
+                    escape_goal[agv] = park_c
+                    escape_ttl[agv] = 100
+                    n_esc += 1
                 face_commit.clear()
                 sticky_winners.clear()
-                stream_on = True
-                claim_freeze_until = int(now) + 120
+                progress.lock_holder = None
+                progress.lock_pad = None
+                progress.lock_ttl = 0
+                if lifelong_random:
+                    stream_on = True
+                claim_freeze_until = int(now) + (40 if dense_maze else 120)
                 last_stall_drop_t = int(now)
                 stall = 0
-                _maybe_refill_lifelong()
+                unlock_no_prog += 1
+                livelock_det.reset()
+                if (serial_pack or dense_maze) and not serial_mode and carrying:
+                    serial_mode = True
+                    base_fleet_busy = 1
+                    max_fleet_busy = 1
+
+                    def _sk2(n: str):
+                        cell = pose[n][:2]
+                        task = carrying.get(n) or {}
+                        pads = unload_pads(str(task.get("destination") or ""))
+                        d = (
+                            min((_manh(cell, p) for p in pads), default=99)
+                            if pads
+                            else 99
+                        )
+                        return (d, n)
+
+                    serial_lead = min(carrying, key=_sk2)
+                    serial_hold = set()
+                    wait_pri[serial_lead] = (
+                        float(wait_pri.get(serial_lead, 0.0)) + 2000.0
+                    )
+                    escape_goal.pop(serial_lead, None)
+                    escape_ttl.pop(serial_lead, None)
+                    for agv in names:
+                        if agv == serial_lead:
+                            continue
+                        if agv in assigned:
+                            task = assigned.pop(agv)
+                            st = str(task.get("start_point") or "")
+                            if approach_station.get(st) == agv:
+                                approach_station.pop(st, None)
+                        park_c = home.get(agv)
+                        if park_c is not None:
+                            escape_goal[agv] = park_c
+                            escape_ttl[agv] = 220
+                    print(
+                        f"[greed_coop] serial-mode ON (stall-recover) "
+                        f"t={now} lead={serial_lead} done={done}/{total}",
+                        flush=True,
+                    )
+                if lifelong_random:
+                    _maybe_refill_lifelong()
                 print(
-                    f"[greed_coop] lifelong stall-recover t={now} "
-                    f"done={done}/{total} released={n_rel} evacuate={n_esc} "
-                    f"pending={_queue_pending()} streamed={n_streamed}",
+                    f"[greed_coop] "
+                    f"{'lifelong' if lifelong_random else 'dense'} stall-recover "
+                    f"t={now} done={done}/{total} released={n_rel} "
+                    f"evacuate={n_esc} pending={_queue_pending()}",
                     flush=True,
                 )
             else:

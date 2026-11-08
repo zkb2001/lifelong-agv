@@ -282,9 +282,41 @@ def plan_unblock(
             plan.release.append(n)
 
     # Escape goals: maximize clearance from critical path (reachable).
-    # Build a repulsion field = min dist to any critical cell (inverted).
     free_pool = [c for c in free if c not in occ]
-    # Allow current cell of evacuees into pool after they leave conceptually.
+    carrier_cols = {int(poses[c][0]) for c in carrying if c in poses}
+    carrier_cells = {
+        (int(poses[c][0]), int(poses[c][1])) for c in carrying if c in poses
+    }
+
+    def _escape_key(c: Cell, _cell: Cell) -> Tuple:
+        dcrit = min((_manh(c, k) for k in critical), default=0) if critical else 0
+        return (
+            0 if c in critical else 1,
+            0 if c[0] in carrier_cols else 1,
+            dcrit,
+            -_manh(c, _cell),
+            c,
+        )
+
+    def _assign_escape(n: str, cell: Cell) -> bool:
+        nonlocal free_pool
+        if not free_pool:
+            return False
+
+        def key(c: Cell, _cell: Cell = cell) -> Tuple:
+            return _escape_key(c, _cell)
+
+        dest = max(free_pool, key=key)
+        field = bfs_dist_field(dest, blocked)
+        if cell not in field and dest != cell:
+            cands = [c for c in free_pool if c in bfs_dist_field(cell, blocked)]
+            if not cands:
+                return False
+            dest = max(cands, key=key)
+        plan.escape[n] = dest
+        free_pool = [c for c in free_pool if c != dest]
+        return True
+
     for n in names:
         if n in carrying or n not in poses:
             continue
@@ -292,32 +324,24 @@ def plan_unblock(
         sc, _ = block_score(n)
         if sc < 0.45 and n not in plan.release:
             continue
-        if not free_pool:
-            break
-        # Prefer cells far from critical, not on critical columns of carriers.
-        carrier_cols = {int(poses[c][0]) for c in carrying if c in poses}
+        _assign_escape(n, cell)
 
-        def key(c: Cell, _cell: Cell = cell) -> Tuple:
-            dcrit = min((_manh(c, k) for k in critical), default=0) if critical else 0
-            return (
-                0 if c in critical else 1,
-                0 if c[0] in carrier_cols else 1,
-                dcrit,
-                -_manh(c, _cell),
-                c,
-            )
-
-        dest = max(free_pool, key=key)
-        # Reachability check via BFS field from dest.
-        field = bfs_dist_field(dest, blocked)
-        if cell not in field and dest != cell:
-            # Fallback: any reachable free cell maximizing clearance.
-            cands = [c for c in free_pool if c in bfs_dist_field(cell, blocked)]
-            if not cands:
+    # Selective fallback: when freeze has no path-blockers, only peel agents
+    # that sit on / next to carriers (not the whole idle fleet).
+    if not plan.escape and carrier_cells:
+        near_blockers = []
+        for n in names:
+            if n in carrying or n not in poses or n in plan.escape:
                 continue
-            dest = max(cands, key=key)
-        plan.escape[n] = dest
-        free_pool = [c for c in free_pool if c != dest]
+            cell = (int(poses[n][0]), int(poses[n][1]))
+            dmin = min((_manh(cell, cc) for cc in carrier_cells), default=99)
+            on_col = cell[0] in carrier_cols
+            if dmin <= 2 or (on_col and dmin <= 4) or cell in critical:
+                near_blockers.append((dmin, 0 if n in assigned else 1, n, cell))
+        near_blockers.sort()
+        for _d, _role, n, cell in near_blockers[: max(2, len(carrying) + 1)]:
+            if _assign_escape(n, cell) and n in assigned and n not in plan.release:
+                plan.release.append(n)
 
     plan.reason = (
         f"crit={len(critical)} release={len(plan.release)} "
