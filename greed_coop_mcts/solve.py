@@ -897,6 +897,28 @@ def solve(
         # done>=95) re-trapped 10079 in tube swaps after soft progress.
         rem = max(0, int(total) - int(done))
         return rem <= 2
+
+    def _env_flag_on(name: str, default: bool = True) -> bool:
+        v = str(os.environ.get(name, "")).strip().lower()
+        if v in ("0", "off", "false", "no"):
+            return False
+        if v in ("1", "on", "true", "yes"):
+            return True
+        return bool(default)
+
+    def _mid_serial_throat_ok() -> bool:
+        """Gated mid-serial corridor fixes (Cluster A/B VI). SH never enters."""
+        return (
+            bool(is_synth)
+            and (bool(dense_maze) or bool(serial_pack))
+            and bool(serial_mode)
+            and serial_lead is not None
+            and serial_lead in carrying
+            and (not lifelong_random)
+            and (not _endgame_active())
+            and _env_flag_on("GREED_MID_THROAT", True)
+        )
+
     mode = (
         "rrsc"
         if use_rrsc
@@ -1513,6 +1535,34 @@ def solve(
                 )
                 escape_goal.pop(serial_lead, None)
                 escape_ttl.pop(serial_lead, None)
+                # Mid dense: also peel non-lead carriers that sit on the lead
+                # corridor (Cluster B). SH / endgame leave this alone.
+                mid_park_carriers = (
+                    bool(is_synth)
+                    and (bool(dense_maze) or bool(serial_pack))
+                    and (not lifelong_random)
+                    and (not _endgame_active())
+                    and _env_flag_on("GREED_MID_THROAT", True)
+                    and _env_flag_on("GREED_MID_PARK_CARRIERS", True)
+                )
+                lead_corridor: Set[Cell] = set()
+                if mid_park_carriers and serial_lead in carrying:
+                    _lp = unload_pads(
+                        str(
+                            (carrying.get(serial_lead) or {}).get(
+                                "destination"
+                            )
+                            or ""
+                        )
+                    )
+                    if _lp:
+                        _lg = min(
+                            _lp, key=lambda c: (_manh(pose[serial_lead][:2], c), c)
+                        )
+                        _ph = _bfs_path_cells(
+                            pose[serial_lead][:2], _lg, move_blocked
+                        )
+                        lead_corridor = set(_ph[:20]) | {_lg}
                 for agv in names:
                     if agv == serial_lead:
                         continue
@@ -1525,6 +1575,34 @@ def solve(
                     if park_c is not None and agv not in carrying:
                         escape_goal[agv] = park_c
                         escape_ttl[agv] = 180
+                    elif (
+                        mid_park_carriers
+                        and agv in carrying
+                        and pose[agv][:2] in lead_corridor
+                    ):
+                        own_pads = set(
+                            unload_pads(
+                                str(
+                                    (carrying.get(agv) or {}).get(
+                                        "destination"
+                                    )
+                                    or ""
+                                )
+                            )
+                        )
+                        if pose[agv][:2] in own_pads:
+                            continue
+                        dest_c = None
+                        if own_pads:
+                            dest_c = min(
+                                own_pads,
+                                key=lambda c: (_manh(pose[agv][:2], c), c),
+                            )
+                        if dest_c is None:
+                            dest_c = park_c
+                        if dest_c is not None:
+                            escape_goal[agv] = dest_c
+                            escape_ttl[agv] = 180
             # Keep claiming while serial so emptied fleet can fetch next task,
             # except hard-endgame with inflight work (avoid pad pile-ups).
             if not (_endgame_hold() and (carrying or assigned)):
@@ -2825,6 +2903,110 @@ def solve(
                         if n != keep:
                             desired[n] = pose[n][:2]
 
+            def _serial_shove_blocker(blk: str, *, tag: str) -> bool:
+                """Drive path blocker off keep_path; shared by endgame + mid."""
+                nonlocal moved_one, serial_retreat_ttl
+                if blk is None or blk == serial_lead:
+                    return False
+                bcell = pose[blk][:2]
+                neigh = []
+                for dx, dy in ((1, 0), (-1, 0), (0, 1), (0, -1)):
+                    cand = (bcell[0] + dx, bcell[1] + dy)
+                    if (
+                        cand in move_blocked
+                        or cand == lead_goal
+                        or (
+                            _lstation is not None and cand == _lstation
+                        )
+                        or not (
+                            1 <= cand[0] <= 20 and 1 <= cand[1] <= 20
+                        )
+                    ):
+                        continue
+                    if cand == lead_cur or occ.get(cand) is None:
+                        neigh.append(cand)
+                off = [c for c in neigh if c not in keep_path]
+                pool = off or neigh
+                pick_step = None
+                if pool:
+                    cand = min(
+                        pool,
+                        key=lambda c: (
+                            0 if c not in keep_path else 1,
+                            -_manh(c, lead_goal),
+                            c,
+                        ),
+                    )
+                    # Long stall: never swap into lead_cur — tube oscillation.
+                    if cand == lead_cur and serial_ticks_since_unload >= 80:
+                        park_c = home.get(blk)
+                        step_home = None
+                        if park_c is not None:
+                            hp = _bfs_path_cells(
+                                bcell, park_c, move_blocked
+                            )
+                            if hp and occ.get(hp[0]) in (None, blk):
+                                step_home = hp[0]
+                        if step_home is not None and step_home != lead_cur:
+                            pick_step = step_home
+                        else:
+                            away = [
+                                c
+                                for c in neigh
+                                if c != lead_cur and c not in keep_path
+                            ] or [c for c in neigh if c != lead_cur]
+                            if away:
+                                pick_step = max(
+                                    away,
+                                    key=lambda c: (_manh(c, lead_goal), c),
+                                )
+                    elif cand == lead_cur:
+                        for dx, dy in ((1, 0), (-1, 0), (0, 1), (0, -1)):
+                            lc = (lead_cur[0] + dx, lead_cur[1] + dy)
+                            if (
+                                lc in move_blocked
+                                or lc == bcell
+                                or lc == lead_goal
+                                or occ.get(lc) is not None
+                                or not (
+                                    1 <= lc[0] <= 20 and 1 <= lc[1] <= 20
+                                )
+                            ):
+                                continue
+                            desired[serial_lead] = lc
+                            wait_pri[serial_lead] = (
+                                float(wait_pri.get(serial_lead, 0.0))
+                                + 9500.0
+                            )
+                            pick_step = lead_cur
+                            serial_retreat_ttl = 2
+                            break
+                    else:
+                        pick_step = cand
+                if pick_step is None:
+                    return False
+                force_stay.discard(blk)
+                face_commit.pop(blk, None)
+                desired[blk] = pick_step
+                wait_pri[blk] = float(wait_pri.get(blk, 0.0)) + 15000.0
+                if pick_step != lead_cur:
+                    desired[serial_lead] = lead_cur
+                moved_one = blk
+                park_c = home.get(blk)
+                if park_c is not None:
+                    escape_goal[blk] = park_c
+                    escape_ttl[blk] = 300
+                for n in names:
+                    if n not in (serial_lead, blk):
+                        desired[n] = pose[n][:2]
+                if now % 100 == 0:
+                    print(
+                        f"[greed_coop] {tag} shove t={now} "
+                        f"who={blk} to={pick_step} done={done}/{total}",
+                        flush=True,
+                    )
+                return True
+
             # Endgame: never stay in hole-hold forever — clear ttl and push.
             if _endgame_active() and serial_ticks_since_unload >= 120:
                 serial_retreat_ttl = 0
@@ -2849,113 +3031,26 @@ def solve(
             ):
                 blk = occ.get(path[0])
                 if blk is not None and blk != serial_lead:
-                    bcell = pose[blk][:2]
-                    neigh = []
-                    for dx, dy in ((1, 0), (-1, 0), (0, 1), (0, -1)):
-                        cand = (bcell[0] + dx, bcell[1] + dy)
-                        if (
-                            cand in move_blocked
-                            or cand == lead_goal
-                            or (
-                                _lstation is not None and cand == _lstation
-                            )
-                            or not (
-                                1 <= cand[0] <= 20 and 1 <= cand[1] <= 20
-                            )
-                        ):
-                            continue
-                        if cand == lead_cur or occ.get(cand) is None:
-                            neigh.append(cand)
-                    off = [c for c in neigh if c not in keep_path]
-                    pool = off or neigh
-                    pick_step = None
-                    if pool:
-                        cand = min(
-                            pool,
-                            key=lambda c: (
-                                0 if c not in keep_path else 1,
-                                -_manh(c, lead_goal),
-                                c,
-                            ),
-                        )
-                        # Long endgame: never swap into lead_cur — that
-                        # oscillates 1-wide tubes (Smokescreen↔Bumblebee).
-                        if cand == lead_cur and serial_ticks_since_unload >= 80:
-                            park_c = home.get(blk)
-                            step_home = None
-                            if park_c is not None:
-                                hp = _bfs_path_cells(
-                                    bcell, park_c, move_blocked
-                                )
-                                if hp and occ.get(hp[0]) in (None, blk):
-                                    step_home = hp[0]
-                            if step_home is not None and step_home != lead_cur:
-                                pick_step = step_home
-                            else:
-                                away = [
-                                    c
-                                    for c in neigh
-                                    if c != lead_cur and c not in keep_path
-                                ] or [
-                                    c for c in neigh if c != lead_cur
-                                ]
-                                if away:
-                                    pick_step = max(
-                                        away,
-                                        key=lambda c: (
-                                            _manh(c, lead_goal),
-                                            c,
-                                        ),
-                                    )
-                        elif cand == lead_cur:
-                            # One-tick yield only — do not refresh long ttl.
-                            for dx, dy in ((1, 0), (-1, 0), (0, 1), (0, -1)):
-                                lc = (lead_cur[0] + dx, lead_cur[1] + dy)
-                                if (
-                                    lc in move_blocked
-                                    or lc == bcell
-                                    or lc == lead_goal
-                                    or occ.get(lc) is not None
-                                    or not (
-                                        1 <= lc[0] <= 20 and 1 <= lc[1] <= 20
-                                    )
-                                ):
-                                    continue
-                                desired[serial_lead] = lc
-                                wait_pri[serial_lead] = (
-                                    float(wait_pri.get(serial_lead, 0.0))
-                                    + 9500.0
-                                )
-                                pick_step = lead_cur
-                                serial_retreat_ttl = 2
-                                break
-                        else:
-                            pick_step = cand
-                    if pick_step is not None:
-                        force_stay.discard(blk)
-                        face_commit.pop(blk, None)
-                        desired[blk] = pick_step
-                        wait_pri[blk] = (
-                            float(wait_pri.get(blk, 0.0)) + 15000.0
-                        )
-                        if pick_step != lead_cur:
-                            desired[serial_lead] = lead_cur
-                        moved_one = blk
-                        park_c = home.get(blk)
-                        if park_c is not None:
-                            escape_goal[blk] = park_c
-                            escape_ttl[blk] = 300
-                        # Freeze everyone else this tick.
-                        for n in names:
-                            if n not in (serial_lead, blk):
-                                desired[n] = pose[n][:2]
-                        if now % 100 == 0:
-                            print(
-                                f"[greed_coop] endgame shove t={now} "
-                                f"who={blk} to={pick_step} "
-                                f"done={done}/{total}",
-                                flush=True,
-                            )
+                    _serial_shove_blocker(blk, tag="endgame")
+            # Mid throat (Cluster A): same shove for idle on path[0].
+            # Do not require moved_one is None — drain/tube already "moves"
+            # the blocker in place without clearing the throat (11515).
+            elif (
+                _mid_serial_throat_ok()
+                and _env_flag_on("GREED_MID_CORRIDOR_SHOVE", True)
+                and path
+                and (
+                    serial_stuck_ticks >= 24
+                    or serial_ticks_since_unload >= 160
+                )
+            ):
+                blk = occ.get(path[0])
+                if (
+                    blk is not None
+                    and blk != serial_lead
+                    and blk not in carrying
+                ):
+                    _serial_shove_blocker(blk, tag="mid-corridor")
             # Endgame serial deadlock → release to parallel RRSC.
             if (
                 serial_mode
@@ -2991,21 +3086,35 @@ def solve(
                 )
             # Tube squat: idle agents on pad/station freeze single-file forever.
             # Stay in serial and shove (OFF↔ON thrash was killing 10594/11608).
+            # Mid dense: also clear idle on path[:4] (Cluster A path[0] freeze).
             if (
                 serial_mode
                 and serial_ticks_since_unload >= 100
                 and now % 50 == 0
-                and _lstation is not None
             ):
+                squat_cells: List[Cell] = []
+                if lead_goal is not None:
+                    squat_cells.append(lead_goal)
+                if _lstation is not None:
+                    squat_cells.append(_lstation)
+                if (
+                    _mid_serial_throat_ok()
+                    and _env_flag_on("GREED_MID_TUBE_PATH", True)
+                    and path
+                ):
+                    squat_cells.extend(path[:4])
                 squatters = []
-                for cell in (lead_goal, _lstation):
+                seen_sq: Set[str] = set()
+                for cell in squat_cells:
                     who = occ.get(cell)
                     if (
                         who is not None
                         and who != serial_lead
                         and who not in carrying
+                        and who not in seen_sq
                     ):
                         squatters.append(who)
+                        seen_sq.add(who)
                 if squatters:
                     lead_cur_now = pose[serial_lead][:2]
                     lead_advancing = (
@@ -3079,26 +3188,118 @@ def solve(
                         serial_ticks_since_unload >= 400
                         and not _endgame_active()
                     ):
-                        # Still stuck: evacuate + re-elect lead, stay serial.
-                        # Skip in endgame — resetting stuck prevented unstick.
-                        _evacuate_blockers(ttl=120)
-                        serial_lead = None
-                        serial_ticks_since_unload = 0
-                        serial_stuck_ticks = 0
-                        serial_last_cell = None
-                        serial_retreat_ttl = 0
-                        serial_drain_from.clear()
-                        print(
-                            f"[greed_coop] serial tube-squat clear t={now} "
-                            f"who={squatters} done={done}/{total}",
-                            flush=True,
-                        )
+                        # Mid sealed tube: resetting since_unload made 11515
+                        # loop shove→clear forever. Prefer corridor shove and
+                        # keep lead; only soft-reset stuck counters.
+                        if _mid_serial_throat_ok() and path:
+                            blk = occ.get(path[0])
+                            if (
+                                blk is not None
+                                and blk != serial_lead
+                                and blk not in carrying
+                            ):
+                                _serial_shove_blocker(
+                                    blk, tag="mid-corridor"
+                                )
+                            serial_stuck_ticks = 0
+                            serial_retreat_ttl = 0
+                            _evacuate_blockers(ttl=120)
+                            print(
+                                f"[greed_coop] serial tube-squat mid-hold "
+                                f"t={now} who={squatters} "
+                                f"done={done}/{total}",
+                                flush=True,
+                            )
+                        else:
+                            # Still stuck: evacuate + re-elect lead, stay serial.
+                            _evacuate_blockers(ttl=120)
+                            serial_lead = None
+                            serial_ticks_since_unload = 0
+                            serial_stuck_ticks = 0
+                            serial_last_cell = None
+                            serial_retreat_ttl = 0
+                            serial_drain_from.clear()
+                            print(
+                                f"[greed_coop] serial tube-squat clear t={now} "
+                                f"who={squatters} done={done}/{total}",
+                                flush=True,
+                            )
                     elif not _endgame_active():
                         print(
                             f"[greed_coop] serial tube-squat shove t={now} "
                             f"who={squatters} done={done}/{total}",
                             flush=True,
                         )
+            # Mid: peel non-lead carriers off keep_path (Cluster B).
+            if (
+                _mid_serial_throat_ok()
+                and _env_flag_on("GREED_MID_PARK_CARRIERS", True)
+                and len(carrying) >= 2
+                and serial_ticks_since_unload >= 120
+                and now % 30 == 0
+                and path
+            ):
+                for agv in list(carrying.keys()):
+                    if agv == serial_lead:
+                        continue
+                    cell = pose[agv][:2]
+                    if cell not in keep_path and (
+                        not path or _manh(cell, path[0]) > 1
+                    ):
+                        continue
+                    own_pads = set(
+                        unload_pads(
+                            str(
+                                (carrying.get(agv) or {}).get("destination")
+                                or ""
+                            )
+                        )
+                    )
+                    if cell in own_pads:
+                        continue
+                    opts: List[Cell] = []
+                    for dx, dy in ((1, 0), (-1, 0), (0, 1), (0, -1)):
+                        cand = (cell[0] + dx, cell[1] + dy)
+                        if (
+                            cand in move_blocked
+                            or cand in keep_path
+                            or cand == lead_goal
+                            or (
+                                _lstation is not None and cand == _lstation
+                            )
+                            or not (
+                                1 <= cand[0] <= 20 and 1 <= cand[1] <= 20
+                            )
+                        ):
+                            continue
+                        if occ.get(cand) is None:
+                            opts.append(cand)
+                    if opts:
+                        pick = max(
+                            opts, key=lambda c: (_manh(c, lead_goal), c)
+                        )
+                        force_stay.discard(agv)
+                        face_commit.pop(agv, None)
+                        desired[agv] = pick
+                        wait_pri[agv] = (
+                            float(wait_pri.get(agv, 0.0)) + 9000.0
+                        )
+                        # Don't steal lead's free advance this tick.
+                        if path and occ.get(path[0]) in (None, serial_lead):
+                            pass
+                        elif moved_one is None:
+                            moved_one = agv
+                    dest_c = None
+                    if own_pads:
+                        dest_c = min(
+                            own_pads, key=lambda c: (_manh(cell, c), c)
+                        )
+                    if dest_c is None:
+                        dest_c = home.get(agv)
+                    if dest_c is not None:
+                        escape_goal[agv] = dest_c
+                        escape_ttl[agv] = 200
+
             # Starve rotate with cooldown — avoid thrashing two same-dest carriers.
             if (
                 serial_mode
@@ -3132,6 +3333,7 @@ def solve(
                     return (1, best_manh, n)
 
                 alts = [n for n in carrying if n != serial_lead]
+                old_lead = serial_lead
                 new_lead = min(alts, key=_ck) if alts else serial_lead
                 if new_lead != serial_lead:
                     serial_lead = new_lead
@@ -3146,6 +3348,62 @@ def solve(
                         f"{serial_ticks_since_unload} done={done}/{total}",
                         flush=True,
                     )
+                    # Mid: peel old lead off corridor so rotate is not a no-op.
+                    # Do not reuse _serial_shove_blocker — it would freeze the
+                    # new lead at the pre-rotate lead_cur.
+                    if (
+                        _mid_serial_throat_ok()
+                        and _env_flag_on("GREED_MID_ROTATE_PEEL", True)
+                        and old_lead is not None
+                        and old_lead in carrying
+                        and old_lead != serial_lead
+                    ):
+                        ocell = pose[old_lead][:2]
+                        if ocell in keep_path or (
+                            path and _manh(ocell, path[0]) <= 1
+                        ):
+                            ropts: List[Cell] = []
+                            for dx, dy in (
+                                (1, 0),
+                                (-1, 0),
+                                (0, 1),
+                                (0, -1),
+                            ):
+                                cand = (ocell[0] + dx, ocell[1] + dy)
+                                if (
+                                    cand in move_blocked
+                                    or cand in keep_path
+                                    or cand == lead_goal
+                                    or occ.get(cand) is not None
+                                    or not (
+                                        1 <= cand[0] <= 20
+                                        and 1 <= cand[1] <= 20
+                                    )
+                                ):
+                                    continue
+                                ropts.append(cand)
+                            if ropts:
+                                pick = max(
+                                    ropts,
+                                    key=lambda c: (_manh(c, lead_goal), c),
+                                )
+                                force_stay.discard(old_lead)
+                                face_commit.pop(old_lead, None)
+                                desired[old_lead] = pick
+                                wait_pri[old_lead] = (
+                                    float(wait_pri.get(old_lead, 0.0))
+                                    + 9000.0
+                                )
+                            park_c = home.get(old_lead)
+                            if park_c is not None:
+                                escape_goal[old_lead] = park_c
+                                escape_ttl[old_lead] = 200
+                            if now % 100 == 0:
+                                print(
+                                    f"[greed_coop] mid-rotate peel t={now} "
+                                    f"who={old_lead} done={done}/{total}",
+                                    flush=True,
+                                )
             last_yielders = set()
             for n in names:
                 blocked_streak[n] = 0
